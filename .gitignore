@@ -11,3 +11,6 @@ wheels/
 
 # Configuration files
 .env
+
+# Node.js files (used for Tailwind CSS)
+node_modules/
