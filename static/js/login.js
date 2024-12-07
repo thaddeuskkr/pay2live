@@ -58,6 +58,11 @@ function verifyOTP() {
             if (json.status === 200) {
                 $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
                 $('#message-content').text('Logged in, redirecting...');
+                /* TODO:
+                   - Actually create a token and the account management system
+                   - Set token in local storage
+                   - Actually redirect to another page where the token can be used for authentication
+                */
             } else {
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
                 $('#message-content').text('Invalid OTP. Please try again.');

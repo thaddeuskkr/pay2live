@@ -10,6 +10,11 @@ app = Flask(__name__)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = os.getenv("DEBUG") == "True"
 
+# TODO:
+# - Move routes to different files (maybe under a routes/ folder) for better organisation
+# - Set up account management
+# - Consider using an actual database over shelve
+
 
 @app.route("/")
 def index():
