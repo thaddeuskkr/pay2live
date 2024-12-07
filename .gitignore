@@ -14,3 +14,6 @@ wheels/
 
 # Node.js files (used for Tailwind CSS)
 node_modules/
+
+# Database files
+*.db
