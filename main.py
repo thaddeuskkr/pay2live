@@ -31,7 +31,7 @@ def otp():
     data = request.get_json()
     phone = data.get("phone")
     otp = secrets.randbelow(10**6)
-    with shelve.open("logins") as logins:
+    with shelve.open("logins.db") as logins:
         while otp in logins.values():
             otp = secrets.randbelow(10**6)
         logins[phone] = str(otp)
@@ -54,7 +54,7 @@ def verify_otp():
     data = request.get_json()
     otp = data.get("otp")
     phone = data.get("phone")
-    with shelve.open("logins") as logins:
+    with shelve.open("logins.db") as logins:
         if phone in logins.keys() and logins[phone] == otp:
             return jsonify(
                 {
