@@ -17,3 +17,6 @@ node_modules/
 
 # Database files
 *.db
+
+# Log files
+*.log
