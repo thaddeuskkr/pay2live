@@ -21,6 +21,12 @@ try:
     debug = os.environ["DEBUG"].lower() == "true"
 except KeyError:
     debug = False
+
+try:
+    log_to_file = os.environ["LOG_TO_FILE"].lower() == "true"
+except KeyError:
+    log_to_file = False
+
 try:
     otp_token = os.environ["OTP_TOKEN"]
     mongo_url = os.environ["MONGODB_CONNECTION_URL"]
@@ -30,7 +36,8 @@ except KeyError as e:
 # Set up logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    filename="pay2live.log", level=logging.DEBUG if debug else logging.INFO
+    filename="pay2live.log" if log_to_file else "",
+    level=logging.DEBUG if debug else logging.INFO,
 )
 
 # Initialise Flask application
