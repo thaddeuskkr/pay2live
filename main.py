@@ -17,7 +17,10 @@ from flask import Flask, request, render_template, jsonify
 load_dotenv()
 
 # Check environment variables
-debug = os.environ["DEBUG"].lower() == "true"
+try:
+    debug = os.environ["DEBUG"].lower() == "true"
+except KeyError:
+    debug = False
 try:
     otp_token = os.environ["OTP_TOKEN"]
     mongo_url = os.environ["MONGODB_CONNECTION_URL"]
