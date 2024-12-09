@@ -2,7 +2,7 @@ import requests
 import secrets
 import os
 from flask import request, make_response
-from main import app, ready, logins
+from app import app, ready, logins
 
 
 @app.route("/api/send_otp", methods=["POST"])

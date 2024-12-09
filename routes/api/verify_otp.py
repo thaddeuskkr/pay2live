@@ -1,6 +1,6 @@
 import secrets
 from flask import request, make_response
-from main import app, logins
+from app import app, logins
 
 
 @app.route("/api/verify_otp", methods=["POST"])

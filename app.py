@@ -48,7 +48,7 @@ thread = threading.Timer(60.0, check_mongodb_connection)
 thread.start()
 check_mongodb_connection()
 
-from .routes import *
+from routes import *
 
 if __name__ == "__main__":
     app.run(debug=debug)
