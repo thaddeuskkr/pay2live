@@ -9,6 +9,12 @@ $(function () {
         otpInput.val(otpInput.val().replace(/[^0-9]/g, ''));
         if (otpInput.val().length > 6) otpInput.val(otpInput.val().slice(0, 6));
     });
+    phoneInput.on('keypress', (e) => {
+        if (e.key == 'Enter') login();
+    });
+    otpInput.on('keypress', (e) => {
+        if (e.key == 'Enter') verifyOTP();
+    });
 })
 
 function login() {
@@ -18,13 +24,9 @@ function login() {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').text('Please enter a valid phone number.');
     } else {
-        $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
-        $('#message-content').html('An OTP was sent to you via WhatsApp.<br>Please enter the code above to sign in.');
-        $('#otp-div').removeClass('hidden');
-        $('#login-button').text('Verify OTP');
-        $('#phone').prop('disabled', true);
-        $('#login-button').attr('onclick', 'verifyOTP()');
-        fetch('./otp', {
+        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
+        $('#message-content').html('Sending an OTP via WhatsApp...');
+        fetch('./api/send_otp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,6 +34,18 @@ function login() {
             body: JSON.stringify({
                 phone: phone
             })
+        }).then(response => {
+            if (response.status == 200) {
+                $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
+                $('#message-content').html('An OTP was sent to you via WhatsApp.<br>Please enter the code above to sign in.');
+                $('#otp-div').removeClass('hidden');
+                $('#login-button').text('Verify OTP');
+                $('#phone').prop('disabled', true);
+                $('#login-button').attr('onclick', 'verifyOTP()');
+            } else {
+                $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
+                $('#message-content').text('An error occurred while sending an OTP. Please try again.');
+            }
         })
     }
 }
@@ -44,7 +58,7 @@ function verifyOTP() {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').text('Please enter a valid OTP.');
     } else {
-        fetch('./verify_otp', {
+        fetch('./api/verify_otp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,19 +68,18 @@ function verifyOTP() {
                 otp: otp
             })
         }).then(async response => {
-            const json = await response.json();
-            if (json.status === 200) {
+            if (response.status == 200) {
                 $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
                 $('#message-content').text('Logged in, redirecting...');
-                /* TODO:
-                   - Actually create a token and the account management system
-                   - Set token in local storage
-                   - Actually redirect to another page where the token can be used for authentication
-                */
             } else {
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
                 $('#message-content').text('Invalid OTP. Please try again.');
             }
+            /* TODO:
+               - Actually create a token and the account management system
+               - Set token in local storage
+               - Actually redirect to another page where the token can be used for authentication
+            */
         });
     }
 }
