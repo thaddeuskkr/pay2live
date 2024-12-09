@@ -12,7 +12,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "pay2live/__init__.py"
+            "dest": "pay2live"
         }
     ]
 }
