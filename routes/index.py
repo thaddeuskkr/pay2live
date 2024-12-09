@@ -1,5 +1,5 @@
 from flask import render_template
-from pay2live import app
+from main import app
 
 
 @app.route("/")

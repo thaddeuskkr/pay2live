@@ -1,18 +1,18 @@
 {
     "builds": [
         {
-            "src": "pay2live/**/*.py",
+            "src": "main.py",
             "use": "@vercel/python"
         },
         {
-            "src": "pay2live/static/**",
+            "src": "static/**",
             "use": "@vercel/static"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "pay2live/**/*.py"
+            "dest": "main.py"
         }
     ]
 }

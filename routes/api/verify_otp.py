@@ -1,6 +1,6 @@
 import secrets
 from flask import request, make_response
-from pay2live import app, logins
+from main import app, logins
 
 
 @app.route("/api/verify_otp", methods=["POST"])
