@@ -72,7 +72,7 @@ def get_queue():
             200,
         )
         request_response = requests.post(
-            "https://develop.tkkr.dev/custom",
+            "https://develop.tkkr.dev/message",
             json={
                 "to": f"65{user["phone"]}",
                 "from": "pay2live",
