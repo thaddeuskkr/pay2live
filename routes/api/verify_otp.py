@@ -20,7 +20,7 @@ def verify_otp():
         response.delete_cookie("session_token")
         return response
     elif login["otp"] == otp:
-        session_token = secrets.token_urlsafe(64)
+        session_token = login["session_token"] or secrets.token_urlsafe(64)
         logins.update_one(
             {"phone": phone}, {"$set": {"session_token": session_token, "otp": None}}
         )
