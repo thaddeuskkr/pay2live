@@ -30,6 +30,7 @@ mongo_client: MongoClient[dict[str, typing.Any]] = MongoClient(
 )
 db = mongo_client[f"pay2live{'_dev' if debug else ''}"]
 logins = db["logins"]
+queue = db["queue"]
 
 
 # Check if MongoDB is ready every minute
