@@ -1,7 +1,7 @@
 [project]
 name = "pay2live"
 version = "0.1.0"
-description = "Add your description here"
+description = "24S2 IT1966 App Development Project"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
