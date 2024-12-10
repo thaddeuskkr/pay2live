@@ -76,7 +76,7 @@ def get_queue():
             json={
                 "to": f"65{user["phone"]}",
                 "from": "pay2live",
-                "message": f"{dictionary['type']}{str(dictionary['number']).rjust(3, "0")} is your queue number.",
+                "message": f"*{dictionary['type']}{str(dictionary['number']).rjust(3, "0")}* is your queue number.",
             },
             headers={"Authorization": os.environ["OTP_TOKEN"]},
         )
