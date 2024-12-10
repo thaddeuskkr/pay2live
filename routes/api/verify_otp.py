@@ -20,9 +20,12 @@ def verify_otp():
         response.delete_cookie("session_token")
         return response
     elif login["otp"] == otp:
-        if login["session_token"] is not None and len(login["session_token"]) > 0:
-            session_token = login["session_token"]
-        else:
+        try:
+            if len(login["session_token"]) > 5:
+                session_token = login["session_token"]
+            else:
+                session_token = secrets.token_urlsafe(64)
+        except KeyError:
             session_token = secrets.token_urlsafe(64)
         logins.update_one(
             {"phone": phone}, {"$set": {"session_token": session_token, "otp": None}}
