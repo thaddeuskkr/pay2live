@@ -15,7 +15,7 @@ $(function () {
     otpInput.on('keypress', (e) => {
         if (e.key == 'Enter') verifyOTP();
     });
-})
+});
 
 function login() {
     const phoneInput = $('#phone');
@@ -29,15 +29,17 @@ function login() {
         fetch('./api/send_otp', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                phone: phone
-            })
-        }).then(response => {
+                phone: phone,
+            }),
+        }).then((response) => {
             if (response.status == 200) {
                 $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
-                $('#message-content').html('An OTP was sent to you via WhatsApp.<br>Please enter the code above to sign in.');
+                $('#message-content').html(
+                    'An OTP was sent to you via WhatsApp.<br>Please enter the code above to sign in.',
+                );
                 $('#otp-div').removeClass('hidden');
                 $('#login-button').text('Verify OTP');
                 $('#phone').prop('disabled', true);
@@ -46,7 +48,7 @@ function login() {
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
                 $('#message-content').text('An error occurred while sending an OTP. Please try again.');
             }
-        })
+        });
     }
 }
 function verifyOTP() {
@@ -61,13 +63,13 @@ function verifyOTP() {
         fetch('./api/verify_otp', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 phone: phone,
-                otp: otp
-            })
-        }).then(async response => {
+                otp: otp,
+            }),
+        }).then(async (response) => {
             if (response.status == 200) {
                 $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
                 $('#message-content').text('Logged in, redirecting...');

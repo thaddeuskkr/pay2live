@@ -1,10 +1,13 @@
 {
-  "scripts": {
-    "build": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify",
-    "watch": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch"
-  },
-  "dependencies": {
-    "@catppuccin/tailwindcss": "^0.1.6",
-    "tailwindcss": "^3.4.16"
-  }
+    "scripts": {
+        "format": "prettier --write .",
+        "build": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify",
+        "watch": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch"
+    },
+    "devDependencies": {
+        "@catppuccin/tailwindcss": "^0.1.6",
+        "prettier": "^3.4.2",
+        "prettier-plugin-tailwindcss": "^0.6.9",
+        "tailwindcss": "^3.4.16"
+    }
 }

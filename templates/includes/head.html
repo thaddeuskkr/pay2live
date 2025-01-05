@@ -1,0 +1,17 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>pay2live</title>
+<link rel="stylesheet" href="./static/css/output.css" />
+<link rel="shortcut icon" type="image/x-icon" href="./static/assets/favicon.ico" />
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js"></script>
+<script>
+    if (
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+        $(document.documentElement).addClass('mocha');
+    } else {
+        $(document.documentElement).removeClass('mocha');
+    }
+</script>
+<script src="./static/js/main.js"></script>

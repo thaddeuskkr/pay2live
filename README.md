@@ -7,7 +7,7 @@
 
 ### Install `uv`
 
-*Using the standalone installers:*
+_Using the standalone installers:_
 
 ```sh
 # On macOS and Linux.
@@ -19,10 +19,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-*If installed via the standalone installer, `uv` can update itself to the latest version:*
+_If installed via the standalone installer, `uv` can update itself to the latest version:_
 
 ```sh
 uv self update
 ```
 
-*For alternative installation methods and more details, check the [installation documentation](https://docs.astral.sh/uv/getting-started/installation/) provided by `uv`.*
+_For alternative installation methods and more details, check the
+[installation documentation](https://docs.astral.sh/uv/getting-started/installation/) provided by `uv`._

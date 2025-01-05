@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-const catppuccin = require('@catppuccin/tailwindcss')
+const catppuccin = require('@catppuccin/tailwindcss');
 module.exports = {
-    content: ["./templates/*.html"],
+    content: ['./templates/**/*.html'],
     theme: {
         extend: {},
     },
@@ -9,8 +9,7 @@ module.exports = {
     plugins: [
         catppuccin({
             defaultFlavour: 'latte',
-            prefix: false
-        })
-    ]
-}
-
+            prefix: false,
+        }),
+    ],
+};
