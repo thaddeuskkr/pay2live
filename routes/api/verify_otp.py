@@ -8,6 +8,24 @@ def verify_otp():
     data = request.get_json()
     otp: str = data.get("otp")
     phone: str = data.get("phone")
+    if (len(phone) != 8) or (not phone.isdigit()):
+        response = make_response(
+            {
+                "phone": phone,
+                "message": "Invalid phone number",
+            },
+            400,
+        )
+        return response
+    if (len(otp) != 6) or (not otp.isdigit()):
+        response = make_response(
+            {
+                "phone": phone,
+                "message": "Invalid OTP",
+            },
+            400,
+        )
+        return response
     login = logins.find_one({"phone": phone})
     if login is None:
         response = make_response(
