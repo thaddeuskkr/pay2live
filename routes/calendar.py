@@ -3,5 +3,5 @@ from app import app
 
 
 @app.route("/calendar")
-def about():
+def calendar():
     return render_template("calendar.html", current_page="calendar")
