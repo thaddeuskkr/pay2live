@@ -48,7 +48,8 @@ nvm install node
 ### Clone the repository and install the required dependencies
 
 ```sh
-git clone https://github.com/thaddeuskkr/pay2live.git && cd pay2live
+git clone https://github.com/thaddeuskkr/pay2live.git
+cd pay2live
 npm install
 uv sync
 ```
