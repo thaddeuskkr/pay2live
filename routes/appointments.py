@@ -3,5 +3,5 @@ from app import app
 
 
 @app.route("/appointments")
-def about():
+def appointments():
     return render_template("appointments.html", current_page="appointments")
