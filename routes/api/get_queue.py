@@ -2,7 +2,7 @@ import requests
 import os
 import pymongo
 from flask import request, make_response
-from app import app, ready, logins, queue
+from app import app, ready, users, queue
 
 
 @app.route("/api/get_queue", methods=["POST"])
@@ -35,7 +35,7 @@ def get_queue():
             401,
         )
         return response
-    user = logins.find_one({"session_token": auth})
+    user = users.find_one({"session_token": auth})
     if user is None:
         response = make_response(
             {

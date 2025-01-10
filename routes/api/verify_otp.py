@@ -1,6 +1,6 @@
 import secrets
 from flask import request, make_response
-from app import app, logins
+from app import app, users
 
 
 @app.route("/api/verify_otp", methods=["POST"])
@@ -26,8 +26,8 @@ def verify_otp():
             400,
         )
         return response
-    login = logins.find_one({"phone": phone})
-    if login is None:
+    user = users.find_one({"phone": phone})
+    if user is None:
         response = make_response(
             {
                 "phone": phone,
@@ -37,15 +37,25 @@ def verify_otp():
         )
         response.delete_cookie("session_token")
         return response
-    elif login["otp"] == otp:
+    elif user["otp"] is None:
+        response = make_response(
+            {
+                "phone": phone,
+                "message": "No OTP has been sent for this phone number",
+            },
+            400,
+        )
+        response.delete_cookie("session_token")
+        return response
+    elif user["otp"] == otp:
         try:
-            if len(login["session_token"]) > 5:
-                session_token = login["session_token"]
+            if len(user["session_token"] or "") > 5:
+                session_token = user["session_token"]
             else:
                 session_token = secrets.token_urlsafe(64)
         except KeyError:
             session_token = secrets.token_urlsafe(64)
-        logins.update_one(
+        users.update_one(
             {"phone": phone}, {"$set": {"session_token": session_token, "otp": None}}
         )
         response = make_response(

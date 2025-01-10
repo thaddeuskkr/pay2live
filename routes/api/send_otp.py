@@ -2,7 +2,8 @@ import requests
 import secrets
 import os
 from flask import request, make_response
-from app import app, ready, logins
+from app import app, ready, users
+from classes import User
 
 
 @app.route("/api/send_otp", methods=["POST"])
@@ -27,7 +28,11 @@ def otp():
             500,
         )
         return response
-    logins.update_one({"phone": phone}, {"$set": {"otp": otp}}, upsert=True)
+    userC = User(phone=phone, otp=otp)
+    if users.find_one({"phone": phone}):
+        users.update_one({"phone": phone}, {"$set": {"otp": otp}})
+    else:
+        users.insert_one(userC.to_dict())
     request_response = requests.post(
         "https://develop.tkkr.dev/otp",
         json={"to": f"65{phone}", "from": "pay2live", "otp": otp},

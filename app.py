@@ -29,7 +29,7 @@ mongo_client: MongoClient[dict[str, typing.Any]] = MongoClient(
     mongo_url, serverSelectionTimeoutMS=5000
 )
 db = mongo_client[f"pay2live{'_dev' if debug else ''}"]
-logins = db["logins"]
+users = db["users"]
 queue = db["queue"]
 
 
