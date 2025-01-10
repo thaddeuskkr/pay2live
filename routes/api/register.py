@@ -5,7 +5,7 @@ from app import app, users
 @app.route("/api/register", methods=["POST"])
 def register():
     data = request.get_json()
-    if [
+    required_fields = [
         "first_name",
         "last_name",
         "email",
@@ -13,8 +13,10 @@ def register():
         "nric",
         "role",
         "address",
-    ] not in data:
-        return make_response({"error": "Missing required fields"}, 400)
+    ]
+    missing_keys = set(required_fields - data.keys())
+    if missing_keys:
+        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
     first_name: str = data.get("first_name")
     last_name: str = data.get("last_name")
     email: str = data.get("email")

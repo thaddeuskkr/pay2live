@@ -6,6 +6,10 @@ from app import app, users
 @app.route("/api/verify_otp", methods=["POST"])
 def verify_otp():
     data = request.get_json()
+    required_fields = ["otp", "phone"]
+    missing_keys = set(required_fields - data.keys())
+    if missing_keys:
+        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
     otp: str = data.get("otp")
     phone: str = data.get("phone")
     if (len(phone) != 8) or (not phone.isdigit()):

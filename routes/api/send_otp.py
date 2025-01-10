@@ -9,6 +9,10 @@ from classes import User
 @app.route("/api/send_otp", methods=["POST"])
 def otp():
     data = request.get_json()
+    required_fields = ["phone"]
+    missing_keys = set(required_fields - data.keys())
+    if missing_keys:
+        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
     phone: str = data.get("phone")
     if (len(phone) != 8) or (not phone.isdigit()):
         response = make_response(
