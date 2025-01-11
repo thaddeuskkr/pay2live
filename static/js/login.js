@@ -73,6 +73,9 @@ function verifyOTP() {
             if (response.status == 200) {
                 $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
                 $('#message-content').text('Logged in, redirecting...');
+                const data = await response.json();
+                if (data && data.registered === true) window.location.href = './';
+                else window.location.href = './register';
             } else {
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
                 $('#message-content').text('Invalid OTP. Please try again.');
