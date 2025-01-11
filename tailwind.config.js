@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const catppuccin = require('@catppuccin/tailwindcss');
 module.exports = {
-    content: ['./templates/**/*.html'],
+    content: ['./templates/**/*.html', './static/js/**/*.js'],
     theme: {
         extend: {},
     },
