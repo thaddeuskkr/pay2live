@@ -5,5 +5,15 @@ from .appointments import *
 from .calendar import *
 from .login import *
 from .api import *
+from .register import *
 
-__all__ = ["index", "about", "shop", "appointments", "calendar", "login", "api"]
+__all__ = [
+    "index",
+    "about",
+    "shop",
+    "appointments",
+    "calendar",
+    "login",
+    "api",
+    "register",
+]

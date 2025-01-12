@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="./static/js/register.js"></script>
+    </head>
+
+    <body class="h-full bg-base text-text">
+        {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mt-16 flex h-[calc(100vh-64px)] w-full items-center justify-center">
+            <div class="m-auto w-full max-w-2xl rounded-md bg-surface0 p-6">
+                <h1 class="text-2xl font-bold text-text">Register</h1>
+                <p class="pb-3.5 text-subtext0">Complete your profile to access all the features of pay2live.</p>
+                <form id="register-form" class="space-y-4">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div class="relative">
+                            <input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="firstName"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                First Name
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="lastName"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Last Name
+                            </label>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" "
+                            required />
+                        <label
+                            for="email"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            Email
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <select
+                            id="gender"
+                            name="gender"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            required>
+                            <option value="" disabled selected></option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <label
+                            for="gender"
+                            class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                            Gender
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input
+                            id="nric"
+                            name="nric"
+                            type="text"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" "
+                            required />
+                        <label
+                            for="nric"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            NRIC
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <textarea
+                            id="address"
+                            name="address"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" "
+                            required></textarea>
+                        <label
+                            for="address"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            Address
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input
+                            disabled
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            pattern="[0-9]{8}"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" "
+                            required />
+                        <label
+                            for="phone"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            Phone Number
+                        </label>
+                    </div>
+                    <div class="relative hidden" id="otp-div">
+                        <input
+                            id="otp"
+                            name="otp"
+                            type="number"
+                            pattern="[0-9]{6}"
+                            class="peer w-full rounded-md bg-surface1 px-4 py-4 text-text placeholder-transparent [appearance:textfield] focus:outline-none focus:ring-2 focus:ring-mauve [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                            placeholder=" " />
+                        <label
+                            for="otp"
+                            class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                            OTP
+                        </label>
+                    </div>
+                    <button
+                        id="register-button"
+                        type="button"
+                        onclick="register()"
+                        class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition hover:opacity-75">
+                        Register
+                    </button>
+                </form>
+                <div id="message-box" class="mt-4 hidden rounded-md px-4 py-2">
+                    <p class="font-medium text-crust" id="message-content">{{ message }}</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

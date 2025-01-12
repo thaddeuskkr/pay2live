@@ -3,7 +3,7 @@ from app import app, users
 
 
 @app.route("/api/register", methods=["POST"])
-def register():
+def api_register():
     data = request.get_json()
     required_fields = [
         "first_name",
@@ -64,11 +64,11 @@ def register():
         return response
     if user and user["registered"] == True:
         return make_response(
-            {"error": "User with that phone number is already registered"}, 400
+            {"message": "User with that phone number is already registered"}, 400
         )
     if users.find_one({"email": email}):
         return make_response(
-            {"error": "User with that email address is already registered"}, 400
+            {"message": "User with that email address is already registered"}, 400
         )
     users.update_one(
         {"session_token": auth},

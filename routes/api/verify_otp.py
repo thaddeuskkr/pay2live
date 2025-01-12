@@ -67,6 +67,7 @@ def verify_otp():
                 "phone": phone,
                 "session_token": session_token,
                 "message": "OTP successfully verified",
+                "registered": user["registered"],
             },
             200,
         )
