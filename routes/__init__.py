@@ -6,6 +6,7 @@ from .calendar import *
 from .login import *
 from .api import *
 from .register import *
+from .profile import *
 
 __all__ = [
     "index",
@@ -16,4 +17,5 @@ __all__ = [
     "login",
     "api",
     "register",
+    "profile",
 ]
