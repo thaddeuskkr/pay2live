@@ -15,6 +15,9 @@ $(function () {
     fetch('./api/get_user').then(async (response) => {
         if (response.status === 200) {
             const data = await response.json();
+            if (data.user.registered === false) {
+                window.location.href = './register';
+            }
             $('#firstName').val(data.user.first_name);
             $('#lastName').val(data.user.last_name);
             $('#email').val(data.user.email);
