@@ -23,6 +23,7 @@ except KeyError as e:
 # Initialise Flask application
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = debug
+app.secret_key = os.environ["SECRET_KEY"]
 
 # Initialise MongoDB client using database "pay2live"
 mongo_client: MongoClient[dict[str, typing.Any]] = MongoClient(
@@ -31,6 +32,7 @@ mongo_client: MongoClient[dict[str, typing.Any]] = MongoClient(
 db = mongo_client[f"pay2live{'_dev' if debug else ''}"]
 users = db["users"]
 queue = db["queue"]
+appointments = db["appointments"]
 
 
 # Check if MongoDB is ready every minute

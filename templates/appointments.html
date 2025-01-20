@@ -6,6 +6,60 @@
 
     <body class="bg-base text-text">
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
-    <p>hdusahdusahduiashidhasui testing</p>
+        <h2 class="mb-4 text-2xl font-semibold">Scheduled Appointments</h2>
+        <!-- Form to Add New Appointment -->
+        <h3 class="mb-2 text-xl font-semibold">Add New Appointment</h3>
+        <form method="POST" class="mb-4">
+            <div class="-mx-2 flex flex-wrap">
+                <div class="mb-3 w-full px-2 md:w-1/2">
+                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <input
+                        type="date"
+                        class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        id="date"
+                        name="date"
+                        required />
+                </div>
+                <div class="mb-3 w-full px-2 md:w-1/2">
+                    <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+                    <input
+                        type="time"
+                        class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        id="time"
+                        name="time"
+                        required />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
+                Add Appointment
+            </button>
+        </form>
+
+        <!-- Display Scheduled Appointments -->
+        <h3 class="mb-2 text-xl font-semibold">Scheduled Appointments</h3>
+        <ul class="list-group">
+            {% if appointments %} {% for appointment in appointments %}
+            <li class="list-group-item flex items-center justify-between border-b border-gray-200 p-4">
+                {{ appointment['name'] }} - {{ appointment['email'] }} - {{ appointment['date'] }} at {{
+                appointment['time'] }}
+                <div class="flex space-x-2">
+                    <a
+                        href="/appointments/edit/{{ appointment['_id'] }}"
+                        class="btn btn-sm btn-warning rounded bg-yellow-500 px-2 py-1 text-white hover:bg-yellow-600"
+                        >Edit</a
+                    >
+                    <form method="POST" action="/appointments/delete/{{ appointment['_id'] }}" style="display: inline">
+                        <button
+                            type="submit"
+                            class="btn btn-sm btn-danger rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %} {% else %}
+            <li class="list-group-item border-b border-gray-200 p-4">No appointments found.</li>
+            {% endif %}
+        </ul>
     </body>
 </html>
