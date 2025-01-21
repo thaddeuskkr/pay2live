@@ -26,7 +26,7 @@ function login() {
     } else {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Sending an OTP via WhatsApp...');
-        fetch('./api/send_otp', {
+        fetch('/api/otp/send', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ function verifyOTP() {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').text('Please enter a valid OTP.');
     } else {
-        fetch('./api/verify_otp', {
+        fetch('/api/otp/verify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

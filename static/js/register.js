@@ -24,7 +24,7 @@ function register() {
     } else {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Registering...');
-        fetch('./api/register', {
+        fetch('/api/users/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

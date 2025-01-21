@@ -36,6 +36,8 @@ $(() => {
         $('#login-mobile').addClass('hidden').removeClass('flex');
         $('#profile-mobile').addClass('flex').removeClass('hidden');
         $('#logout-mobile').addClass('flex').removeClass('hidden');
+        $('#nav-appointments').removeClass('hidden');
+        $('#nav-appointments-mobile').removeClass('hidden').addClass('block');
     }
 });
 

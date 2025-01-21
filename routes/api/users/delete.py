@@ -2,8 +2,8 @@ from flask import request, make_response
 from app import app, users
 
 
-@app.route("/api/get_user", methods=["GET"])
-def get_user():
+@app.route("/api/users/delete", methods=["DELETE"])
+def delete_user():
     if "session_token" in request.cookies:
         if len(request.cookies["session_token"]) > 5:
             auth = request.cookies["session_token"]
@@ -23,8 +23,8 @@ def get_user():
             401,
         )
         return response
-    user = users.find_one({"session_token": auth}, {"_id": False})
-    if user is None:
+    delete_result = users.delete_one({"session_token": auth})
+    if delete_result.deleted_count == 0:
         response = make_response(
             {
                 "message": "Invalid session token",
@@ -32,6 +32,10 @@ def get_user():
             401,
         )
         return response
-    return make_response(
-        {"message": "Successfully retrieved user information", "user": user}, 200
-    )
+    else:
+        return make_response(
+            {
+                "message": "Successfully deleted user information",
+            },
+            200,
+        )

@@ -6,8 +6,8 @@ from app import app, ready, users
 from classes import User
 
 
-@app.route("/api/send_otp", methods=["POST"])
-def otp():
+@app.route("/api/otp/send", methods=["POST"])
+def send_otp():
     data = request.get_json()
     required_fields = ["phone"]
     missing_keys = set(required_fields - data.keys())

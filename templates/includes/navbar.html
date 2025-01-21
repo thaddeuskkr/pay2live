@@ -50,6 +50,12 @@
                             class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'shop' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
                             >Shop</a
                         >
+                        <a
+                            id="nav-appointments"
+                            href="./appointments"
+                            class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            >Appointments</a
+                        >
                     </div>
                 </div>
             </div>
@@ -149,6 +155,12 @@
                 href="./portfolio"
                 class="{{ 'block rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'shop' else 'block rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
                 >Shop</a
+            >
+            <a
+                id="nav-appointments-mobile"
+                href="./appointments"
+                class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
+                >Appointments</a
             >
             <a
                 id="login-mobile"

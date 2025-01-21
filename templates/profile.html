@@ -23,7 +23,8 @@
                                 type="text"
                                 class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                                 placeholder=" "
-                                required />
+                                required
+                                value="{{ user.first_name }}" />
                             <label
                                 for="firstName"
                                 class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
@@ -37,7 +38,8 @@
                                 type="text"
                                 class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                                 placeholder=" "
-                                required />
+                                required
+                                value="{{ user.last_name }}" />
                             <label
                                 for="lastName"
                                 class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
@@ -52,7 +54,8 @@
                             type="email"
                             class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             placeholder=" "
-                            required />
+                            required
+                            value="{{ user.email }}" />
                         <label
                             for="email"
                             class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
@@ -65,10 +68,19 @@
                             name="gender"
                             class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             required>
-                            <option value="" disabled selected></option>
+                            {% if user.gender == "male" %}
+                            <option value="male" selected>Male</option>
+                            {% else %}
                             <option value="male">Male</option>
+                            {% endif %} {% if user.gender == "female" %}
+                            <option value="female" selected>Female</option>
+                            {% else %}
                             <option value="female">Female</option>
+                            {% endif %} {% if user.gender == "other" %}
+                            <option value="other" selected>Other</option>
+                            {% else %}
                             <option value="other">Other</option>
+                            {% endif %}
                         </select>
                         <label
                             for="gender"
@@ -83,7 +95,8 @@
                             type="text"
                             class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             placeholder=" "
-                            required />
+                            required
+                            value="{{ user.nric }}" />
                         <label
                             for="nric"
                             class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
@@ -96,7 +109,9 @@
                             name="address"
                             class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             placeholder=" "
-                            required></textarea>
+                            required>
+{{ user.address }}</textarea
+                        >
                         <label
                             for="address"
                             class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
@@ -111,7 +126,8 @@
                             pattern="[0-9]{8}"
                             class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             placeholder=" "
-                            required />
+                            required
+                            value="{{ user.phone }}" />
                         <label
                             for="phone"
                             class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">

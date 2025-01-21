@@ -3,7 +3,7 @@ from flask import request, make_response
 from app import app, users
 
 
-@app.route("/api/verify_otp", methods=["POST"])
+@app.route("/api/otp/verify", methods=["POST"])
 def verify_otp():
     data = request.get_json()
     required_fields = ["otp", "phone"]

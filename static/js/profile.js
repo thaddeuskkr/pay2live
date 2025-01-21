@@ -1,38 +1,3 @@
-$(function () {
-    const cookies = Object.fromEntries(
-        document.cookie.split(/; */).map(function (c) {
-            var index = c.indexOf('='); // Find the index of the first equal sign
-            var key = c.slice(0, index); // Everything upto the index is the key
-            var value = c.slice(index + 1); // Everything after the index is the value
-
-            // Return the key and value
-            return [decodeURIComponent(key), decodeURIComponent(value)];
-        }),
-    );
-    if (!cookies.session_token || cookies.session_token === 'null' || cookies.session_token.length < 5)
-        window.location.href = './login';
-
-    fetch('./api/get_user').then(async (response) => {
-        if (response.status === 200) {
-            const data = await response.json();
-            if (data.user.registered === false) {
-                window.location.href = './register';
-            }
-            $('#firstName').val(data.user.first_name);
-            $('#lastName').val(data.user.last_name);
-            $('#email').val(data.user.email);
-            $('#gender').val(data.user.gender);
-            $('#nric').val(data.user.nric);
-            $('#address').val(data.user.address);
-            $('#phone').val(data.user.phone);
-        } else {
-            const data = await response.json();
-            $('#message-box').removeClass('bg-green').addClass('bg-red');
-            $('#message-content').text(data.message);
-        }
-    });
-});
-
 function edit() {
     const fName = $('#firstName').val();
     const lName = $('#lastName').val();
@@ -56,7 +21,7 @@ function edit() {
     } else {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Applying changes...');
-        fetch('./api/update_user', {
+        fetch('/api/users/update', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +66,7 @@ function deleteAccount() {
 function confirmDelete() {
     $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
     $('#message-content').html('Deleting account...');
-    fetch('./api/delete_user', {
+    fetch('/api/users/delete', {
         method: 'DELETE',
     }).then(async (response) => {
         if (response.status === 200) {
