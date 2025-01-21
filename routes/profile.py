@@ -4,14 +4,10 @@ from app import app, users
 
 @app.route("/profile")
 def profile():
-    if "session_token" in request.cookies:
-        if len(request.cookies["session_token"]) > 5:
-            auth = request.cookies["session_token"]
-        else:
-            return redirect("/login")
-    else:
+    session_token = request.cookies.get("session_token")
+    user = users.find_one({"session_token": session_token}) if session_token else None
+    if not user:
         return redirect("/login")
-    user = users.find_one({"session_token": auth})
-    if user is None:
-        return redirect("/login")
+    if not user.get("registered"):
+        return redirect("/register")
     return render_template("profile.html", current_page="profile", user=user)

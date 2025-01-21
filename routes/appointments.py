@@ -15,15 +15,9 @@ services = {
 
 @app.route("/appointments", methods=["GET"])
 def appointments_route():
-    if "session_token" in request.cookies:
-        if len(request.cookies["session_token"]) > 5:
-            auth = request.cookies["session_token"]
-        else:
-            return redirect("/login")
-    else:
-        return redirect("/login")
-    user = users.find_one({"session_token": auth})
-    if user is None:
+    session_token = request.cookies.get("session_token")
+    user = users.find_one({"session_token": session_token}) if session_token else None
+    if not user:
         return redirect("/login")
 
     if user["role"] == "admin":
@@ -38,8 +32,8 @@ def appointments_route():
         appointment["service"] = services[appointment["service"]]
         appointment["doctor"] = users.find_one({"_id": appointment["doctor"]})
         appointment["user"] = users.find_one({"_id": appointment["user"]})
-        appointment["date"] = datetime_object.strftime("%Y-%m-%d")
-        appointment["time"] = datetime_object.strftime("%H:%M:%S")
+        appointment["date"] = datetime_object.strftime("%d/%m/%Y")
+        appointment["time"] = datetime_object.strftime("%H:%M")
         appointment["id"] = str(appointment["_id"])
 
     services_list: list[dict[str, str]] = []
@@ -52,4 +46,5 @@ def appointments_route():
         appointments=appointments_list,
         doctors=users.find({"role": "doctor"}),
         services=services_list,
+        user=user,
     )

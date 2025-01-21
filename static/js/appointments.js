@@ -16,11 +16,12 @@ $(function () {
                 },
                 body: JSON.stringify({ id: dataId }),
             }).then(async (response) => {
+                const data = await response.json();
                 if (response.status == 200) {
                     alert('Appointment cancelled successfully!');
                     window.location.reload();
                 } else {
-                    alert('Failed to delete appointment!');
+                    alert(`Failed to cancel appointment: ${data.message}`);
                 }
             });
         }
@@ -37,12 +38,13 @@ $(function () {
                 timestamp: new Date($('#date').val() + 'T' + $('#time').val()).valueOf(),
             }),
         }).then(async (response) => {
+            const data = await response.json();
             if (response.status == 200) {
                 alert('Appointment booked successfully!');
                 $('#bookingPopup').addClass('hidden').removeClass('flex');
                 window.location.reload();
             } else {
-                alert('Failed to book appointment!');
+                alert(`Failed to book appointment: ${data.message}`);
             }
         });
     });

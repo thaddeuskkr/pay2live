@@ -29,16 +29,6 @@ $(() => {
             return [decodeURIComponent(key), decodeURIComponent(value)];
         }),
     );
-    if (cookies.session_token && cookies.session_token !== 'null' && cookies.session_token.length > 5) {
-        $('#login').addClass('sm:hidden').removeClass('sm:flex');
-        $('#profile').addClass('sm:flex').removeClass('sm:hidden');
-        $('#logout').addClass('sm:flex').removeClass('sm:hidden');
-        $('#login-mobile').addClass('hidden').removeClass('flex');
-        $('#profile-mobile').addClass('flex').removeClass('hidden');
-        $('#logout-mobile').addClass('flex').removeClass('hidden');
-        $('#nav-appointments').removeClass('hidden');
-        $('#nav-appointments-mobile').removeClass('hidden').addClass('block');
-    }
 });
 
 function logout() {

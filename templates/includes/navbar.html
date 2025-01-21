@@ -53,13 +53,13 @@
                         <a
                             id="nav-appointments"
                             href="./appointments"
-                            class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
                             >Appointments</a
                         >
                         <a
                             id="nav-admin"
                             href="./admin"
-                            class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'hidden' if not user or not user.admin }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
                             >Admin</a
                         >
                     </div>
@@ -70,7 +70,7 @@
                     id="login"
                     type="button"
                     href="./login"
-                    class="hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:flex sm:items-center">
+                    class="hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:{{ 'flex' if not user else 'hidden' }} sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -83,7 +83,7 @@
                     id="profile"
                     type="button"
                     href="./profile"
-                    class="hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:hidden sm:items-center">
+                    class="hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:{{ 'hidden' if not user else 'flex' }} sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -96,7 +96,7 @@
                     id="logout"
                     type="button"
                     onclick="logout()"
-                    class="mr-1.5 hidden cursor-pointer rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:hidden sm:items-center">
+                    class="mr-1.5 hidden cursor-pointer rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:{{ 'hidden' if not user else 'flex' }} sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -165,20 +165,20 @@
             <a
                 id="nav-appointments-mobile"
                 href="./appointments"
-                class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
+                class="{{ 'hidden' if not user else 'block' }} {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
                 >Appointments</a
             >
             <a
                 id="nav-admin-mobile"
                 href="./admin"
-                class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
+                class="{{ 'hidden' if not user or not user.admin else 'block' }} {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
                 >Admin</a
             >
             <a
                 id="login-mobile"
                 type="button"
                 href="./login"
-                class="flex items-center rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text">
+                class="{{ 'flex' if not user else 'hidden' }} items-center rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                     <path
                         fill-rule="evenodd"
@@ -191,7 +191,7 @@
                 id="profile-mobile"
                 type="button"
                 href="./profile"
-                class="hidden items-center rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text">
+                class="{{ 'hidden' if not user else 'flex' }} items-center rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                     <path
                         fill-rule="evenodd"
@@ -204,7 +204,7 @@
                 id="logout-mobile"
                 type="button"
                 onclick="logout()"
-                class="hidden cursor-pointer items-center rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text">
+                class="{{ 'hidden' if not user else 'flex' }} cursor-pointer items-center rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                     <path
                         fill-rule="evenodd"

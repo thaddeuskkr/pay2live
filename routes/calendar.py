@@ -4,14 +4,8 @@ from app import app, users
 
 @app.route("/calendar")
 def calendar():
-    if "session_token" in request.cookies:
-        if len(request.cookies["session_token"]) > 5:
-            auth = request.cookies["session_token"]
-        else:
-            return redirect("/login")
-    else:
+    session_token = request.cookies.get("session_token")
+    user = users.find_one({"session_token": session_token}) if session_token else None
+    if not user:
         return redirect("/login")
-    user = users.find_one({"session_token": auth})
-    if user is None:
-        return redirect("/login")
-    return render_template("calendar.html", current_page="calendar")
+    return render_template("calendar.html", current_page="calendar", user=user)
