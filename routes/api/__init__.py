@@ -6,6 +6,8 @@ from .users.fetch import *
 from .users.update import *
 from .users.delete import *
 from .appointments.add import *
+from .appointments.delete import *
+from .appointments.edit import *
 
 __all__ = [
     "get_queue",
@@ -16,4 +18,6 @@ __all__ = [
     "update_user",
     "delete_user",
     "add_appointment",
+    "delete_appointment",
+    "edit_appointment",
 ]

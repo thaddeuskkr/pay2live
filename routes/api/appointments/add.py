@@ -20,13 +20,19 @@ def add_appointment():
         response = make_response({"message": "Invalid session token"}, 401)
         return response
 
-    date = request.form["date"]
-    time = request.form["time"]
+    data = request.get_json()
+    required_fields = ["timestamp", "service"]
+    missing_keys = set(required_fields - data.keys())
+    if missing_keys:
+        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
+    service: str = data.get("service")
+    timestamp: str = data.get("timestamp")
 
     new_appointment: dict[str, Any] = {
         "user": ObjectId(user["_id"]),
-        "date": date,
-        "time": time,
+        "service": service,
+        "timestamp": timestamp,
+        "doctor": None,
     }
 
     # Insert the appointment into MongoDB

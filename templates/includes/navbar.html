@@ -56,6 +56,12 @@
                             class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
                             >Appointments</a
                         >
+                        <a
+                            id="nav-admin"
+                            href="./admin"
+                            class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            >Admin</a
+                        >
                     </div>
                 </div>
             </div>
@@ -90,7 +96,7 @@
                     id="logout"
                     type="button"
                     onclick="logout()"
-                    class="hidden cursor-pointer rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:hidden sm:items-center">
+                    class="mr-1.5 hidden cursor-pointer rounded-md px-3 py-2 hover:bg-surface1 hover:text-text sm:hidden sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -161,6 +167,12 @@
                 href="./appointments"
                 class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
                 >Appointments</a
+            >
+            <a
+                id="nav-admin-mobile"
+                href="./admin"
+                class="hidden {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
+                >Admin</a
             >
             <a
                 id="login-mobile"

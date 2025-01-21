@@ -2,64 +2,122 @@
 <html lang="en">
     <head>
         {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="./static/js/appointments.js"></script>
     </head>
 
     <body class="bg-base text-text">
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
-        <h2 class="mb-4 text-2xl font-semibold">Scheduled Appointments</h2>
-        <!-- Form to Add New Appointment -->
-        <h3 class="mb-2 text-xl font-semibold">Add New Appointment</h3>
-        <form method="POST" class="mb-4" action="/api/appointments/add">
-            <div class="-mx-2 flex flex-wrap">
-                <div class="mb-3 w-full px-2 md:w-1/2">
-                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                    <input
-                        type="date"
-                        class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        id="date"
-                        name="date"
-                        required />
+        <div class="mx-auto mt-16 h-[calc(100vh-64px)] max-w-4xl items-center justify-center">
+            <h1 class="mb-8 pt-16 text-center text-3xl font-bold text-blue">My Medical Appointments</h1>
+
+            <!-- Appointments List -->
+            <div class="mb-8 rounded-lg bg-surface0 p-6 shadow-md">
+                <div class="mb-4 flex items-center justify-between">
+                    <h2 class="text-xl font-semibold text-text">Upcoming Appointments</h2>
+                    <button
+                        id="bookBtn"
+                        class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-colors duration-300 hover:bg-lavender">
+                        Book Appointment
+                    </button>
                 </div>
-                <div class="mb-3 w-full px-2 md:w-1/2">
-                    <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
-                    <input
-                        type="time"
-                        class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        id="time"
-                        name="time"
-                        required />
+                <div class="space-y-4">
+                    {% if not appointments %}
+                    <p class="text-subtext0">No upcoming appointments.</p>
+                    {% endif %} {% for appointment in appointments %}
+                    <div class="border-b pb-4">
+                        <p class="text-lg font-semibold text-text">{{ appointment.service }}</p>
+                        <p class="text-subtext0">Date: {{ appointment.date }}</p>
+                        <p class="text-subtext0">Time: {{ appointment.time }}</p>
+                        <p class="text-subtext0">
+                            Doctor: {{ 'Unassigned' if not appointment.doctor else appointment.doctor.display_name }}
+                        </p>
+                        <div class="flex space-x-2 pt-2">
+                            <button
+                                class="editBtn text-blue-500 hover:text-blue-600 focus:outline-none"
+                                title="Edit"
+                                data-id="{{ appointment.id }}">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                            </button>
+                            <button
+                                class="deleteBtn text-red-500 hover:text-red-600 focus:outline-none"
+                                title="Delete"
+                                data-id="{{ appointment.id }}">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-                Add Appointment
-            </button>
-        </form>
 
-        <!-- Display Scheduled Appointments -->
-        <h3 class="mb-2 text-xl font-semibold">Scheduled Appointments</h3>
-        <ul class="list-group">
-            {% if appointments %} {% for appointment in appointments %}
-            <li class="list-group-item flex items-center justify-between border-b border-gray-200 p-4">
-                {{ appointment['name'] }} - {{ appointment['email'] }} - {{ appointment['date'] }} at {{
-                appointment['time'] }}
-                <div class="flex space-x-2">
-                    <a
-                        href="/appointments/edit/{{ appointment['_id'] }}"
-                        class="btn btn-sm btn-warning rounded bg-yellow-500 px-2 py-1 text-white hover:bg-yellow-600"
-                        >Edit</a
-                    >
-                    <form method="POST" action="/appointments/delete/{{ appointment['_id'] }}" style="display: inline">
-                        <button
-                            type="submit"
-                            class="btn btn-sm btn-danger rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600">
-                            Delete
-                        </button>
+            <!-- Booking Popup -->
+            <div id="bookingPopup" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50">
+                <div class="w-full max-w-md rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Book a New Appointment</h2>
+                    <form id="bookingForm">
+                        <div class="mb-4">
+                            <label for="service" class="mb-2 block font-semibold text-text">Service</label>
+                            <select
+                                id="service"
+                                name="service"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2">
+                                <option value="">Select a service</option>
+                                {% for service in services %}
+                                <option value="{{ service.id }}">{{ service.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="date" class="mb-2 block font-semibold text-text">Preferred Date</label>
+                            <input
+                                type="date"
+                                id="date"
+                                name="date"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                        </div>
+                        <div class="mb-6">
+                            <label for="time" class="text-gray mb-2 block font-semibold">Preferred Time</label>
+                            <input
+                                type="time"
+                                id="time"
+                                name="time"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                        </div>
+                        <div class="flex justify-end space-x-4">
+                            <button
+                                type="button"
+                                id="cancelBtn"
+                                class="rounded-md bg-maroon px-4 py-2 font-semibold text-crust transition-colors duration-300 hover:bg-red">
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-colors duration-300 hover:bg-lavender">
+                                Book
+                            </button>
+                        </div>
                     </form>
                 </div>
-            </li>
-            {% endfor %} {% else %}
-            <li class="list-group-item border-b border-gray-200 p-4">No appointments found.</li>
-            {% endif %}
-        </ul>
+            </div>
+        </div>
     </body>
 </html>
