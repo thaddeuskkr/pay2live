@@ -4,6 +4,10 @@ from app import app, users
 
 @app.route("/api/users/register", methods=["POST"])
 def register_user():
+    session_token = request.cookies.get("session_token")
+    user = users.find_one({"session_token": session_token}) if session_token else None
+    if not user:
+        return make_response({"message": "Invalid session token"}, 401)
     data = request.get_json()
     required_fields = [
         "first_name",
@@ -36,34 +40,6 @@ def register_user():
         or len(address) < 1
     ):
         return make_response({"message": "Invalid text in input fields"}, 400)
-    if "session_token" in request.cookies:
-        if len(request.cookies["session_token"]) > 5:
-            auth = request.cookies["session_token"]
-        else:
-            response = make_response(
-                {
-                    "message": "Invalid session token",
-                },
-                401,
-            )
-            return response
-    else:
-        response = make_response(
-            {
-                "message": "No session token found",
-            },
-            401,
-        )
-        return response
-    user = users.find_one({"session_token": auth})
-    if user is None:
-        response = make_response(
-            {
-                "message": "Invalid session token",
-            },
-            401,
-        )
-        return response
     if user and user["registered"] == True:
         return make_response(
             {"message": "User with that phone number is already registered"}, 400
@@ -73,7 +49,7 @@ def register_user():
             {"message": "User with that email address is already registered"}, 400
         )
     users.update_one(
-        {"session_token": auth},
+        {"session_token": session_token},
         {
             "$set": {
                 "first_name": first_name,

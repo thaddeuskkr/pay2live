@@ -16,34 +16,10 @@ def get_queue():
             500,
         )
         return response
-    if "session_token" in request.cookies:
-        if len(request.cookies["session_token"]) > 5:
-            auth = request.cookies["session_token"]
-        else:
-            response = make_response(
-                {
-                    "message": "Invalid session token",
-                },
-                401,
-            )
-            return response
-    else:
-        response = make_response(
-            {
-                "message": "No session token found",
-            },
-            401,
-        )
-        return response
-    user = users.find_one({"session_token": auth})
-    if user is None:
-        response = make_response(
-            {
-                "message": "Invalid session token",
-            },
-            401,
-        )
-        return response
+    session_token = request.cookies.get("session_token")
+    user = users.find_one({"session_token": session_token}) if session_token else None
+    if not user:
+        return make_response({"message": "Invalid session token"}, 401)
     else:
         required_fields = ["type"]
         missing_keys = set(required_fields - data.keys())
