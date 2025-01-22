@@ -1,3 +1,5 @@
+const DateTime = luxon.DateTime;
+
 $(function () {
     $('#bookBtn').click(() => {
         $('#bookingPopup').removeClass('hidden').addClass('flex');
@@ -26,8 +28,51 @@ $(function () {
             });
         }
     });
+    $('.editBtn').click((e) => {
+        const dataId = $(e.currentTarget).attr('data-id');
+        const dataTimestamp = $(e.currentTarget).attr('data-timestamp');
+        const dataDate = DateTime.fromMillis(parseInt(dataTimestamp)).toISODate();
+        const dataTime = DateTime.fromMillis(parseInt(dataTimestamp)).toISOTime().slice(0, 5);
+        $('#selected-service')
+            .text($(e.currentTarget).attr('data-service-text'))
+            .attr('value', $(e.currentTarget).attr('data-service'));
+        $('#editService').attr('disabled', 'disabled');
+        $('#editDate').val(dataDate);
+        $('#editTime').val(dataTime);
+        $('#editPopup').removeClass('hidden').addClass('flex');
+        $('#editPopup').append(`<input type="hidden" name="id" value="${dataId}">`);
+    });
+    $('#cancelEditBtn').click(() => {
+        $('#editPopup').addClass('hidden').removeClass('flex');
+    });
+    $('#editForm').submit((e) => {
+        e.preventDefault();
+        const datetime = DateTime.fromISO($('#editDate').val() + 'T' + $('#editTime').val(), {
+            zone: 'Asia/Singapore',
+        });
+        fetch('/api/appointments/edit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: $('#editPopup input[name="id"]').val(),
+                timestamp: datetime.toMillis(),
+            }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Appointment updated successfully!');
+                $('#editPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to update appointment: ${data.message}`);
+            }
+        });
+    });
     $('#bookingForm').submit((e) => {
         e.preventDefault();
+        const datetime = DateTime.fromISO($('#date').val() + 'T' + $('#time').val(), { zone: 'Asia/Singapore' });
         fetch('/api/appointments/add', {
             method: 'POST',
             headers: {
@@ -35,7 +80,7 @@ $(function () {
             },
             body: JSON.stringify({
                 service: $('#service').val(),
-                timestamp: new Date($('#date').val() + 'T' + $('#time').val()).valueOf(),
+                timestamp: datetime.toMillis(),
             }),
         }).then(async (response) => {
             const data = await response.json();

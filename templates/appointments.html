@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
         <script src="./static/js/appointments.js"></script>
     </head>
 
@@ -9,8 +10,6 @@
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
         <div class="mx-auto mt-16 h-[calc(100vh-64px)] max-w-4xl items-center justify-center">
             <h1 class="mb-8 pt-16 text-center text-3xl font-bold text-blue">My Medical Appointments</h1>
-
-            <!-- Appointments List -->
             <div class="mb-8 rounded-lg bg-surface0 p-6 shadow-md">
                 <div class="mb-4 flex items-center justify-between">
                     <h2 class="text-xl font-semibold text-text">Upcoming Appointments</h2>
@@ -35,7 +34,10 @@
                             <button
                                 class="editBtn text-blue-500 hover:text-blue-600 focus:outline-none"
                                 title="Edit"
-                                data-id="{{ appointment.id }}">
+                                data-id="{{ appointment.id }}"
+                                data-service="{{ appointment.raw.service }}"
+                                data-service-text="{{ appointment.service }}"
+                                data-timestamp="{{ appointment.raw.timestamp }}">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5"
@@ -66,7 +68,51 @@
                 </div>
             </div>
 
-            <!-- Booking Popup -->
+            <div id="editPopup" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50">
+                <div class="w-full max-w-md rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Edit an Appointment</h2>
+                    <form id="editForm">
+                        <div class="mb-4">
+                            <label for="service" class="mb-2 block font-semibold text-text">Service</label>
+                            <select id="editService" name="service" class="w-full rounded-md bg-surface1 px-3 py-2">
+                                <option id="selected-service" value="" selected></option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="date" class="mb-2 block font-semibold text-text">Preferred Date</label>
+                            <input
+                                type="date"
+                                id="editDate"
+                                name="date"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                        </div>
+                        <div class="mb-6">
+                            <label for="time" class="text-gray mb-2 block font-semibold">Preferred Time</label>
+                            <input
+                                type="time"
+                                id="editTime"
+                                name="time"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                        </div>
+                        <div class="flex justify-end space-x-4">
+                            <button
+                                type="button"
+                                id="cancelEditBtn"
+                                class="rounded-md bg-maroon px-4 py-2 font-semibold text-crust transition-colors duration-300 hover:bg-red">
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-colors duration-300 hover:bg-lavender">
+                                Edit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div id="bookingPopup" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50">
                 <div class="w-full max-w-md rounded-lg bg-surface0 p-8 shadow-md">
                     <h2 class="mb-6 text-center text-2xl font-bold text-blue">Book a New Appointment</h2>

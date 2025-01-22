@@ -1,3 +1,4 @@
+from zoneinfo import ZoneInfo
 from flask import render_template, request, redirect
 from app import app, appointments, users
 from bson.objectid import ObjectId
@@ -28,12 +29,17 @@ def appointments_route():
         appointments_list = list(appointments.find({"user": ObjectId(user["_id"])}))
 
     for appointment in appointments_list:
-        datetime_object = datetime.fromtimestamp(int(appointment["timestamp"]) / 1000)
+        appointment["raw"] = appointment
+        datetime_object = datetime.fromtimestamp(
+            int(appointment["timestamp"]) / 1000, tz=ZoneInfo("Asia/Singapore")
+        )
         appointment["service"] = services[appointment["service"]]
         appointment["doctor"] = users.find_one({"_id": appointment["doctor"]})
         appointment["user"] = users.find_one({"_id": appointment["user"]})
-        appointment["date"] = datetime_object.strftime("%d/%m/%Y")
-        appointment["time"] = datetime_object.strftime("%H:%M")
+        appointment["date"] = datetime_object.strftime(
+            "%d/%m/%Y",
+        )
+        appointment["time"] = datetime_object.strftime("%I:%M %p")
         appointment["id"] = str(appointment["_id"])
 
     services_list: list[dict[str, str]] = []
@@ -43,7 +49,7 @@ def appointments_route():
     return render_template(
         "appointments.html",
         current_page="appointments",
-        appointments=appointments_list,
+        appointments=sorted(appointments_list, key=lambda x: x["timestamp"]),
         doctors=users.find({"role": "doctor"}),
         services=services_list,
         user=user,
