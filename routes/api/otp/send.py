@@ -4,6 +4,7 @@ import os
 from flask import request, make_response
 from app import app, ready, users
 from classes import User
+import html
 
 
 @app.route("/api/otp/send", methods=["POST"])
@@ -15,7 +16,7 @@ def send_otp():
         return make_response(
             {"message": f"Missing required fields: {missing_keys}"}, 400
         )
-    phone: str = data.get("phone")
+    phone: str = html.escape(data.get("phone"))
     if (len(phone) != 8) or (not phone.isdigit()):
         response = make_response(
             {
