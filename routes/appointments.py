@@ -1,6 +1,7 @@
 from zoneinfo import ZoneInfo
 from flask import render_template, request, redirect
-from app import app, appointments, users, services
+from app import app, appointments, users
+from config import services
 from bson.objectid import ObjectId
 from datetime import datetime
 import time
@@ -46,6 +47,7 @@ def appointments_route():
 
     return render_template(
         "appointments.html",
+        title="My Medical Appointments",
         current_page="appointments",
         appointments=sorted(appointments_list, key=lambda x: x["timestamp"]),
         doctors=users.find({"role": "doctor"}),

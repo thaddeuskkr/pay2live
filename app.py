@@ -54,13 +54,3 @@ from routes import *
 
 if __name__ == "__main__":
     app.run(debug=debug)
-
-
-services = {
-    "consultation": "Consultation",
-    "collection": "Medicine Collection",
-    "blood": "Blood Test",
-    "dental": "Dental Checkup",
-    "eye-exam": "Eye Examination",
-    "vaccination": "Vaccination",
-}

@@ -2,7 +2,8 @@ import time
 from typing import Any
 from bson import ObjectId
 from flask import request, make_response
-from app import app, appointments, users, services
+from app import app, appointments, users
+from config import services
 
 
 @app.route("/api/appointments/add", methods=["POST"])
