@@ -2,6 +2,7 @@ from .index import *
 from .about import *
 from .shop import *
 from .appointments import *
+from .new_appointments import *
 from .login import *
 from .api import *
 from .register import *
@@ -12,6 +13,7 @@ __all__ = [
     "about",
     "shop",
     "appointments",
+    "new_appointments",
     "login",
     "api",
     "register",

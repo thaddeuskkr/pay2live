@@ -970,20 +970,12 @@ video {
   --tw-bg-opacity: 0.5;
 }
 
-.fill-yellow{
-  fill: rgb(var(--ctp-yellow));
-}
-
-.stroke-yellow{
-  stroke: rgb(var(--ctp-yellow));
+.stroke-inherit{
+  stroke: inherit;
 }
 
 .stroke-yellow-500{
   stroke: #eab308;
-}
-
-.stroke-inherit{
-  stroke: inherit;
 }
 
 .p-0\.5{
@@ -1128,11 +1120,6 @@ video {
   color: rgba(var(--ctp-crust), var(--tw-text-opacity, 1));
 }
 
-.text-mauve{
-  --tw-text-opacity: 1;
-  color: rgba(var(--ctp-mauve), var(--tw-text-opacity, 1));
-}
-
 .text-red-500{
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity, 1));
@@ -1151,11 +1138,6 @@ video {
 .text-text{
   --tw-text-opacity: 1;
   color: rgba(var(--ctp-text), var(--tw-text-opacity, 1));
-}
-
-.text-yellow{
-  --tw-text-opacity: 1;
-  color: rgba(var(--ctp-yellow), var(--tw-text-opacity, 1));
 }
 
 .placeholder-transparent::-moz-placeholder{
