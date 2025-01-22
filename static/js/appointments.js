@@ -40,7 +40,7 @@ $(function () {
         $('#editDate').val(dataDate);
         $('#editTime').val(dataTime);
         $('#editPopup').removeClass('hidden').addClass('flex');
-        $('#editPopup').append(`<input type="hidden" name="id" value="${dataId}">`);
+        $('#editPopup').append(`<input type="hidden" name="id" value="${escapeHtml(dataId)}">`);
     });
     $('#cancelEditBtn').click(() => {
         $('#editPopup').addClass('hidden').removeClass('flex');
@@ -94,3 +94,12 @@ $(function () {
         });
     });
 });
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}

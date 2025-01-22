@@ -76,7 +76,7 @@ function verifyOTP() {
                 const data = await response.json();
                 setTimeout(() => {
                     if (data && data.registered === true) window.location.href = './';
-                    else window.location.href = `./register?phone=${phone}`;
+                    else window.location.href = `./register?phone=${encodeURIComponent(phone)}`;
                 }, 1000);
             } else {
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
