@@ -2,7 +2,7 @@ import time
 from typing import Any
 from bson import ObjectId
 from flask import request, make_response
-from app import app, appointments, users
+from app import app, appointments, users, services
 
 
 @app.route("/api/appointments/add", methods=["POST"])
@@ -24,6 +24,9 @@ def add_appointment():
     patient_id: str = data.get("patient")
 
     current_time_ms = int(time.time() * 1000)
+
+    if service not in services.keys():
+        return make_response({"message": "Invalid service"}, 400)
 
     if int(timestamp) < current_time_ms:
         return make_response({"message": "Cannot book an appointment in the past"}, 400)
