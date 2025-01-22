@@ -1,3 +1,4 @@
+import time
 from flask import request, make_response
 from app import app, appointments, users
 from bson.objectid import ObjectId
@@ -29,10 +30,15 @@ def edit_appointment():
     id: str = data.get("id")
     timestamp: str = data.get("timestamp")
 
+    current_time_ms = int(time.time() * 1000)
+
+    if int(timestamp) < current_time_ms:
+        return make_response({"message": "Cannot move an appointment to the past"}, 400)
+
     # Update the appointment in MongoDB
     appointments.update_one(
         {"_id": ObjectId(id)},
         {"$set": {"timestamp": timestamp, "doctor": None}},
     )
 
-    return make_response({"message": "Appointment updated successfully"}, 200)
+    return make_response({"message": "Appointment edited successfully"}, 200)
