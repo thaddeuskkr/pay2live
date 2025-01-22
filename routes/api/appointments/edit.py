@@ -23,7 +23,9 @@ def edit_appointment():
     required_fields = ["timestamp", "id"]
     missing_keys = set(required_fields - data.keys())
     if missing_keys:
-        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
+        return make_response(
+            {"message": f"Missing required fields: {missing_keys}"}, 400
+        )
     id: str = data.get("id")
     timestamp: str = data.get("timestamp")
 

@@ -16,7 +16,9 @@ def update_user():
     ]
     missing_keys = set(required_fields - data.keys())
     if missing_keys:
-        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
+        return make_response(
+            {"message": f"Missing required fields: {missing_keys}"}, 400
+        )
     first_name: str = data.get("first_name")
     last_name: str = data.get("last_name")
     phone: str = data.get("phone")
@@ -33,7 +35,7 @@ def update_user():
         or len(nric) < 1
         or len(address) < 1
     ):
-        return make_response({"error": "Invalid text in input fields"}, 400)
+        return make_response({"message": "Invalid text in input fields"}, 400)
     if "session_token" in request.cookies:
         if len(request.cookies["session_token"]) > 5:
             auth = request.cookies["session_token"]

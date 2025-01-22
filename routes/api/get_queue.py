@@ -49,7 +49,7 @@ def get_queue():
         missing_keys = set(required_fields - data.keys())
         if missing_keys:
             return make_response(
-                {"error": f"Missing required fields: {missing_keys}"}, 400
+                {"message": f"Missing required fields: {missing_keys}"}, 400
             )
         type = data.get("type")
         if type not in ["A", "B", "C"]:

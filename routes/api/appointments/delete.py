@@ -22,7 +22,9 @@ def delete_appointment():
     required_fields = ["id"]
     missing_keys = set(required_fields - data.keys())
     if missing_keys:
-        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
+        return make_response(
+            {"message": f"Missing required fields: {missing_keys}"}, 400
+        )
     appointment_id: str = data.get("id")
     # Delete the appointment from MongoDB
     appointment = appointments.find_one({"_id": ObjectId(appointment_id)})

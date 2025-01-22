@@ -1,3 +1,4 @@
+import time
 from typing import Any
 from bson import ObjectId
 from flask import request, make_response
@@ -24,9 +25,16 @@ def add_appointment():
     required_fields = ["timestamp", "service"]
     missing_keys = set(required_fields - data.keys())
     if missing_keys:
-        return make_response({"error": f"Missing required fields: {missing_keys}"}, 400)
+        return make_response(
+            {"message": f"Missing required fields: {missing_keys}"}, 400
+        )
     service: str = data.get("service")
     timestamp: str = data.get("timestamp")
+
+    current_time_ms = int(time.time() * 1000)
+
+    if int(timestamp) < current_time_ms:
+        return make_response({"message": "Cannot book an appointment in the past"}, 400)
 
     new_appointment: dict[str, Any] = {
         "user": ObjectId(user["_id"]),
