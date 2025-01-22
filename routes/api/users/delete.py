@@ -1,5 +1,6 @@
+from bson import ObjectId
 from flask import request, make_response
-from app import app, users
+from app import app, users, appointments
 
 
 @app.route("/api/users/delete", methods=["DELETE"])
@@ -19,6 +20,7 @@ def delete_user():
         )
         return response
     else:
+        appointments.delete_many({"user": ObjectId(user["_id"])})
         return make_response(
             {
                 "message": "Successfully deleted user information",
