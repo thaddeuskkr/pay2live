@@ -28,7 +28,8 @@
                         <p class="text-subtext0">Date: {{ appointment.date }}</p>
                         <p class="text-subtext0">Time: {{ appointment.time }}</p>
                         <p class="text-subtext0">
-                            Doctor: {{ 'Unassigned' if not appointment.doctor else appointment.doctor.display_name }}
+                            Doctor: {{ 'Unassigned' if not appointment.doctor else appointment.doctor.first_name + ' ' +
+                            appointment.doctor.last_name }}
                         </p>
                         <div class="flex space-x-2 pt-2">
                             <button
@@ -139,7 +140,7 @@
                                 required
                                 class="w-full rounded-md bg-surface1 px-3 py-2" />
                         </div>
-                        <div class="mb-6">
+                        <div class="mb-4">
                             <label for="time" class="text-gray mb-2 block font-semibold">Preferred Time</label>
                             <input
                                 type="time"
@@ -148,6 +149,24 @@
                                 required
                                 class="w-full rounded-md bg-surface1 px-3 py-2" />
                         </div>
+                        {% if user["role"] == "doctor" %}
+                        <div class="mb-6">
+                            <label for="patient" class="text-gray mb-2 block font-semibold">Patient</label>
+                            <input
+                                list="patients-list"
+                                id="patient-id"
+                                name="patient"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                            <datalist id="patients-list">
+                                {% for patient in patients %}
+                                <option value="{{ patient._id }}">
+                                    {{ patient.first_name }} {{ patient.last_name }} ({{ patient.nric }})
+                                </option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        {% endif %}
                         <div class="flex justify-end space-x-4">
                             <button
                                 type="button"

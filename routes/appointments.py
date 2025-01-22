@@ -58,6 +58,7 @@ def appointments_route():
         current_page="appointments",
         appointments=sorted(appointments_list, key=lambda x: x["timestamp"]),
         doctors=users.find({"role": "doctor"}),
+        patients=users.find({"role": "patient"}),
         services=services_list,
         user=user,
     )

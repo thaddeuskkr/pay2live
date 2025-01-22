@@ -21,18 +21,34 @@ def add_appointment():
         )
     service: str = data.get("service")
     timestamp: str = data.get("timestamp")
+    patient_id: str = data.get("patient")
 
     current_time_ms = int(time.time() * 1000)
 
     if int(timestamp) < current_time_ms:
         return make_response({"message": "Cannot book an appointment in the past"}, 400)
 
-    new_appointment: dict[str, Any] = {
-        "user": ObjectId(user["_id"]),
-        "service": service,
-        "timestamp": timestamp,
-        "doctor": None,
-    }
+    if user["role"] == "doctor":
+        if not patient_id:
+            return make_response(
+                {"message": f'Missing required fields: "patient"'}, 400
+            )
+        patient = users.find_one({"_id": ObjectId(patient_id)})
+        if not patient:
+            return make_response({"message": "Invalid patient ID"}, 400)
+        new_appointment: dict[str, Any] = {
+            "user": ObjectId(patient["_id"]),
+            "service": service,
+            "timestamp": timestamp,
+            "doctor": ObjectId(user["_id"]),
+        }
+    else:
+        new_appointment: dict[str, Any] = {
+            "user": ObjectId(user["_id"]),
+            "service": service,
+            "timestamp": timestamp,
+            "doctor": None,
+        }
 
     # Insert the appointment into MongoDB
     appointments.insert_one(new_appointment)

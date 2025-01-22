@@ -79,6 +79,7 @@ $(function () {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                patient: $('#patient-id').val(),
                 service: $('#service').val(),
                 timestamp: datetime.toMillis(),
             }),
