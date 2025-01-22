@@ -1,6 +1,6 @@
 import secrets
 from flask import request, make_response
-from app import app, users
+from app import app, users, debug
 import html
 
 
@@ -77,7 +77,7 @@ def verify_otp():
         response.set_cookie(
             "session_token",
             httponly=True,
-            secure=True,
+            secure=(debug == False),
             samesite="Lax",
             value=session_token,
             max_age=None,

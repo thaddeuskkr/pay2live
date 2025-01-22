@@ -3,6 +3,7 @@ from flask import render_template, request, redirect
 from app import app, appointments, users
 from bson.objectid import ObjectId
 from datetime import datetime
+import time
 
 services = {
     "consultation": "Consultation",
@@ -45,6 +46,12 @@ def appointments_route():
     services_list: list[dict[str, str]] = []
     for service in services.keys():
         services_list.append({"id": service, "name": services[service]})
+
+    appointments_list = [
+        x
+        for x in appointments_list
+        if (x["timestamp"] + 3_600_000) >= (time.time() * 1000)
+    ]
 
     return render_template(
         "appointments.html",
