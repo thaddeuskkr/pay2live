@@ -1,6 +1,7 @@
 import secrets
 from flask import request, make_response
 from app import app, users
+import html
 
 
 @app.route("/api/otp/verify", methods=["POST"])
@@ -13,7 +14,7 @@ def verify_otp():
             {"message": f"Missing required fields: {missing_keys}"}, 400
         )
     otp: str = data.get("otp")
-    phone: str = data.get("phone")
+    phone: str = html.escape(data.get("phone"))
     if (len(phone) != 8) or (not phone.isdigit()):
         response = make_response(
             {
