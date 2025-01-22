@@ -19,16 +19,6 @@ $(() => {
         menu.toggleClass('hidden');
         menuButton.find('svg').toggleClass('hidden');
     });
-    const cookies = Object.fromEntries(
-        document.cookie.split(/; */).map(function (c) {
-            var index = c.indexOf('='); // Find the index of the first equal sign
-            var key = c.slice(0, index); // Everything upto the index is the key
-            var value = c.slice(index + 1); // Everything after the index is the value
-
-            // Return the key and value
-            return [decodeURIComponent(key), decodeURIComponent(value)];
-        }),
-    );
 });
 
 function logout() {

@@ -75,15 +75,10 @@ def verify_otp():
         )
         response.set_cookie(
             "session_token",
+            httponly=True,
+            secure=True,
+            samesite="Lax",
             value=session_token,
-            max_age=None,
-            expires=None,
-            path="/",
-            domain=None,
-        )
-        response.set_cookie(
-            "phone",
-            value=phone,
             max_age=None,
             expires=None,
             path="/",
