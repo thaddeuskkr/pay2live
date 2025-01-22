@@ -28,8 +28,10 @@
                         <p class="text-subtext0">Date: {{ appointment.date }}</p>
                         <p class="text-subtext0">Time: {{ appointment.time }}</p>
                         <p class="text-subtext0">
-                            Doctor: {{ 'Unassigned' if not appointment.doctor else appointment.doctor.first_name + ' ' +
-                            appointment.doctor.last_name }}
+                            {% if user["role"] == "patient" %} Doctor: {{ 'Unassigned' if not appointment.doctor else
+                            appointment.doctor.first_name + ' ' + appointment.doctor.last_name }} {% endif %} {% if
+                            user["role"] == "doctor" %} Patient: {{ appointment.user.first_name + ' ' +
+                            appointment.user.last_name }} {% endif %}
                         </p>
                         <div class="flex space-x-2 pt-2">
                             <button
@@ -61,6 +63,23 @@
                                         fill-rule="evenodd"
                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                         clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <button
+                                data-id="{{ appointment.id }}"
+                                title="Claim"
+                                class="{{ 'hidden' if user['role'] != 'doctor' or appointment.doctor }} claimBtn stroke-yellow-500 hover:stroke-yellow-600 focus:outline-none">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="h-5 w-5 stroke-inherit">
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
                             </button>
                         </div>

@@ -8,6 +8,7 @@ from .users.delete import *
 from .appointments.add import *
 from .appointments.delete import *
 from .appointments.edit import *
+from .appointments.claim import *
 
 __all__ = [
     "get_queue",
@@ -20,4 +21,5 @@ __all__ = [
     "add_appointment",
     "delete_appointment",
     "edit_appointment",
+    "claim_appointment",
 ]

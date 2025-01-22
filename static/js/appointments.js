@@ -7,6 +7,24 @@ $(function () {
     $('#cancelBtn').click(() => {
         $('#bookingPopup').addClass('hidden').removeClass('flex');
     });
+    $('.claimBtn').click((e) => {
+        const dataId = $(e.currentTarget).attr('data-id');
+        fetch(`/api/appointments/claim`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: dataId }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Appointment claimed successfully!');
+                window.location.reload();
+            } else {
+                alert(`Failed to claim appointment: ${data.message}`);
+            }
+        });
+    });
     $('.deleteBtn').click((e) => {
         const dataId = $(e.currentTarget).attr('data-id');
         const confirmation = confirm('Are you sure you want to cancel this appointment? This action cannot be undone.');
