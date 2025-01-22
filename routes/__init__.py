@@ -4,6 +4,7 @@ from .shop import *
 from .appointments import *
 from .new_appointments import *
 from .login import *
+from .logout import *
 from .api import *
 from .register import *
 from .profile import *
@@ -15,6 +16,7 @@ __all__ = [
     "appointments",
     "new_appointments",
     "login",
+    "logout",
     "api",
     "register",
     "profile",

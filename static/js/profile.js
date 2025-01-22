@@ -73,7 +73,7 @@ function confirmDelete() {
             $('#message-box').removeClass('bg-red').addClass('bg-green');
             $('#message-content').html('Account deleted successfully! Redirecting...');
             setTimeout(() => {
-                logout();
+                window.location.href = '/logout';
             }, 1000);
         } else {
             const data = await response.json();
