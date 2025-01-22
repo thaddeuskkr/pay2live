@@ -1,18 +1,9 @@
 from zoneinfo import ZoneInfo
 from flask import render_template, request, redirect
-from app import app, appointments, users
+from app import app, appointments, users, services
 from bson.objectid import ObjectId
 from datetime import datetime
 import time
-
-services = {
-    "consultation": "Consultation",
-    "collection": "Medicine Collection",
-    "blood": "Blood Test",
-    "dental": "Dental Checkup",
-    "eye-exam": "Eye Examination",
-    "vaccination": "Vaccination",
-}
 
 
 @app.route("/appointments", methods=["GET"])
