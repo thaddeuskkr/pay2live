@@ -8,6 +8,7 @@ from .logout import *
 from .api import *
 from .register import *
 from .profile import *
+from .queue import *
 
 __all__ = [
     "index",
@@ -20,4 +21,5 @@ __all__ = [
     "api",
     "register",
     "profile",
+    "queue",
 ]

@@ -179,7 +179,7 @@
                                 class="w-full rounded-md bg-surface1 px-3 py-2" />
                             <datalist id="patients-list">
                                 {% for patient in patients %}
-                                <option value="{{ patient._id }}">
+                                <option value="{{ patient._id }}" data-id="{{ patient._id }}">
                                     {{ patient.first_name }} {{ patient.last_name }} ({{ patient.nric }})
                                 </option>
                                 {% endfor %}

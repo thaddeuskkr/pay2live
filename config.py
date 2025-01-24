@@ -6,3 +6,12 @@ services = {
     "eye-exam": "Eye Examination",
     "vaccination": "Vaccination",
 }
+
+abbreviations = {
+    "consultation": "C",
+    "collection": "P",
+    "blood": "B",
+    "dental": "D",
+    "eye-exam": "E",
+    "vaccination": "V",
+}
