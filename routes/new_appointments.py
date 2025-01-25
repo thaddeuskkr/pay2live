@@ -13,11 +13,10 @@ def new_appointments_route():
     if not user:
         return redirect("/login")
 
-    if user["role"] == "doctor":
-        appointments_list = list(appointments.find({"doctor": None}))
-    else:
+    if user["role"] != "doctor":
         return redirect("/appointments")
 
+    appointments_list = list(appointments.find({"doctor": None}))
     for appointment in appointments_list:
         appointment["raw"] = appointment
         datetime_object = datetime.fromtimestamp(
