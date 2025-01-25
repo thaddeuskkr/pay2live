@@ -47,5 +47,5 @@ def queue_route():
         missed_queue_numbers=missed_queue_numbers,
         abbreviations=abbreviations,
         services=services_list,
-        waiting=len(waiting_numbers),
+        waiting=(len(waiting_numbers or [])),
     )

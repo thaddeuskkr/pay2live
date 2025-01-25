@@ -54,7 +54,7 @@ def get_queue():
             {
                 "message": "Successfully added to queue",
                 "number": abbreviations[dictionary["service"]]
-                + str(dictionary["number"]),
+                + str(dictionary["number"]).rjust(3, "0"),
                 "user": user["phone"],
                 "status": dictionary["status"],
             },
@@ -64,7 +64,7 @@ def get_queue():
         response = make_response(
             {
                 "phone": user["phone"],
-                "message": "Failed to send OTP. Please try again later.",
+                "message": "Failed to send notification. Please try again later.",
             },
             500,
         )
