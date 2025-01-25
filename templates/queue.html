@@ -13,14 +13,17 @@
 
                 <div class="mb-6 text-center">
                     <p class="mb-2 text-lg font-semibold text-subtext1">{{ waiting or '0' }} patients in queue</p>
+                    {% if current_queue_numbers %}
                     <p class="mb-2 text-lg text-subtext1">Currently Serving:</p>
+                    {% endif %}
                     <table id="missedNumbers" class="w-full border-collapse text-center">
                         {% for row in current_queue_numbers %}
                         <tr>
                             {% for cell in row %}
                             <td class="pb-3">
                                 <div class="text-5xl font-bold text-blue">
-                                    {{ abbreviations[cell.service] or '' }}{{ cell.number or 'None' }}
+                                    {{ abbreviations[cell.service] or '' }}{{ (cell.number|string()).rjust(3, "0") if
+                                    cell.number else 'None' }}
                                 </div>
                                 <div class="text-2xl font-semibold text-blue">Room {{ cell.room or 'None' }}</div>
                             </td>
@@ -58,7 +61,8 @@
                         <tr>
                             {% for cell in row %}
                             <td class="px-2 text-3xl font-bold text-red">
-                                {{ abbreviations[cell.service] or '' }}{{ cell.number }}
+                                {{ abbreviations[cell.service] or '' }}{{ (cell.number|string()).rjust(3, "0") if
+                                cell.number else 'None' }}
                             </td>
                             {% endfor %}
                         </tr>
