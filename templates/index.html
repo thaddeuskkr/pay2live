@@ -6,5 +6,66 @@
 
     <body class="bg-base text-text">
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+
+        <main class="px-8 md:px-20 lg:px-40">
+            <section id="hero" class="flex flex-col md:flex-row items-center justify-between py-24">
+                <div class="max-w-md text-left">
+                    <h1 class="text-4xl font-bold mb-6">Schedule an appointment with us!</h1>
+                    <p class="text-lg mb-8">Pay2Live provides progressive, and affordable healthcare, accessible on mobile and online for everyone. Get started with us!</p>
+                    <a href="login" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded">Login / Signup</a>
+                </div>
+                <div class="mt-8 md:mt-0 md:ml-8 max-w-lg">
+                    <img src="/static/assets/trafalgar-header illustration 1.png" alt="Healthcare illustration" class="w-full h-auto">
+                </div>
+            </section>
+
+            <section id="features" class="py-16">
+                <h2 class="text-3xl font-semibold mb-8 text-center">Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+                    <div class="p-6 shadow-md rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">Secure Payments</h3>
+                        <p class="leading-relaxed">State-of-the-art encryption ensures your transactions are safe.</p>
+                    </div>
+                    <div class="p-6 shadow-md rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">Fast Transactions</h3>
+                        <p class="leading-relaxed">Experience quick and seamless payment processing.</p>
+                    </div>
+                    <div class="p-6 shadow-md rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">User-Friendly Interface</h3>
+                        <p class="leading-relaxed">Navigate effortlessly with our intuitive design.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-16">
+                <h2 class="text-3xl font-semibold mb-6 text-center">Contact Us</h2>
+                <p class="text-lg leading-relaxed mb-8 text-center">Have questions or need support? Reach out to us!</p>
+                <form method="POST" id="form" class="form-container max-w-md mx-auto space-y-6 shadow-md p-8 rounded-lg">
+                    <input type="hidden" name="access_key" value="3962da99-0244-456b-a065-0c89f2fd4903">
+
+                    <div>
+                        <label for="name" class="block text-left font-medium mb-2">Name:</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-left font-medium mb-2">Email:</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-left font-medium mb-2">Message:</label>
+                        <textarea name="message" id="message" rows="5" required class="w-full px-4 py-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                    </div>
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded">Submit Form</button>
+
+                    <div id="result" class="text-left mt-4"></div>
+                </form>
+            </section>
+        </main>
+
+        <footer class="py-6 text-center">
+            <p>&copy; 2025 Pay2Live. All Rights Reserved.</p>
+        </footer>
     </body>
 </html>
