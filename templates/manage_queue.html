@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="/static/js/manage_queue.js"></script>
+    </head>
+
+    <body class="bg-base text-text">
+        {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mt-16 flex h-[calc(100vh-64px)] w-full flex-col items-center justify-center">
+            <h1 class="mb-1 text-center text-3xl font-bold text-text">Queue Management</h1>
+            <div class="mb-6 text-center">
+                <p class="mb-2 text-lg font-semibold text-subtext1">{{ waiting }} patients in queue</p>
+                <input
+                    id="room"
+                    type="number"
+                    placeholder="Room"
+                    value="{{ room_number }}"
+                    class="mr-2 w-24 rounded-md bg-surface0 px-3 py-2 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" />
+                <button id="reload" class="w-24 rounded-md bg-blue px-3 py-2 text-center font-semibold text-crust">
+                    Refresh
+                </button>
+            </div>
+            <table class="border border-text">
+                <thead>
+                    <tr>
+                        <th class="border border-text px-2 py-1">Queue Number</th>
+                        <th class="border border-text px-2 py-1">Service</th>
+                        <th class="border border-text px-2 py-1">Patient</th>
+                        <th class="border border-text px-2 py-1">Status</th>
+                        <th class="border border-text px-2 py-1">Room</th>
+                        <th class="border border-text px-2 py-1">Action</th>
+                    </tr>
+                </thead>
+                {% macro sentence_case(text) %} {{ text[0]|upper}}{{text[1:] }} {% endmacro %}
+                <tbody>
+                    {% for queue in queue_numbers %}
+                    <tr>
+                        <td class="border border-text px-2 py-1 font-semibold">
+                            {{ queue.service_abbr }}{{ (queue.number|string()).rjust(3, "0") }}
+                        </td>
+                        <td class="border border-text px-2 py-1">{{ queue.service_name }}</td>
+                        <td class="border border-text px-2 py-1">
+                            {{ queue.user.first_name }} {{ queue.user.last_name }} ({{ queue.user.nric }})
+                        </td>
+                        <td class="border border-text px-2 py-1">{{ sentence_case(queue.status) }}</td>
+                        <td class="border border-text px-2 py-1">{{ queue.room or '' }}</td>
+                        <td class="border border-text px-2 py-1">
+                            <button
+                                class="call {{ 'hidden' if queue.status != 'waiting' and queue.status != 'missed' }} font-semibold w-full rounded-sm bg-mauve px-2 text-crust transition-colors hover:bg-pink"
+                                data-queue_number="{{ queue.number }}">
+                                Call Patient
+                            </button>
+                            <button
+                                class="complete {{ 'hidden' if queue.status != 'current' }} w-full rounded-sm bg-mauve px-2 text-crust font-semibold transition-colors hover:bg-pink"
+                                data-queue_number="{{ queue.number }}">
+                                Complete Service
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

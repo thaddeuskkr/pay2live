@@ -42,20 +42,26 @@
                     </select>
                 </div>
 
-                <button
-                    id="getNumber"
-                    class="w-full transform rounded bg-blue px-4 py-3 font-bold text-crust transition duration-300 ease-in-out hover:bg-lavender">
-                    Get Queue Number
-                </button>
+                <div class="flex flex-row">
+                    <button
+                        id="getNumber"
+                        class="mr-1 w-1/2 transform rounded bg-blue px-4 py-3 font-bold text-crust transition duration-300 ease-in-out hover:bg-lavender">
+                        Get Queue Number
+                    </button>
+                    <button
+                        id="reload"
+                        class="ml-1 w-1/2 transform rounded bg-mauve px-4 py-3 font-bold text-crust transition duration-300 ease-in-out hover:bg-pink">
+                        Refresh
+                    </button>
+                </div>
 
                 <div id="message-box" class="mb-4 mt-4 hidden w-full rounded-md px-4 py-2">
                     <p class="font-medium text-crust" id="message-content">{{ message }}</p>
                 </div>
 
+                {% if missed_queue_numbers %}
                 <div class="mb-2 mt-8 text-center">
-                    {% if missed_queue_numbers %}
                     <p class="mb-2 text-lg text-subtext1">Missed Queue Numbers:</p>
-                    {% endif %}
                     <table id="missedNumbers" class="w-full border-collapse text-center">
                         {% for row in missed_queue_numbers %}
                         <tr>
@@ -69,6 +75,7 @@
                         {% endfor %}
                     </table>
                 </div>
+                {% endif %}
             </div>
         </div>
     </body>
