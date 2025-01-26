@@ -14,12 +14,47 @@ def appointments_route():
     if not user:
         return redirect("/login")
 
-    if user["role"] == "admin":
-        appointments_list = list(appointments.find())
-    elif user["role"] == "doctor":
-        appointments_list = list(appointments.find({"doctor": ObjectId(user["_id"])}))
+    filter = request.args.get("filter", "upcoming")
+
+    if filter == "new":
+        if user["role"] != "doctor":
+            return redirect("/appointments")
+        appointments_list = [
+            x
+            for x in appointments.find({"doctor": None})
+            if (x["timestamp"] + 3_600_000) >= (time.time() * 1000)
+        ]
+        filter_header = "Unclaimed Appointments"
+    elif filter == "past":
+        if user["role"] == "admin":
+            appointments_list = list(appointments.find())
+        elif user["role"] == "doctor":
+            appointments_list = list(
+                appointments.find({"doctor": ObjectId(user["_id"])})
+            )
+        else:
+            appointments_list = list(appointments.find({"user": ObjectId(user["_id"])}))
+        appointments_list = [
+            x
+            for x in appointments_list
+            if (x["timestamp"] + 3_600_000) <= (time.time() * 1000)
+        ]
+        filter_header = "Past Appointments"
     else:
-        appointments_list = list(appointments.find({"user": ObjectId(user["_id"])}))
+        if user["role"] == "admin":
+            appointments_list = list(appointments.find())
+        elif user["role"] == "doctor":
+            appointments_list = list(
+                appointments.find({"doctor": ObjectId(user["_id"])})
+            )
+        else:
+            appointments_list = list(appointments.find({"user": ObjectId(user["_id"])}))
+        filter_header = "Upcoming Appointments"
+        appointments_list = [
+            x
+            for x in appointments_list
+            if (x["timestamp"] + 3_600_000) >= (time.time() * 1000)
+        ]
 
     for appointment in appointments_list:
         appointment["raw"] = appointment
@@ -39,15 +74,9 @@ def appointments_route():
     for service in services.keys():
         services_list.append({"id": service, "name": services[service]})
 
-    appointments_list = [
-        x
-        for x in appointments_list
-        if (x["timestamp"] + 3_600_000) >= (time.time() * 1000)
-    ]
-
     return render_template(
         "appointments.html",
-        title="My Medical Appointments",
+        filter_header=filter_header,
         current_page="appointments",
         appointments=sorted(appointments_list, key=lambda x: x["timestamp"]),
         doctors=users.find({"role": "doctor"}),

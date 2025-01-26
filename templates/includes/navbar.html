@@ -57,12 +57,6 @@
                             >Appointments</a
                         >
                         <a
-                            id="nav-new-appointments"
-                            href="./new_appointments"
-                            class="{{ 'hidden' if not user or user['role'] != 'doctor' }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'new_appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
-                            >New Appointments</a
-                        >
-                        <a
                             id="nav-queue"
                             href="./queue"
                             class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'queue' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
@@ -178,12 +172,6 @@
                 href="./appointments"
                 class="{{ 'hidden' if not user else 'block' }} {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
                 >Appointments</a
-            >
-            <a
-                id="nav-new-appointments-mobile"
-                href="./new_appointments"
-                class="{{ 'hidden' if not user or user['role'] != 'doctor' else 'block' }} {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'new_appointments' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 hover:text-text'}}"
-                >New Appointments</a
             >
             <a
                 id="nav-queue-mobile"
