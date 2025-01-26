@@ -27,9 +27,15 @@ def edit_appointment():
         return make_response({"message": "Cannot move an appointment to the past"}, 400)
 
     # Update the appointment in MongoDB
-    appointments.update_one(
-        {"_id": ObjectId(id)},
-        {"$set": {"timestamp": timestamp, "doctor": None}},
-    )
+    if user["role"] == "doctor":
+        appointments.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {"timestamp": timestamp}},
+        )
+    else:
+        appointments.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {"timestamp": timestamp, "doctor": None}},
+        )
 
     return make_response({"message": "Appointment edited successfully"}, 200)
