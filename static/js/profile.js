@@ -65,13 +65,13 @@ function deleteAccount() {
 
 function confirmDelete() {
     $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
-    $('#message-content').html('Deleting account...');
-    fetch('/api/users/delete', {
+    $('#message-content').html('Deactivating account...');
+    fetch('/api/users/deactivate', {
         method: 'DELETE',
     }).then(async (response) => {
         if (response.status === 200) {
             $('#message-box').removeClass('bg-red').addClass('bg-green');
-            $('#message-content').html('Account deleted successfully! Redirecting...');
+            $('#message-content').html('Account deactivated successfully! Redirecting...');
             setTimeout(() => {
                 window.location.href = '/logout';
             }, 1000);
