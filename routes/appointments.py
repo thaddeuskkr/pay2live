@@ -83,4 +83,5 @@ def appointments_route():
         patients=users.find({"role": "patient"}),
         services=services_list,
         user=user,
+        date=datetime.now().astimezone(ZoneInfo('Asia/Singapore')).strftime('%Y-%m-%d')
     )
