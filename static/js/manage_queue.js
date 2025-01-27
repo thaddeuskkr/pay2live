@@ -32,16 +32,18 @@ $(function () {
     });
     $('.delete').click(function (e) {
         const queue_number = $(e.currentTarget).attr('data-queue_number');
-        fetch('/api/queue/delete', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ queue: queue_number }),
-        }).then(function (response) {
-            if (response.status === 200) {
-                window.location.href = '/queue?room=' + $('#room').val();
-            }
-        });
+        if (confirm('Are you sure you want to delete this queue number?')) {
+            fetch('/api/queue/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ queue: queue_number }),
+            }).then(function (response) {
+                if (response.status === 200) {
+                    window.location.href = '/queue?room=' + $('#room').val();
+                }
+            });
+        }
     });
 });
