@@ -45,16 +45,21 @@
                         </td>
                         <td class="border border-text px-2 py-1">{{ sentence_case(queue.status) }}</td>
                         <td class="border border-text px-2 py-1">{{ queue.room or '' }}</td>
-                        <td class="border border-text px-2 py-1">
+                        <td class="flex flex-row border border-text px-2 py-1">
                             <button
-                                class="call {{ 'hidden' if queue.status != 'waiting' and queue.status != 'missed' }} font-semibold w-full rounded-sm bg-mauve px-2 text-crust transition-colors hover:bg-pink"
+                                class="call {{ 'hidden' if queue.status != 'waiting' and queue.status != 'missed' }} font-semibold mr-1 rounded-sm bg-mauve px-2 text-crust transition-colors hover:bg-pink"
                                 data-queue_number="{{ queue.number }}">
                                 Call Patient
                             </button>
                             <button
-                                class="complete {{ 'hidden' if queue.status != 'current' }} w-full rounded-sm bg-mauve px-2 text-crust font-semibold transition-colors hover:bg-pink"
+                                class="complete {{ 'hidden' if queue.status != 'current' }} rounded-sm bg-mauve px-2 text-crust mr-1 font-semibold transition-colors hover:bg-pink"
                                 data-queue_number="{{ queue.number }}">
                                 Complete Service
+                            </button>
+                            <button
+                                class="delete rounded-sm bg-mauve px-2 font-semibold text-crust transition-colors hover:bg-pink"
+                                data-queue_number="{{ queue.number }}">
+                                Delete
                             </button>
                         </td>
                     </tr>

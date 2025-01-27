@@ -11,6 +11,7 @@ from .appointments.claim import *
 from .queue.get import *
 from .queue.call import *
 from .queue.complete import *
+from .queue.delete import *
 
 __all__ = [
     "send_otp",
@@ -26,4 +27,5 @@ __all__ = [
     "get_queue",
     "call_queue",
     "complete_queue",
+    "delete_queue",
 ]

@@ -46,7 +46,7 @@ def call_queue():
             json={
                 "to": f"65{previous_patient_user['phone']}",
                 "from": "pay2live",
-                "message": f"{previous_patient_user['first_name']} {previous_patient_user["last_name"]},\n\nYou have just missed your queue number *{abbreviations[previous_patient['service']]}{str(previous_patient['number']).rjust(3, '0')}*.\nPlease speak to the clinic staff if you require further assistance.",
+                "message": f"{previous_patient_user['first_name']} {previous_patient_user["last_name"]},\nYou have just missed your queue number *{abbreviations[previous_patient['service']]}{str(previous_patient['number']).rjust(3, '0')}*.\nPlease speak to the clinic staff if you require further assistance.",
             },
             headers={"Authorization": os.environ["OTP_TOKEN"]},
         )
@@ -73,7 +73,7 @@ def call_queue():
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",
-            "message": f"{called_user["first_name"]} {called_user["last_name"]},\n\nYour queue number *{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* has been called.\nPlease proceed to room {room} immediately.",
+            "message": f"{called_user["first_name"]} {called_user["last_name"]},\nYour queue number *{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* has been called.\nPlease proceed to room {room} immediately.",
         },
         headers={"Authorization": os.environ["OTP_TOKEN"]},
     )
