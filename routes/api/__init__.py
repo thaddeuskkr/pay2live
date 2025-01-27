@@ -3,7 +3,7 @@ from .otp.verify import *
 from .users.register import *
 from .users.fetch import *
 from .users.update import *
-from .users.delete import *
+from .users.deactivate import *
 from .appointments.add import *
 from .appointments.delete import *
 from .appointments.edit import *
@@ -19,7 +19,7 @@ __all__ = [
     "register_user",
     "fetch_user",
     "update_user",
-    "delete_user",
+    "deactivate_user",
     "add_appointment",
     "delete_appointment",
     "edit_appointment",

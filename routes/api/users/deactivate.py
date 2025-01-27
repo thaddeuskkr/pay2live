@@ -1,17 +1,18 @@
-from bson import ObjectId
 from flask import request, make_response
-from app import app, users, appointments
+from app import app, users
 
 
-@app.route("/api/users/delete", methods=["DELETE"])
-def delete_user():
+@app.route("/api/users/deactivate", methods=["DELETE"])
+def deactivate_user():
     session_token = request.cookies.get("session_token")
     user = users.find_one({"session_token": session_token}) if session_token else None
     if not user:
         return make_response({"message": "Invalid session token"}, 401)
 
-    delete_result = users.delete_one({"session_token": session_token})
-    if delete_result.deleted_count == 0:
+    update_result = users.update_one(
+        {"session_token": session_token}, {"$set": {"active": False}}
+    )
+    if update_result.modified_count == 0:
         response = make_response(
             {
                 "message": "Invalid session token",
@@ -20,10 +21,9 @@ def delete_user():
         )
         return response
     else:
-        appointments.delete_many({"user": ObjectId(user["_id"])})
         return make_response(
             {
-                "message": "Successfully deleted user information",
+                "message": "Successfully deactivated user account",
             },
             200,
         )

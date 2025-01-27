@@ -16,6 +16,7 @@ class User:
         otp: str | None = None,
         admin: bool = False,
         registered: bool = False,
+        active: bool = True,
     ) -> None:
         self.phone = phone
         self.first_name = first_name
@@ -29,6 +30,7 @@ class User:
         self.otp = otp
         self.admin = admin
         self.registered = registered
+        self.active = active
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -44,6 +46,7 @@ class User:
             "otp": self.otp,
             "admin": self.admin,
             "registered": self.registered,
+            "active": self.active,
         }
 
     @classmethod
@@ -61,4 +64,5 @@ class User:
             otp=data.get("otp"),
             admin=data.get("admin") == "True",
             registered=data.get("registered") == "True",
+            active=data.get("active") == "True",
         )

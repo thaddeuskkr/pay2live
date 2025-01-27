@@ -36,7 +36,17 @@ def send_otp():
         )
         return response
     userC = User(phone=phone, otp=otp)
-    if users.find_one({"phone": phone}):
+    db_user = users.find_one({"phone": phone})
+    if db_user:
+        if not db_user["active"]:
+            response = make_response(
+                {
+                    "phone": phone,
+                    "message": "User account deactivated. Please contact support.",
+                },
+                400,
+            )
+            return response
         users.update_one({"phone": phone}, {"$set": {"otp": otp}})
     else:
         users.insert_one(userC.to_dict())
