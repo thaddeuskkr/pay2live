@@ -14,13 +14,19 @@ function register() {
     if (
         fName.length === 0 ||
         lName.length === 0 ||
-        !email.includes('@') ||
         !gender ||
-        nric.length !== 9 ||
-        address.length === 0
+        address.length === 0 ||
+        email.length === 0 ||
+        nric.length === 0
     ) {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').text('Please fill in all required fields.');
+    } else if (!email.includes('@')) {
+        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
+        $('#message-content').text('Please enter a valid email.');
+    } else if (nric.length !== 9) {
+        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
+        $('#message-content').text('Please enter a valid NRIC.');
     } else {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Registering...');
