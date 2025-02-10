@@ -5,7 +5,7 @@ import pymongo
 from flask import request, make_response
 from app import app, ready, users, queue
 from config import abbreviations
-
+import html
 
 @app.route("/api/queue/get", methods=["POST"])
 def get_queue():
@@ -53,7 +53,7 @@ def get_queue():
         response = make_response(
             {
                 "message": "Successfully added to queue",
-                "number": abbreviations[dictionary["service"]]
+                "number": html.escape(abbreviations[dictionary["service"]])
                 + str(dictionary["number"]).rjust(3, "0"),
                 "user": user["phone"],
                 "status": dictionary["status"],
