@@ -1,6 +1,6 @@
 $(function () {
     $('#reload').click(function () {
-        window.location.href = '/queue?room=' + $('#room').val();
+        window.location.href = '/queue?room=' + encodeURIComponent($('#room').val());
     });
     $('.call').click(function (e) {
         const queue_number = $(e.currentTarget).attr('data-queue_number');
@@ -12,7 +12,7 @@ $(function () {
             body: JSON.stringify({ queue: queue_number, room: $('#room').val() }),
         }).then(function (response) {
             if (response.status === 200) {
-                window.location.href = '/queue?room=' + $('#room').val();
+                window.location.href = '/queue?room=' + encodeURIComponent($('#room').val());
             }
         });
     });
@@ -26,7 +26,7 @@ $(function () {
             body: JSON.stringify({ queue: queue_number }),
         }).then(function (response) {
             if (response.status === 200) {
-                window.location.href = '/queue?room=' + $('#room').val();
+                window.location.href = '/queue?room=' + encodeURIComponent($('#room').val());
             }
         });
     });
@@ -41,7 +41,7 @@ $(function () {
                 body: JSON.stringify({ queue: queue_number }),
             }).then(function (response) {
                 if (response.status === 200) {
-                    window.location.href = '/queue?room=' + $('#room').val();
+                    window.location.href = '/queue?room=' + encodeURIComponent($('#room').val());
                 }
             });
         }
