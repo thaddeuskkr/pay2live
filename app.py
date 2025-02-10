@@ -32,6 +32,8 @@ db = mongo_client[f"pay2live{'_dev' if debug else ''}"]
 users = db["users"]
 queue = db["queue"]
 appointments = db["appointments"]
+shop = db["shop"]
+carts = db["carts"]
 
 
 # Check if MongoDB is ready every minute

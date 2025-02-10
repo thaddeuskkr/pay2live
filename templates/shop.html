@@ -2,9 +2,57 @@
 <html lang="en">
     <head>
         {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="/static/js/shop.js"></script>
     </head>
 
     <body class="bg-base text-text">
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mx-auto mt-16 h-[calc(100vh-64px)] max-w-4xl items-center justify-center">
+            <h1 class="mb-4 pt-16 text-center text-3xl font-bold text-text">Shop</h1>
+            <div class="container mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" id="shop-items">
+                    {% for item in shop_items %}
+                    <div class="relative rounded-lg bg-surface0 p-6 shadow-md">
+                        <img src="{{ item.image }}" class="mb-4 aspect-square w-fit rounded-lg object-cover" />
+                        <h3 class="mb-2 text-xl font-bold">{{ item.name }}</h3>
+                        <p class="mb-4 text-subtext1">S${{ "%.2f"|format(item.price) }}</p>
+                        <button
+                            onclick="addToCart('{{ item._id }}')"
+                            class="rounded bg-blue px-4 py-2 text-crust transition-colors hover:bg-lavender">
+                            Add to Cart
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mt-8 rounded-lg bg-surface0 p-6 shadow-md">
+                    <h2 class="mb-4 text-2xl font-bold">Cart</h2>
+                    <ul id="cart-items" class="mb-4">
+                        {% for item in cart_items %}
+                        <li class="mb-2 flex items-center justify-between">
+                            <span
+                                >{{ item.info.name }} - S${{ "%.2f"|format(item.info.price) }} x {{ item.quantity
+                                }}</span
+                            >
+                            <button
+                                onclick="removeFromCart('{{ item.info._id }}')"
+                                class="rounded bg-red px-2 py-1 text-sm text-crust transition-colors hover:bg-maroon">
+                                Remove
+                            </button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <p class="text-xl font-bold">
+                        Total: S$<span id="cart-total" class="font-semibold">{{ "%.2f"|format(subtotal) }}</span>
+                    </p>
+                    {% if cart_items %}
+                    <button
+                        onclick="checkout()"
+                        class="mt-4 rounded bg-mauve px-4 py-2 text-crust transition-colors hover:bg-pink">
+                        Checkout
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </body>
 </html>

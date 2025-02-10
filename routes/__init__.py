@@ -8,6 +8,7 @@ from .api import *
 from .register import *
 from .profile import *
 from .queue import *
+from .admin import *
 
 __all__ = [
     "index",
@@ -20,4 +21,5 @@ __all__ = [
     "register",
     "profile",
     "queue",
+    "admin",
 ]

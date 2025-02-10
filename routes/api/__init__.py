@@ -12,6 +12,8 @@ from .queue.get import *
 from .queue.call import *
 from .queue.complete import *
 from .queue.delete import *
+from .cart.add import *
+from .cart.remove import *
 
 __all__ = [
     "send_otp",
@@ -28,4 +30,6 @@ __all__ = [
     "call_queue",
     "complete_queue",
     "delete_queue",
+    "add_cart",
+    "remove_cart",
 ]
