@@ -27,3 +27,18 @@ function removeFromCart(itemId) {
         }
     });
 }
+
+function clearCart() {
+    if (!confirm('Are you sure you want to clear your cart?')) return;
+    fetch('/api/cart/clear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    }).then(async (res) => {
+        const data = await res.json();
+        if (res.status == 200) {
+            window.location.reload();
+        } else {
+            alert(data.message);
+        }
+    });
+}
