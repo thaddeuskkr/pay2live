@@ -16,7 +16,9 @@ def update_user():
         "email",
         "gender",
         "nric",
-        "address",
+        "address1",
+        "address2",
+        "address4",
     ]
     missing_keys = set(required_fields - data.keys())
     if missing_keys:
@@ -29,7 +31,11 @@ def update_user():
     email: str = data.get("email")
     gender: str = data.get("gender")
     nric: str = data.get("nric")
-    address: str = data.get("address")
+    address1: str = data.get("address1")
+    address2: str = data.get("address2")
+    address3: str = data.get("address3")
+    address4: str = data.get("address4")
+
     if (
         len(first_name) < 1
         or len(last_name) < 1
@@ -37,7 +43,9 @@ def update_user():
         or len(email) < 1
         or len(gender) <= 0
         or len(nric) < 1
-        or len(address) < 1
+        or len(address1) < 1
+        or len(address2) < 1
+        or len(address4) < 1
     ):
         return make_response({"message": "Invalid text in input fields"}, 400)
     duplicate_phone = users.find_one({"phone": phone})
@@ -59,8 +67,11 @@ def update_user():
                 "email": email,
                 "phone": phone,
                 "gender": gender,
-                "nric": nric,
-                "address": address,
+                "nric": str.upper(nric),
+                "address1": address1,
+                "address2": address2,
+                "address3": address3 or None,
+                "address4": address4,
             }
         },
     )

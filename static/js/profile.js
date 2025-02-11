@@ -1,24 +1,17 @@
-function edit() {
-    const fName = $('#firstName').val();
-    const lName = $('#lastName').val();
-    const email = $('#email').val();
-    const gender = $('#gender').val();
-    const nric = $('#nric').val();
-    const address = $('#address').val();
-    const phone = $('#phone').val();
+$(function () {
+    $('#edit-form').submit((e) => {
+        e.preventDefault();
+        const fName = $('#firstName').val();
+        const lName = $('#lastName').val();
+        const email = $('#email').val();
+        const gender = $('#gender').val();
+        const nric = $('#nric').val();
+        const address1 = $('#addressLine1').val();
+        const address2 = $('#addressLine2').val();
+        const address3 = $('#addressLine3').val();
+        const address4 = $('#postalCode').val();
+        const phone = $('#phone').val();
 
-    if (
-        fName.length === 0 ||
-        lName.length === 0 ||
-        !email.includes('@') ||
-        !gender ||
-        nric.length !== 9 ||
-        address.length === 0 ||
-        phone.length !== 8
-    ) {
-        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
-        $('#message-content').text('Please fill in all required fields.');
-    } else {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Applying changes...');
         fetch('/api/users/update', {
@@ -32,7 +25,10 @@ function edit() {
                 email: email,
                 gender: gender,
                 nric: nric,
-                address: address,
+                address1: address1,
+                address2: address2,
+                address3: address3,
+                address4: address4,
                 phone: phone,
             }),
         }).then(async (response) => {
@@ -49,11 +45,11 @@ function edit() {
                 $('#message-content').text(data.message);
             }
         });
-    }
-}
+    });
+});
 
 function deleteAccount() {
-    $('#delete-button').text('Confirm Deactivate');
+    $('#delete-button').text('Confirm Deactivation');
     $('#delete-button').addClass('bg-red').removeClass('bg-yellow');
     $('#delete-button').attr('onclick', 'confirmDelete()');
     setTimeout(() => {
