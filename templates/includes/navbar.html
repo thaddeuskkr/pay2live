@@ -32,14 +32,9 @@
                 </button>
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex flex-shrink-0 items-center text-xl font-extrabold">pay2live</div>
+                <a class="flex flex-shrink-0 items-center text-xl font-extrabold" href="/">pay2live</a>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
-                        <a
-                            href="./"
-                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'home' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 transition-colors' }}"
-                            >Home</a
-                        >
                         <a
                             href="./about"
                             class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'about' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 transition-colors' }}">
@@ -152,11 +147,6 @@
 
     <div class="hidden sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2">
-            <a
-                href="./"
-                class="{{ 'block rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'home' else 'block rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 transition-colors'}}"
-                >Home</a
-            >
             <a
                 href="./about"
                 class="{{ 'block rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'about' else 'block rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 transition-colors'}}">
