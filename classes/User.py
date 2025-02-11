@@ -11,7 +11,10 @@ class User:
         gender: str | None = None,
         nric: str | None = None,
         role: str | None = "patient",
-        address: str | None = None,
+        address1: str | None = None,
+        address2: str | None = None,
+        address3: str | None = None,
+        address4: str | None = None,
         session_token: str | None = None,
         otp: str | None = None,
         admin: bool = False,
@@ -25,7 +28,10 @@ class User:
         self.gender = gender
         self.nric = nric
         self.role = role
-        self.address = address
+        self.address1 = address1
+        self.address2 = address2
+        self.address3 = address3
+        self.address4 = address4
         self.session_token = session_token
         self.otp = otp
         self.admin = admin
@@ -41,7 +47,10 @@ class User:
             "gender": self.gender,
             "nric": self.nric,
             "role": self.role,
-            "address": self.address,
+            "address1": self.address1,
+            "address2": self.address2,
+            "address3": self.address3,
+            "address4": self.address4,
             "session_token": self.session_token,
             "otp": self.otp,
             "admin": self.admin,
@@ -59,7 +68,10 @@ class User:
             gender=data.get("gender"),
             nric=data.get("nric"),
             role=data.get("role"),
-            address=data.get("address"),
+            address1=data.get("address1"),
+            address2=data.get("address2"),
+            address3=data.get("address3"),
+            address4=data.get("address4"),
             session_token=data.get("session_token"),
             otp=data.get("otp"),
             admin=data.get("admin") == "True",
