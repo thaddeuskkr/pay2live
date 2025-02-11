@@ -69,7 +69,7 @@ function confirmDelete() {
             $('#message-box').removeClass('bg-red').addClass('bg-green');
             $('#message-content').html('Account deactivated successfully! Redirecting...');
             setTimeout(() => {
-                window.location.href = '/logout';
+                window.location.href = '/logout?reset_token=1';
             }, 1000);
         } else {
             const data = await response.json();
