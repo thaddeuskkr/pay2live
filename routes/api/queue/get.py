@@ -53,7 +53,7 @@ def get_queue():
         response = make_response(
             {
                 "message": "Successfully added to queue",
-                "number": html.escape(abbreviations[dictionary["service"]])
+                "number": html.escape(abbreviations[html.escape(dictionary["service"])])
                 + str(dictionary["number"]).rjust(3, "0"),
                 "user": user["phone"],
                 "status": dictionary["status"],
