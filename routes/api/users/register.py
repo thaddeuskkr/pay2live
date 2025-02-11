@@ -18,7 +18,6 @@ def register_user():
         "role",
         "address1",
         "address2",
-        "address3",
         "address4",
     ]
     missing_keys = set(required_fields - data.keys())
@@ -64,7 +63,7 @@ def register_user():
                 "last_name": last_name,
                 "email": email,
                 "gender": gender,
-                "nric": nric,
+                "nric": str.upper(nric),
                 "role": role,
                 "address1": address1,
                 "address2": address2,
