@@ -53,11 +53,11 @@ function edit() {
 }
 
 function deleteAccount() {
-    $('#delete-button').text('Confirm Delete');
+    $('#delete-button').text('Confirm Deactivate');
     $('#delete-button').addClass('bg-red').removeClass('bg-yellow');
     $('#delete-button').attr('onclick', 'confirmDelete()');
     setTimeout(() => {
-        $('#delete-button').text('Delete Account');
+        $('#delete-button').text('Deactivate Account');
         $('#delete-button').addClass('bg-yellow').removeClass('bg-red');
         $('#delete-button').attr('onclick', 'deleteAccount()');
     }, 5000);
