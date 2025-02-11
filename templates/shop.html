@@ -18,7 +18,7 @@
                         <p class="mb-4 text-subtext1">S${{ "%.2f"|format(item.price) }}</p>
                         <button
                             onclick="addToCart('{{ item._id }}')"
-                            class="rounded bg-blue px-4 py-2 text-crust transition-colors hover:bg-lavender">
+                            class="rounded bg-blue px-4 py-2 text-crust transition-opacity hover:opacity-80">
                             Add to Cart
                         </button>
                     </div>
@@ -35,7 +35,7 @@
                             >
                             <button
                                 onclick="removeFromCart('{{ item.info._id }}')"
-                                class="rounded bg-red px-2 py-1 text-sm text-crust transition-colors hover:bg-maroon">
+                                class="rounded bg-red px-2 py-1 text-sm text-crust transition-opacity hover:opacity-80">
                                 Remove
                             </button>
                         </li>
@@ -47,12 +47,12 @@
                     {% if cart_items %}
                     <button
                         onclick="checkout()"
-                        class="mt-4 rounded bg-mauve px-4 py-2 text-crust transition-colors hover:bg-pink">
+                        class="mt-4 rounded bg-mauve px-4 py-2 text-crust transition-opacity hover:opacity-80">
                         Checkout
                     </button>
                     <button
                         onclick="clearCart()"
-                        class="mt-4 rounded bg-red px-4 py-2 text-crust transition-colors hover:bg-maroon">
+                        class="mt-4 rounded bg-red px-4 py-2 text-crust transition-opacity hover:opacity-80">
                         Clear Cart
                     </button>
                     {% endif %}
