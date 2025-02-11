@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %} {% include 'includes/head.html' %} {% endblock %}
+    </head>
+
+    <body class="bg-base text-text">
+        {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mx-auto mt-16 h-[calc(100vh-64px)] max-w-4xl items-center justify-center">
+            <h1 class="mb-4 pt-16 text-center text-3xl font-bold text-text">Checkout</h1>
+            <div class="container mx-auto px-4 py-8">
+                <div class="rounded-lg bg-surface0 p-6 shadow-md">
+                    <h2 class="mb-4 text-2xl font-bold">Summary</h2>
+                    <ul id="cart-items" class="mb-4">
+                        {% for item in cart_items %}
+                        <li class="mb-2 flex items-center justify-between">
+                            <span
+                                >{{ item.info.name }} - S${{ "%.2f"|format(item.info.price) }} x {{ item.quantity
+                                }}</span
+                            >
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <p class="text-xl font-bold">
+                        Total: S$<span id="cart-total" class="font-semibold">{{ "%.2f"|format(subtotal) }}</span>
+                    </p>
+                </div>
+                <div class="mt-6 rounded-lg bg-surface0 p-6 shadow-md">
+                    <form id="payment-form" class="space-y-4">
+                        <h2 class="text-2xl font-bold">Shipping Information</h2>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div class="relative">
+                                <input
+                                    id="firstName"
+                                    name="firstName"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required
+                                    value="{{ user.first_name }}" />
+                                <label
+                                    for="firstName"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    First Name
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    id="lastName"
+                                    name="lastName"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required
+                                    value="{{ user.last_name }}" />
+                                <label
+                                    for="lastName"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    Last Name
+                                </label>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required
+                                value="{{ user.email }}" />
+                            <label
+                                for="email"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Email
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="phone"
+                                name="phone"
+                                type="phone"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required
+                                maxlength="8"
+                                value="{{ user.phone }}" />
+                            <label
+                                for="phone"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Contact Number
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="addressLine1"
+                                name="addressLine1"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required
+                                value="{{ user.address1 }}" />
+                            <label
+                                for="addressLine1"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 1
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="addressLine2"
+                                name="addressLine2"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required
+                                value="{{ user.address2 }}" />
+                            <label
+                                for="addressLine2"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 2
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="addressLine3"
+                                name="addressLine3"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                value="{{ user.address3 or '' }}" />
+                            <label
+                                for="addressLine3"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 3 (optional)
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="postalCode"
+                                name="postalCode"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                value="{{ user.address4 }}"
+                                required
+                                minlength="6"
+                                maxlength="6" />
+                            <label
+                                for="postalCode"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Postal Code
+                            </label>
+                        </div>
+                        <h2 class="text-2xl font-bold">Billing Information</h2>
+                        <div class="relative">
+                            <input
+                                id="nameOnCard"
+                                name="nameOnCard"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=""
+                                required />
+                            <label
+                                for="nameOnCard"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Name on Card
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="cardNumber"
+                                name="cardNumber"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=""
+                                required
+                                minlength="16"
+                                maxlength="16" />
+                            <label
+                                for="cardNumber"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Card Number
+                            </label>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div class="relative">
+                                <input
+                                    id="cardExpiry"
+                                    name="cardExpiry"
+                                    type="text"
+                                    placeholder=" "
+                                    required
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    pattern="^(0[1-9]|1[0-2])\/\d{2}$" />
+                                <label
+                                    for="cardExpiry"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    Card Expiry (MM/YY)
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    id="cardCVV"
+                                    name="cardCVV"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required
+                                    minlength="3"
+                                    maxlength="3" />
+                                <label
+                                    for="cardCVV"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    Security Code / CVV
+                                </label>
+                            </div>
+                        </div>
+                        <button
+                            type="submit"
+                            class="w-full rounded-md bg-green px-4 py-2 text-crust shadow-sm transition-opacity hover:opacity-80">
+                            Pay S${{ "%.2f"|format(subtotal) }} to pay2live
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

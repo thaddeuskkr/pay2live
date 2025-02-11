@@ -9,6 +9,7 @@ from .register import *
 from .profile import *
 from .queue import *
 from .admin import *
+from .checkout import *
 
 __all__ = [
     "index",
@@ -22,4 +23,5 @@ __all__ = [
     "profile",
     "queue",
     "admin",
+    "checkout",
 ]
