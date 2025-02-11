@@ -1,33 +1,20 @@
 $(function () {
     const urlParams = new URLSearchParams(window.location.search);
     $('#phone').val(urlParams.get('phone'));
-});
 
-function register() {
-    const fName = $('#firstName').val();
-    const lName = $('#lastName').val();
-    const email = $('#email').val();
-    const gender = $('#gender').val();
-    const nric = $('#nric').val();
-    const address = $('#address').val();
+    $('#register-form').submit(function (e) {
+        e.preventDefault();
 
-    if (
-        fName.length === 0 ||
-        lName.length === 0 ||
-        !gender ||
-        address.length === 0 ||
-        email.length === 0 ||
-        nric.length === 0
-    ) {
-        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
-        $('#message-content').text('Please fill in all required fields.');
-    } else if (!email.includes('@')) {
-        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
-        $('#message-content').text('Please enter a valid email.');
-    } else if (nric.length !== 9) {
-        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
-        $('#message-content').text('Please enter a valid NRIC.');
-    } else {
+        const fName = $('#firstName').val();
+        const lName = $('#lastName').val();
+        const email = $('#email').val();
+        const gender = $('#gender').val();
+        const nric = $('#nric').val();
+        const address1 = $('#addressLine1').val();
+        const address2 = $('#addressLine2').val();
+        const address3 = $('#addressLine3').val();
+        const address4 = $('#postalCode').val();
+
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Registering...');
         fetch('/api/users/register', {
@@ -41,7 +28,10 @@ function register() {
                 email: email,
                 gender: gender,
                 nric: nric,
-                address: address,
+                address1: address1,
+                address2: address2,
+                address3: address3,
+                address4: address4,
                 role: 'patient',
             }),
         }).then(async (response) => {
@@ -58,5 +48,5 @@ function register() {
                 $('#message-content').text(data.message);
             }
         });
-    }
-}
+    });
+});

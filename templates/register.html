@@ -80,7 +80,9 @@
                             type="text"
                             class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             placeholder=" "
-                            required />
+                            required
+                            minlength="9"
+                            maxlength="9" />
                         <label
                             for="nric"
                             class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
@@ -88,16 +90,60 @@
                         </label>
                     </div>
                     <div class="relative">
-                        <textarea
-                            id="address"
-                            name="address"
-                            class="peer block h-28 w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                        <input
+                            id="addressLine1"
+                            name="addressLine1"
+                            type="text"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                             placeholder=" "
-                            required></textarea>
+                            required />
                         <label
-                            for="address"
+                            for="addressLine1"
                             class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
-                            Address
+                            Address Line 1
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input
+                            id="addressLine2"
+                            name="addressLine2"
+                            type="text"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" "
+                            required />
+                        <label
+                            for="addressLine2"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            Address Line 2
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input
+                            id="addressLine3"
+                            name="addressLine3"
+                            type="text"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" " />
+                        <label
+                            for="addressLine3"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            Address Line 3 (optional)
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input
+                            id="postalCode"
+                            name="postalCode"
+                            type="text"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=" "
+                            required
+                            minlength="6"
+                            maxlength="6" />
+                        <label
+                            for="postalCode"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            Postal Code
                         </label>
                     </div>
                     <div class="relative">
@@ -116,25 +162,10 @@
                             Phone Number
                         </label>
                     </div>
-                    <div class="relative hidden" id="otp-div">
-                        <input
-                            id="otp"
-                            name="otp"
-                            type="number"
-                            pattern="[0-9]{6}"
-                            class="peer w-full rounded-md bg-surface1 px-4 py-4 text-text placeholder-transparent [appearance:textfield] focus:outline-none focus:ring-2 focus:ring-mauve [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                            placeholder=" " />
-                        <label
-                            for="otp"
-                            class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
-                            OTP
-                        </label>
-                    </div>
                     <button
                         id="register-button"
-                        type="button"
-                        onclick="register()"
-                        class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition hover:opacity-75">
+                        type="submit"
+                        class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
                         Register
                     </button>
                 </form>
