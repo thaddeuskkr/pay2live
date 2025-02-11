@@ -13,17 +13,17 @@
             <div class="mb-7 flex justify-center space-x-1.5">
                 <a
                     href="/appointments"
-                    class="w-28 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-85"
+                    class="w-28 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
                     >Upcoming</a
                 >
                 <a
                     href="/appointments?filter=past"
-                    class="w-28 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-85"
+                    class="w-28 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
                     >Previous</a
                 >
                 <a
                     href="/appointments?filter=new"
-                    class="{{ 'hidden' if user['role'] != 'doctor' }} w-28 text-center rounded-md bg-mauve px-4 py-2 text-crust font-semibold hover:opacity-85 transition-opacity"
+                    class="{{ 'hidden' if user['role'] != 'doctor' }} w-28 text-center rounded-md bg-mauve px-4 py-2 text-crust font-semibold hover:opacity-80 transition-opacity"
                     >Unclaimed</a
                 >
             </div>
@@ -32,7 +32,7 @@
                     <h2 class="text-xl font-semibold text-text">{{ filter_header }}</h2>
                     <button
                         id="bookBtn"
-                        class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-85">
+                        class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-80">
                         Book Appointment
                     </button>
                 </div>
@@ -52,7 +52,7 @@
                         </p>
                         <div class="flex space-x-2 pt-2">
                             <button
-                                class="{{ 'hidden' if filter_header == 'Past Appointments' }} editBtn text-blue-500 hover:opacity-85 transition-opacity focus:outline-none"
+                                class="{{ 'hidden' if filter_header == 'Past Appointments' }} editBtn text-blue-500 hover:opacity-80 transition-opacity focus:outline-none"
                                 title="Edit"
                                 data-id="{{ appointment.id }}"
                                 data-service="{{ appointment.raw.service }}"
@@ -68,7 +68,7 @@
                                 </svg>
                             </button>
                             <button
-                                class="{{ 'hidden' if filter_header == 'Past Appointments' }} deleteBtn text-red-500 transition-opacity hover:opacity-85 focus:outline-none"
+                                class="{{ 'hidden' if filter_header == 'Past Appointments' }} deleteBtn text-red-500 transition-opacity hover:opacity-80 focus:outline-none"
                                 title="Delete"
                                 data-id="{{ appointment.id }}">
                                 <svg
@@ -85,7 +85,7 @@
                             <button
                                 data-id="{{ appointment.id }}"
                                 title="Claim"
-                                class="{{ 'hidden' if user['role'] != 'doctor' or appointment.doctor or filter_header == 'Past Appointments' }} claimBtn transition-opacity stroke-yellow-500 hover:opacity-85 focus:outline-none">
+                                class="{{ 'hidden' if user['role'] != 'doctor' or appointment.doctor or filter_header == 'Past Appointments' }} claimBtn transition-opacity stroke-yellow-500 hover:opacity-80 focus:outline-none">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -138,12 +138,12 @@
                             <button
                                 type="button"
                                 id="cancelEditBtn"
-                                class="rounded-md bg-maroon px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-85">
+                                class="rounded-md bg-maroon px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-80">
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-85">
+                                class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-80">
                                 Edit
                             </button>
                         </div>
@@ -209,12 +209,12 @@
                             <button
                                 type="button"
                                 id="cancelBtn"
-                                class="rounded-md bg-maroon px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-85">
+                                class="rounded-md bg-maroon px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-80">
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-85">
+                                class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-80">
                                 Book
                             </button>
                         </div>
