@@ -37,35 +37,35 @@
                     <div class="flex space-x-4">
                         <a
                             href="./"
-                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'home' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'home' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text transition-colors' }}"
                             >Home</a
                         >
                         <a
                             href="./about"
-                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'about' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}">
+                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'about' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text transition-colors' }}">
                             About Us</a
                         >
                         <a
                             href="./shop"
-                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'shop' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'shop' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text transition-colors' }}"
                             >Shop</a
                         >
                         <a
                             id="nav-appointments"
                             href="./appointments"
-                            class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'appointments' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text transition-colors' }}"
                             >Appointments</a
                         >
                         <a
                             id="nav-queue"
                             href="./queue"
-                            class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'queue' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'queue' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text transition-colors' }}"
                             >Queue</a
                         >
                         <a
                             id="nav-admin"
                             href="./admin"
-                            class="{{ 'hidden' if not user or not user.admin }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text' }}"
+                            class="{{ 'hidden' if not user or not user.admin }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'admin' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 hover:text-text transition-colors' }}"
                             >Admin</a
                         >
                     </div>
@@ -76,7 +76,7 @@
                     id="login"
                     type="button"
                     href="./login"
-                    class="hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text {{ 'sm:flex' if not user else 'sm:hidden' }} sm:items-center">
+                    class="transition-colors hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text {{ 'sm:flex' if not user else 'sm:hidden' }} sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -89,7 +89,7 @@
                     id="profile"
                     type="button"
                     href="./profile"
-                    class="hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text {{ 'sm:hidden' if not user else 'sm:flex' }} sm:items-center">
+                    class=" transition-colors hidden rounded-md px-3 py-2 hover:bg-surface1 hover:text-text {{ 'sm:hidden' if not user else 'sm:flex' }} sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -102,7 +102,7 @@
                     id="logout"
                     type="button"
                     href="/logout"
-                    class="mr-1.5 hidden cursor-pointer rounded-md px-3 py-2 hover:bg-surface1 hover:text-text {{ 'sm:hidden' if not user else 'sm:flex' }} sm:items-center">
+                    class=" transition-colors mr-1.5 hidden cursor-pointer rounded-md px-3 py-2 hover:bg-surface1 hover:text-text {{ 'sm:hidden' if not user else 'sm:flex' }} sm:items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-1 size-5">
                         <path
                             fill-rule="evenodd"
@@ -114,7 +114,7 @@
                 <button
                     id="theme-toggle"
                     type="button"
-                    class="relative rounded-full bg-crust p-1 text-subtext0 hover:text-text focus:outline-none">
+                    class="relative rounded-full bg-crust p-1 text-subtext0 transition-colors hover:text-text focus:outline-none">
                     <span class="absolute -inset-1.5"></span>
                     <span class="sr-only">Toggle light/dark theme</span>
                     <svg
