@@ -34,7 +34,7 @@ function login() {
             body: JSON.stringify({
                 phone: phone,
             }),
-        }).then((response) => {
+        }).then(async (response) => {
             if (response.status == 200) {
                 $('#message-box').removeClass('hidden').removeClass('bg-red').addClass('bg-green');
                 $('#message-content').html(
@@ -45,8 +45,9 @@ function login() {
                 $('#phone').prop('disabled', true);
                 $('#login-button').attr('onclick', 'verifyOTP()');
             } else {
+                const json = await response.json();
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
-                $('#message-content').text('An error occurred while sending an OTP. Please try again.');
+                $('#message-content').text(json.message);
             }
         });
     }

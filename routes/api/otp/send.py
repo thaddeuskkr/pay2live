@@ -30,7 +30,7 @@ def send_otp():
     if not ready:
         response = make_response(
             {
-                "message": "Service is not ready. Please try again later.",
+                "message": "The OTP service is not ready. Please try again later.",
             },
             500,
         )
@@ -42,7 +42,7 @@ def send_otp():
             response = make_response(
                 {
                     "phone": phone,
-                    "message": "User account deactivated. Please contact support.",
+                    "message": "Your account has been deactivated. Please contact support.",
                 },
                 400,
             )
