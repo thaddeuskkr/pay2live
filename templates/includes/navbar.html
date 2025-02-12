@@ -41,8 +41,13 @@
                             About Us</a
                         >
                         <a
+                            href="/contact"
+                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'contact' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 transition-colors' }}">
+                            Contact</a
+                        >
+                        <a
                             href="/shop"
-                            class="{{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'shop' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 transition-colors' }}"
+                            class="{{ 'hidden' if not user }} {{ 'rounded-md bg-surface0 px-3 py-2 font-medium text-text' if current_page == 'shop' else 'rounded-md px-3 py-2 font-medium text-subtext0 hover:bg-surface1 transition-colors' }}"
                             >Shop</a
                         >
                         <a
@@ -153,8 +158,13 @@
                 About Us</a
             >
             <a
+                href="/contact"
+                class="{{ 'block rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'contact' else 'block rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 transition-colors'}}">
+                Contact</a
+            >
+            <a
                 href="/shop"
-                class="{{ 'block rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'shop' else 'block rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 transition-colors'}}"
+                class="{{ 'hidden' if not user else 'block' }} {{ 'rounded-md bg-surface0 px-3 py-2 text-base font-medium text-text' if current_page == 'shop' else 'rounded-md px-3 py-2 text-base font-medium text-subtext0 hover:bg-surface1 transition-colors'}}"
                 >Shop</a
             >
             <a
