@@ -1,3 +1,4 @@
+import re
 from flask import request, make_response
 from app import app, users
 from util import validate_nric
@@ -49,6 +50,10 @@ def update_user():
         or len(address4) < 1
     ):
         return make_response({"message": "Invalid text in input fields"}, 400)
+    if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+        return make_response({"message": "Invalid email address"}, 400)
+    if not re.match(r"^\d{8}$", phone):
+        return make_response({"message": "Invalid phone number"}, 400)
     if not validate_nric(nric):
         return make_response({"message": "Invalid NRIC"}, 400)
     duplicate_phone = users.find_one({"phone": phone})
