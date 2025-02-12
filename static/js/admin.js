@@ -106,6 +106,60 @@ $(function () {
             }
         });
     });
+    $('#newUserCancel').on('click', function () {
+        $('#newUserPopup').removeClass('flex').addClass('hidden');
+    });
+    $('#new-user-form').on('submit', function (e) {
+        e.preventDefault();
+        const firstName = $('#newFirstName').val();
+        const lastName = $('#newLastName').val();
+        const email = $('#newEmail').val();
+        const phone = $('#newPhone').val();
+        const gender = $('#newGender').val();
+        const nric = $('#newNric').val();
+        const address1 = $('#newAddressLine1').val();
+        const address2 = $('#newAddressLine2').val();
+        const address3 = $('#newAddressLine3').val();
+        const address4 = $('#newPostalCode').val();
+        const role = $('#newRole').val();
+        const admin = $('#newAdmin').val();
+        const registered = $('#newRegistered').val();
+        const active = $('#newActive').val();
+        fetch('/api/admin/users/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                phone: phone,
+                gender: gender,
+                nric: nric,
+                address1: address1,
+                address2: address2,
+                address3: address3,
+                address4: address4,
+                role: role,
+                admin: admin,
+                registered: registered,
+                active: active,
+            }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('User added successfully!');
+                $('#newUserPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to add user: ${data.message}`);
+            }
+        });
+    });
+    $('#new-user').on('click', function () {
+        $('#newUserPopup').removeClass('hidden').addClass('flex');
+    });
     $('#modifyItemCancel').on('click', function () {
         $('#modifyItemPopup').removeClass('flex').addClass('hidden');
     });

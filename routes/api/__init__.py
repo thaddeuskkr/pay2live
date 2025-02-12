@@ -18,6 +18,7 @@ from .cart.checkout import *
 from .cart.finalise import *
 from .admin.update_user import *
 from .admin.delete_user import *
+from .admin.add_user import *
 from .admin.update_shop import *
 from .admin.delete_shop import *
 from .admin.add_shop import *
@@ -43,6 +44,7 @@ __all__ = [
     "checkout",
     "a_update_user",
     "a_delete_user",
+    "a_add_user",
     "a_update_shop",
     "a_delete_shop",
     "a_add_shop",
