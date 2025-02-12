@@ -1,7 +1,6 @@
 from .otp.send import *
 from .otp.verify import *
 from .users.register import *
-from .users.fetch import *
 from .users.update import *
 from .users.deactivate import *
 from .appointments.add import *
@@ -15,12 +14,13 @@ from .queue.delete import *
 from .cart.add import *
 from .cart.remove import *
 from .cart.clear import *
+from .cart.checkout import *
+from .cart.finalise import *
 
 __all__ = [
     "send_otp",
     "verify_otp",
     "register_user",
-    "fetch_user",
     "update_user",
     "deactivate_user",
     "add_appointment",
@@ -34,4 +34,6 @@ __all__ = [
     "add_cart",
     "remove_cart",
     "clear_cart",
+    "finalise_cart",
+    "checkout",
 ]

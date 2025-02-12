@@ -12,7 +12,7 @@
                 <div class="rounded-lg bg-surface0 p-6 shadow-md">
                     <h2 class="mb-4 text-2xl font-bold">Summary</h2>
                     <ul id="cart-items" class="mb-4">
-                        {% for item in cart_items %}
+                        {% for item in order_items %}
                         <li class="mb-2 flex items-center justify-between">
                             <span
                                 >{{ item.info.name }} - S${{ "%.2f"|format(item.info.price) }} x {{ item.quantity

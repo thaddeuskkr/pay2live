@@ -44,5 +44,14 @@ function clearCart() {
 }
 
 function checkout() {
-    window.location.href = '/checkout';
+    fetch('/api/cart/finalise', {
+        method: 'POST',
+    }).then(async (res) => {
+        const data = await res.json();
+        if (res.status == 200) {
+            window.location.href = `/checkout/${data.order_id}`;
+        } else {
+            alert(data.message);
+        }
+    });
 }
