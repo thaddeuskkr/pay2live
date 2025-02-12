@@ -86,4 +86,24 @@ $(function () {
             }
         });
     });
+    $('#deleteUser').click(function () {
+        if (!confirm('Are you sure you want to delete this user?')) return;
+        const id = $('#manage-user-form').attr('data-id');
+        fetch('/api/admin/users/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('User deleted successfully!');
+                $('#manageUserPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to delete user: ${data.message}`);
+            }
+        });
+    });
 });
