@@ -6,7 +6,7 @@ from app import app, users, orders
 from util import luhn_check
 from datetime import datetime
 import re
-
+import html
 
 @app.route("/api/cart/checkout", methods=["POST"])
 def checkout():
@@ -121,5 +121,5 @@ def checkout():
     print(request_response)
 
     return make_response(
-        {"message": "Payment successful", "order_id": str(order_id)}, 200
+        {"message": "Payment successful", "order_id": html.escape(str(order_id))}, 200
     )
