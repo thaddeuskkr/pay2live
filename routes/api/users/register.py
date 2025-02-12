@@ -16,7 +16,6 @@ def register_user():
         "email",
         "gender",
         "nric",
-        "role",
         "address1",
         "address2",
         "address4",
@@ -31,7 +30,6 @@ def register_user():
     email: str = data.get("email")
     gender: str = data.get("gender")
     nric: str = data.get("nric")
-    role: str = data.get("role")
     address1: str = data.get("address1")
     address2: str = data.get("address2")
     address3: str = data.get("address3")
@@ -42,7 +40,6 @@ def register_user():
         or len(email) < 1
         or len(gender) <= 0
         or len(nric) < 1
-        or len(role) < 1
         or len(address1) < 1
         or len(address2) < 1
         or len(address4) < 1
@@ -67,7 +64,7 @@ def register_user():
                 "email": email,
                 "gender": gender,
                 "nric": str.upper(nric),
-                "role": role,
+                "role": "patient",
                 "address1": address1,
                 "address2": address2,
                 "address3": address3 or None,
