@@ -2,7 +2,7 @@ $(function () {
     const urlParams = new URLSearchParams(window.location.search);
     $('#phone').val(urlParams.get('phone'));
 
-    $('#register-form').submit(function (e) {
+    $('#register-form').on('submit', function (e) {
         e.preventDefault();
 
         const fName = $('#firstName').val();

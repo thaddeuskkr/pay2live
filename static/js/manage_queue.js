@@ -1,8 +1,8 @@
 $(function () {
-    $('#reload').click(function () {
+    $('#reload').on('click', function () {
         window.location.href = '/queue?room=' + encodeURIComponent($('#room').val());
     });
-    $('.call').click(function (e) {
+    $('.call').on('click', function (e) {
         const queue_number = $(e.currentTarget).attr('data-queue_number');
         fetch('/api/queue/call', {
             method: 'POST',
@@ -16,7 +16,7 @@ $(function () {
             }
         });
     });
-    $('.complete').click(function (e) {
+    $('.complete').on('click', function (e) {
         const queue_number = $(e.currentTarget).attr('data-queue_number');
         fetch('/api/queue/complete', {
             method: 'POST',
@@ -30,7 +30,7 @@ $(function () {
             }
         });
     });
-    $('.delete').click(function (e) {
+    $('.delete').on('click', function (e) {
         const queue_number = $(e.currentTarget).attr('data-queue_number');
         if (confirm('Are you sure you want to delete this queue number?')) {
             fetch('/api/queue/delete', {

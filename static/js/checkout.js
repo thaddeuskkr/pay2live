@@ -1,5 +1,5 @@
 $(function () {
-    $('#payment-form').submit(function (e) {
+    $('#payment-form').on('submit', function (e) {
         e.preventDefault();
         const firstName = $('#firstName').val();
         const lastName = $('#lastName').val();

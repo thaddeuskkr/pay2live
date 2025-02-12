@@ -1,5 +1,5 @@
 $(function () {
-    $('#edit-form').submit((e) => {
+    $('#edit-form').on('submit', (e) => {
         e.preventDefault();
         const fName = $('#firstName').val();
         const lName = $('#lastName').val();

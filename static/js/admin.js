@@ -1,5 +1,5 @@
 $(function () {
-    $('#manageUserCancel').click(() => {
+    $('#manageUserCancel').on('click', function () {
         $('#manageUserPopup').removeClass('flex').addClass('hidden');
     });
     $('.manage-user').on('click', function (e) {
@@ -36,7 +36,7 @@ $(function () {
         $('#manage-user-form').attr('data-id', id);
         $('#manageUserPopup').removeClass('hidden').addClass('flex');
     });
-    $('#manage-user-form').submit(function (e) {
+    $('#manage-user-form').on('submit', function (e) {
         e.preventDefault();
         const id = $('#manage-user-form').attr('data-id');
         const firstName = $('#firstName').val();
@@ -86,7 +86,7 @@ $(function () {
             }
         });
     });
-    $('#deleteUser').click(function () {
+    $('#deleteUser').on('click', function () {
         if (!confirm('Are you sure you want to delete this user?')) return;
         const id = $('#manage-user-form').attr('data-id');
         fetch('/api/admin/users/delete', {
@@ -103,6 +103,107 @@ $(function () {
                 window.location.reload();
             } else {
                 alert(`Failed to delete user: ${data.message}`);
+            }
+        });
+    });
+    $('#modifyItemCancel').on('click', function () {
+        $('#modifyItemPopup').removeClass('flex').addClass('hidden');
+    });
+    $('.modify-item').on('click', function (e) {
+        e.preventDefault();
+        const id = $(e.currentTarget).attr('data-id');
+        const name = $(e.currentTarget).attr('data-name');
+        const price = $(e.currentTarget).attr('data-price');
+        const image = $(e.currentTarget).attr('data-image');
+        const visible = $(e.currentTarget).attr('data-visible');
+        $('#itemName').val(name);
+        $('#itemPrice').val(price);
+        $('#itemImage').val(image);
+        $('#itemVisible').val(visible);
+        $('#modify-item-form').attr('data-id', id);
+        $('#modifyItemPopup').removeClass('hidden').addClass('flex');
+    });
+    $('#modify-item-form').on('submit', function (e) {
+        e.preventDefault();
+        const id = $('#modify-item-form').attr('data-id');
+        const name = $('#itemName').val();
+        const price = $('#itemPrice').val();
+        const image = $('#itemImage').val();
+        const visible = $('#itemVisible').val();
+        fetch('/api/admin/shop/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                price: price,
+                image: image,
+                visible: visible,
+            }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Item updated successfully!');
+                $('#modifyItemPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to update item: ${data.message}`);
+            }
+        });
+    });
+    $('#deleteItem').on('click', function () {
+        if (!confirm('Are you sure you want to delete this item?')) return;
+        const id = $('#modify-item-form').attr('data-id');
+        fetch('/api/admin/shop/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Item deleted successfully!');
+                $('#modifyItemPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to delete item: ${data.message}`);
+            }
+        });
+    });
+    $('#newItemCancel').on('click', function () {
+        $('#newItemPopup').removeClass('flex').addClass('hidden');
+    });
+    $('#new-item').on('click', function () {
+        $('#newItemPopup').removeClass('hidden').addClass('flex');
+    });
+    $('#new-item-form').on('submit', function (e) {
+        e.preventDefault();
+        const name = $('#newItemName').val();
+        const price = $('#newItemPrice').val();
+        const image = $('#newItemImage').val();
+        const visible = $('#newItemVisible').val();
+        fetch('/api/admin/shop/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                price: price,
+                image: image,
+                visible: visible,
+            }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Item added successfully!');
+                $('#newItemPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to add item: ${data.message}`);
             }
         });
     });

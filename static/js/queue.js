@@ -1,5 +1,5 @@
 $(function () {
-    $('#getNumber').click(function () {
+    $('#getNumber').on('click', function () {
         if (!$('#get-service').val()) {
             $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
             $('#message-content').text('Please select a service.');
@@ -25,7 +25,7 @@ $(function () {
             }
         });
     });
-    $('#reload').click(function () {
+    $('#reload').on('click', function () {
         window.location.reload();
     });
 });

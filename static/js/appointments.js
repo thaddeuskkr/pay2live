@@ -1,13 +1,13 @@
 const DateTime = luxon.DateTime;
 
 $(function () {
-    $('#bookBtn').click(() => {
+    $('#bookBtn').on('click', () => {
         $('#bookingPopup').removeClass('hidden').addClass('flex');
     });
-    $('#cancelBtn').click(() => {
+    $('#cancelBtn').on('click', () => {
         $('#bookingPopup').addClass('hidden').removeClass('flex');
     });
-    $('.claimBtn').click((e) => {
+    $('.claimBtn').on('click', (e) => {
         const dataId = $(e.currentTarget).attr('data-id');
         fetch(`/api/appointments/claim`, {
             method: 'POST',
@@ -25,7 +25,7 @@ $(function () {
             }
         });
     });
-    $('.deleteBtn').click((e) => {
+    $('.deleteBtn').on('click', (e) => {
         const dataId = $(e.currentTarget).attr('data-id');
         const confirmation = confirm('Are you sure you want to cancel this appointment? This action cannot be undone.');
         if (confirmation) {
@@ -46,7 +46,7 @@ $(function () {
             });
         }
     });
-    $('.editBtn').click((e) => {
+    $('.editBtn').on('click', (e) => {
         const dataId = $(e.currentTarget).attr('data-id');
         const dataTimestamp = $(e.currentTarget).attr('data-timestamp');
         const dataDate = DateTime.fromMillis(parseInt(dataTimestamp)).toISODate();
@@ -60,10 +60,10 @@ $(function () {
         $('#editPopup').removeClass('hidden').addClass('flex');
         $('#editPopup').append(`<input type="hidden" name="id" value="${escapeHtml(dataId)}">`);
     });
-    $('#cancelEditBtn').click(() => {
+    $('#cancelEditBtn').on('click', () => {
         $('#editPopup').addClass('hidden').removeClass('flex');
     });
-    $('#editForm').submit((e) => {
+    $('#editForm').on('submit', (e) => {
         e.preventDefault();
         const datetime = DateTime.fromISO($('#editDate').val() + 'T' + $('#editTime').val(), {
             zone: 'Asia/Singapore',
@@ -88,7 +88,7 @@ $(function () {
             }
         });
     });
-    $('#bookingForm').submit((e) => {
+    $('#bookingForm').on('submit', (e) => {
         e.preventDefault();
         const datetime = DateTime.fromISO($('#date').val() + 'T' + $('#time').val(), { zone: 'Asia/Singapore' });
         fetch('/api/appointments/add', {
