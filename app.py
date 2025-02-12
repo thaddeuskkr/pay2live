@@ -34,6 +34,7 @@ queue = db["queue"]
 appointments = db["appointments"]
 shop = db["shop"]
 carts = db["carts"]
+orders = db["orders"]
 
 
 # Check if MongoDB is ready every minute
