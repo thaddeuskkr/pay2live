@@ -50,11 +50,11 @@ $(function () {
 
 function deleteAccount() {
     $('#delete-button').text('Confirm Deactivation');
-    $('#delete-button').addClass('bg-red').removeClass('bg-yellow');
+    $('#delete-button').addClass('bg-red').removeClass('bg-peach');
     $('#delete-button').attr('onclick', 'confirmDelete()');
     setTimeout(() => {
         $('#delete-button').text('Deactivate Account');
-        $('#delete-button').addClass('bg-yellow').removeClass('bg-red');
+        $('#delete-button').addClass('bg-peach').removeClass('bg-red');
         $('#delete-button').attr('onclick', 'deleteAccount()');
     }, 5000);
 }
