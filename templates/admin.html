@@ -2,9 +2,337 @@
 <html lang="en">
     <head>
         {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="/static/js/admin.js"></script>
     </head>
 
     <body class="bg-base text-text">
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mx-auto mt-16 h-[calc(100vh-64px)] max-w-7xl items-center justify-center">
+            <h1 class="mb-5 pt-16 text-center text-3xl font-bold text-text">{{ tab_name }}</h1>
+            <div class="mb-7 flex justify-center space-x-1.5">
+                <a
+                    href="/admin?tab=users"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Users</a
+                >
+                <a
+                    href="/admin?tab=appointments"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Appointments</a
+                >
+                <a
+                    href="/admin?tab=queue"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Queue</a
+                >
+                <a
+                    href="/admin?tab=shop"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Shop</a
+                >
+                <a
+                    href="/admin?tab=carts"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Carts</a
+                >
+                <a
+                    href="/admin?tab=orders"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Orders</a
+                >
+            </div>
+            <div class="{{ 'hidden' if tab != 'users' }} mb-8 rounded-lg bg-surface0 p-6 shadow-md">
+                <h2 class="text-xl font-semibold text-text">Users</h2>
+                <table class="mt-4 w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left">ID</th>
+                            <th class="text-left">Name</th>
+                            <th class="text-left">Phone</th>
+                            <th class="text-left">Email</th>
+                            <th class="text-left">NRIC</th>
+                            <th class="text-left">Role</th>
+                            <th class="text-left">Registered</th>
+                            <th class="text-left">Active</th>
+                            <th class="text-left">Admin</th>
+                            <th class="text-left"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in a_users %}
+                        <tr>
+                            <td><code>{{ user._id }}</code></td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.nric }}</td>
+                            <td>{{ user.role|capitalize() }}</td>
+                            <td>{{ "Yes" if user.registered else "No" }}</td>
+                            <td>{{ "Yes" if user.active else "No" }}</td>
+                            <td>{{ "Yes" if user.admin else "No" }}</td>
+                            <td class="flex flex-row justify-end py-1">
+                                <button
+                                    class="manage-user mr-1 rounded-sm bg-mauve px-2 font-semibold text-crust transition-opacity hover:opacity-80"
+                                    data-id="{{ user._id }}"
+                                    data-phone="{{ user.phone }}"
+                                    data-first_name="{{ user.first_name }}"
+                                    data-last_name="{{ user.last_name }}"
+                                    data-email="{{ user.email }}"
+                                    data-gender="{{ user.gender }}"
+                                    data-nric="{{ user.nric }}"
+                                    data-role="{{ user.role }}"
+                                    data-admin="{{ 'true' if user.admin else 'false' }}"
+                                    data-registered="{{ 'true' if user.registered else 'false' }}"
+                                    data-active="{{ 'true' if user.active else 'false' }}"
+                                    data-address1="{{ user.address1 }}"
+                                    data-address2="{{ user.address2 }}"
+                                    data-address3="{{ user.address3 or '' }}"
+                                    data-address4="{{ user.address4 }}">
+                                    Manage
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50" id="manageUserPopup">
+                <div class="w-full max-w-2xl rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Manage User</h2>
+                    <form id="manage-user-form" class="space-y-4">
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div class="relative">
+                                <input
+                                    id="firstName"
+                                    name="firstName"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required />
+                                <label
+                                    for="firstName"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    First Name
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    id="lastName"
+                                    name="lastName"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required />
+                                <label
+                                    for="lastName"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    Last Name
+                                </label>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="email"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Email
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <select
+                                id="gender"
+                                name="gender"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                required>
+                                <option value="" disabled selected></option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label
+                                for="gender"
+                                class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                Gender
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="nric"
+                                name="nric"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required
+                                minlength="9"
+                                maxlength="9" />
+                            <label
+                                for="nric"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                NRIC
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="addressLine1"
+                                name="addressLine1"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="addressLine1"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 1
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="addressLine2"
+                                name="addressLine2"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="addressLine2"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 2
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="addressLine3"
+                                name="addressLine3"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" " />
+                            <label
+                                for="addressLine3"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 3 (optional)
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="postalCode"
+                                name="postalCode"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required
+                                minlength="6"
+                                maxlength="6" />
+                            <label
+                                for="postalCode"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Postal Code
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                disabled
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                pattern="[0-9]{8}"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="phone"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Phone Number
+                            </label>
+                        </div>
+                        <div class="flex">
+                            <div class="relative mr-1 w-full">
+                                <select
+                                    id="role"
+                                    name="role"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="patient">Patient</option>
+                                    <option value="doctor">Doctor</option>
+                                </select>
+                                <label
+                                    for="role"
+                                    class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                    Role
+                                </label>
+                            </div>
+                            <div class="relative mx-1 w-full">
+                                <select
+                                    id="registered"
+                                    name="registered"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <label
+                                    for="registered"
+                                    class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                    Registered
+                                </label>
+                            </div>
+                            <div class="relative mx-1 w-full">
+                                <select
+                                    id="active"
+                                    name="active"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <label
+                                    for="active"
+                                    class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                    Active
+                                </label>
+                            </div>
+                            <div class="relative ml-1 w-full">
+                                <select
+                                    id="admin"
+                                    name="admin"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <label
+                                    for="admin"
+                                    class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                    Admin
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <button
+                                id="saveUser"
+                                type="submit"
+                                class="mr-1 w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Save Changes
+                            </button>
+                            <button
+                                type="button"
+                                id="manageUserCancel"
+                                class="ml-1 w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

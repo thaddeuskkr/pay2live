@@ -16,6 +16,7 @@ from .cart.remove import *
 from .cart.clear import *
 from .cart.checkout import *
 from .cart.finalise import *
+from .admin.update_user import *
 
 __all__ = [
     "send_otp",
@@ -36,4 +37,5 @@ __all__ = [
     "clear_cart",
     "finalise_cart",
     "checkout",
+    "a_update_user",
 ]
