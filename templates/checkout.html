@@ -223,6 +223,9 @@
                             Pay <span class="font-bold">S${{ "%.2f"|format(subtotal) }}</span> to pay2live
                         </button>
                     </form>
+                    <div id="message-box" class="mt-4 hidden rounded-md px-4 py-2">
+                        <p class="font-medium text-crust" id="message-content">{{ message }}</p>
+                    </div>
                 </div>
             </div>
         </div>
