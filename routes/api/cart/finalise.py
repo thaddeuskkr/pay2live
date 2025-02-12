@@ -33,6 +33,7 @@ def finalise_cart():
         "items": cart_items,
         "total": subtotal,
         "paid": False,
+        "fulfilled": False,
     }
 
     result = orders.insert_one(order)
