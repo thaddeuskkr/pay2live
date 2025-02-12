@@ -35,7 +35,7 @@ def get_queue():
         return make_response({"message": "Invalid service"}, 400)
     previous = queue.find_one(sort=[("_id", pymongo.DESCENDING)])
     dictionary: dict[str, Any] = {
-        "service": service,
+        "service": html.escape(service),
         "number": previous["number"] + 1 if previous else 1,
         "room": None,
         "user": ObjectId(user["_id"]),
@@ -55,7 +55,7 @@ def get_queue():
         response = make_response(
             {
                 "message": "Successfully added to queue",
-                "number": html.escape(abbreviations[html.escape(dictionary["service"])])
+                "number": abbreviations[dictionary["service"]]
                 + str(dictionary["number"]).rjust(3, "0"),
                 "user": user["phone"],
                 "status": dictionary["status"],
