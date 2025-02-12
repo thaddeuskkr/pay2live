@@ -36,6 +36,7 @@ def finalise_cart():
     }
 
     result = orders.insert_one(order)
+    carts.delete_one({"_id": ObjectId(cart["_id"])})
 
     return make_response(
         {
