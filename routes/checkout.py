@@ -16,6 +16,7 @@ def checkout_route(id: str):
         "checkout.html",
         current_page="checkout",
         user=user,
+        order_id=str(order["_id"]),
         order_items=order["items"],
         subtotal=order["total"],
     )
