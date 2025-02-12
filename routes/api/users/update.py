@@ -1,5 +1,6 @@
 from flask import request, make_response
 from app import app, users
+from util import validate_nric
 
 
 @app.route("/api/users/update", methods=["POST"])
@@ -48,6 +49,8 @@ def update_user():
         or len(address4) < 1
     ):
         return make_response({"message": "Invalid text in input fields"}, 400)
+    if not validate_nric(nric):
+        return make_response({"message": "Invalid NRIC"}, 400)
     duplicate_phone = users.find_one({"phone": phone})
     if duplicate_phone and duplicate_phone["session_token"] != session_token:
         return make_response(

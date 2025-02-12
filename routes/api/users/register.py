@@ -1,5 +1,6 @@
 from flask import request, make_response
 from app import app, users
+from util import validate_nric
 
 
 @app.route("/api/users/register", methods=["POST"])
@@ -47,6 +48,8 @@ def register_user():
         or len(address4) < 1
     ):
         return make_response({"message": "Invalid text in input fields"}, 400)
+    if not validate_nric(nric):
+        return make_response({"message": "Invalid NRIC"}, 400)
     if user and user["registered"] == True:
         return make_response(
             {"message": "User with that phone number is already registered"}, 400
