@@ -11,7 +11,7 @@ def checkout_route(id: str):
         return redirect("/login")
     order = orders.find_one({"_id": ObjectId(id)})
     if not order or str(order["user"]) != str(user["_id"]) or order["paid"]:
-        return redirect("/cart")
+        return redirect("/shop")
     return render_template(
         "checkout.html",
         current_page="checkout",
