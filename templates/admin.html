@@ -70,7 +70,7 @@
                             <td>{{ "Yes" if user.registered else "No" }}</td>
                             <td>{{ "Yes" if user.active else "No" }}</td>
                             <td>{{ "Yes" if user.admin else "No" }}</td>
-                            <td class="flex flex-row justify-end py-1">
+                            <td class="flex justify-end py-1">
                                 <button
                                     class="manage-user mr-1 rounded-sm bg-mauve px-2 font-semibold text-crust transition-opacity hover:opacity-80"
                                     data-id="{{ user._id }}"
@@ -236,7 +236,6 @@
                         </div>
                         <div class="relative">
                             <input
-                                disabled
                                 id="phone"
                                 name="phone"
                                 type="tel"
@@ -316,23 +315,231 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="flex">
+                        <div class="flex space-x-2">
                             <button
                                 type="button"
                                 id="deleteUser"
-                                class="mr-1 w-full rounded-md bg-peach px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                class="w-full rounded-md bg-peach px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
                                 Delete Account
                             </button>
                             <button
                                 id="saveUser"
                                 type="submit"
-                                class="mx-1 w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
                                 Save Changes
                             </button>
                             <button
                                 type="button"
                                 id="manageUserCancel"
-                                class="ml-1 w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="{{ 'hidden' if tab != 'shop' }} mb-8 rounded-lg bg-surface0 p-6 shadow-md">
+                <div class="flex justify-between">
+                    <h2 class="text-left text-xl font-semibold text-text">Shop Items</h2>
+                    <button
+                        id="new-item"
+                        class="rounded-md bg-blue px-4 py-2 font-semibold text-crust transition-opacity duration-300 hover:opacity-80">
+                        Add New Item
+                    </button>
+                </div>
+                <table class="mt-4 w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Image</th>
+                            <th class="text-left">ID</th>
+                            <th class="text-left">Name</th>
+                            <th class="text-left">Price</th>
+                            <th class="text-left">Visible</th>
+                            <th class="text-left"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in a_shop %}
+                        <tr>
+                            <td><img src="{{ item.image }}" class="max-w-28" /></td>
+                            <td><code>{{ item._id }}</code></td>
+                            <td>{{ item.name }}</td>
+                            <td>S${{ "%.2f"|format(item.price) }}</td>
+                            <td>{{ "Yes" if item.visible else "No" }}</td>
+                            <td class="py-1">
+                                <button
+                                    class="modify-item mr-1 self-center rounded-sm bg-mauve px-2 font-semibold text-crust transition-opacity hover:opacity-80"
+                                    data-id="{{ item._id }}"
+                                    data-name="{{ item.name }}"
+                                    data-price="{{ '%.2f'|format(item.price) }}"
+                                    data-visible="{{ 'true' if item.visible else 'false' }}"
+                                    data-image="{{ item.image }}">
+                                    Modify
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50" id="modifyItemPopup">
+                <div class="w-full max-w-2xl rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Modify Item</h2>
+                    <form id="modify-item-form" class="space-y-4">
+                        <div class="relative">
+                            <input
+                                id="itemName"
+                                name="itemName"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="itemName"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Name
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="itemPrice"
+                                name="itemPrice"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="itemPrice"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Price
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="itemImage"
+                                name="itemImage"
+                                type="url"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="itemImage"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Image URL
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <select
+                                id="itemVisible"
+                                name="itemVisible"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                required>
+                                <option value="" disabled selected></option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label
+                                for="itemVisible"
+                                class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                Visible
+                            </label>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button
+                                type="button"
+                                id="deleteItem"
+                                class="w-full rounded-md bg-peach px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Delete Item
+                            </button>
+                            <button
+                                id="saveItem"
+                                type="submit"
+                                class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Save Changes
+                            </button>
+                            <button
+                                type="button"
+                                id="modifyItemCancel"
+                                class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50" id="newItemPopup">
+                <div class="w-full max-w-2xl rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Add New Item</h2>
+                    <form id="new-item-form" class="space-y-4">
+                        <div class="relative">
+                            <input
+                                id="newItemName"
+                                name="newItemName"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="newItemName"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Name
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="newItemPrice"
+                                name="newItemPrice"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="newItemPrice"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Price
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="newItemImage"
+                                name="newItemImage"
+                                type="url"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="newItemImage"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Image URL
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <select
+                                id="newItemVisible"
+                                name="newItemVisible"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                required>
+                                <option value="" disabled selected></option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label
+                                for="newItemVisible"
+                                class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                Visible
+                            </label>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button
+                                id="saveItem"
+                                type="submit"
+                                class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Add Item
+                            </button>
+                            <button
+                                type="button"
+                                id="newItemCancel"
+                                class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
                                 Cancel
                             </button>
                         </div>
