@@ -32,7 +32,6 @@ $(function () {
                 address2: address2,
                 address3: address3,
                 address4: address4,
-                role: 'patient',
             }),
         }).then(async (response) => {
             console.log(response);
