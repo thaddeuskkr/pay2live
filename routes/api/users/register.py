@@ -46,6 +46,10 @@ def register_user():
         or len(address4) < 1
     ):
         return make_response({"message": "Invalid text in input fields"}, 400)
+    if not re.match(r"^[a-zA-Z]+$", first_name):
+        return make_response({"message": "Invalid first name"}, 400)
+    if not re.match(r"^[a-zA-Z]+$", last_name):
+        return make_response({"message": "Invalid last name"}, 400)
     if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
         return make_response({"message": "Invalid email address"}, 400)
     if not validate_nric(nric):
