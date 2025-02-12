@@ -23,8 +23,8 @@ def delete_appointment():
         response = make_response({"message": "Appointment not found"}, 404)
         return response
     if (
-        appointment["user"] != user["_id"]
-        and appointment["doctor"] != user["_id"]
+        str(appointment["user"]) != str(user["_id"])
+        and str(appointment["doctor"]) != str(user["_id"])
         and not user["admin"]
     ):
         response = make_response(

@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request
 from app import app, users, queue
 from config import abbreviations, services
+from bson import ObjectId
 import math
 import pymongo
 
@@ -27,7 +28,9 @@ def queue_route():
             queue_number["raw"] = queue_number
             queue_number["service_name"] = services[queue_number["service"]]
             queue_number["service_abbr"] = abbreviations[queue_number["service"]]
-            queue_number["user"] = users.find_one({"_id": queue_number["user"]})
+            queue_number["user"] = users.find_one(
+                {"_id": ObjectId(queue_number["user"])}
+            )
         return render_template(
             "manage_queue.html",
             current_page="queue",

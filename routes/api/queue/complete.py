@@ -43,10 +43,12 @@ def complete_queue():
         )
     if dictionary["status"] != "current":
         return make_response({"message": "Queue number not called"}, 400)
-    called_user = users.find_one({"_id": dictionary["user"]})
+    called_user = users.find_one({"_id": ObjectId(dictionary["user"])})
     if not called_user:
         return make_response({"message": "User not found"}, 404)
-    queue.update_one({"_id": dictionary["_id"]}, {"$set": {"status": "completed"}})
+    queue.update_one(
+        {"_id": ObjectId(dictionary["_id"])}, {"$set": {"status": "completed"}}
+    )
     request_response = requests.post(
         "https://develop.tkkr.dev/message",
         json={

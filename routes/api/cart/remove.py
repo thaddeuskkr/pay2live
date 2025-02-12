@@ -21,7 +21,7 @@ def remove_cart():
     item: str = data.get("item")
     quantity: str | int = data.get("quantity")
 
-    if ObjectId(item) not in [item["_id"] for item in shop.find()]:
+    if item not in [str(item["_id"]) for item in shop.find()]:
         return make_response({"message": "Item not found"}, 404)
 
     try:

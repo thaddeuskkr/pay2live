@@ -1,4 +1,5 @@
 from typing import Any
+from bson import ObjectId
 import requests
 import os
 import pymongo
@@ -6,6 +7,7 @@ from flask import request, make_response
 from app import app, ready, users, queue
 from config import abbreviations
 import html
+
 
 @app.route("/api/queue/get", methods=["POST"])
 def get_queue():
@@ -36,7 +38,7 @@ def get_queue():
         "service": service,
         "number": previous["number"] + 1 if previous else 1,
         "room": None,
-        "user": user["_id"],
+        "user": ObjectId(user["_id"]),
         "status": "waiting",
     }
     queue.insert_one(dictionary)

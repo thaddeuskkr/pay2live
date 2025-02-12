@@ -1,3 +1,4 @@
+from bson import ObjectId
 import requests
 import os
 from flask import request, make_response
@@ -32,10 +33,10 @@ def delete_queue():
     dictionary = queue.find_one({"number": int(queue_number)})
     if not dictionary:
         return make_response({"message": "Queue number not found"}, 404)
-    called_user = users.find_one({"_id": dictionary["user"]})
+    called_user = users.find_one({"_id": ObjectId(dictionary["user"])})
     if not called_user:
         return make_response({"message": "User not found"}, 404)
-    queue.delete_one({"_id": dictionary["_id"]})
+    queue.delete_one({"_id": ObjectId(dictionary["_id"])})
     request_response = requests.post(
         "https://develop.tkkr.dev/message",
         json={

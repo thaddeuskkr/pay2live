@@ -38,7 +38,9 @@ def call_queue():
         )
     previous_patient = queue.find_one({"room": int(room), "status": "current"})
     if previous_patient:
-        previous_patient_user = users.find_one({"_id": previous_patient["user"]})
+        previous_patient_user = users.find_one(
+            {"_id": ObjectId(previous_patient["user"])}
+        )
         if not previous_patient_user:
             return make_response({"message": "User not found"}, 404)
         request_response = requests.post(
@@ -51,7 +53,7 @@ def call_queue():
             headers={"Authorization": os.environ["OTP_TOKEN"]},
         )
         queue.update_one(
-            {"_id": previous_patient["_id"]}, {"$set": {"status": "missed"}}
+            {"_id": ObjectId(previous_patient["_id"])}, {"$set": {"status": "missed"}}
         )
     dictionary = None
     if patient:
@@ -62,11 +64,12 @@ def call_queue():
         return make_response({"message": "Queue number or patient not found"}, 404)
     if dictionary["status"] not in ["waiting", "missed"]:
         return make_response({"message": "Queue number already called"}, 400)
-    called_user = users.find_one({"_id": dictionary["user"]})
+    called_user = users.find_one({"_id": ObjectId(dictionary["user"])})
     if not called_user:
         return make_response({"message": "User not found"}, 404)
     queue.update_one(
-        {"_id": dictionary["_id"]}, {"$set": {"status": "current", "room": int(room)}}
+        {"_id": ObjectId(dictionary["_id"])},
+        {"$set": {"status": "current", "room": int(room)}},
     )
     request_response = requests.post(
         "https://develop.tkkr.dev/message",

@@ -2,7 +2,7 @@ from zoneinfo import ZoneInfo
 from flask import render_template, request, redirect
 from app import app, appointments, users
 from config import services
-from bson.objectid import ObjectId
+from bson import ObjectId
 from datetime import datetime
 import time
 
@@ -62,8 +62,8 @@ def appointments_route():
             int(appointment["timestamp"]) / 1000, tz=ZoneInfo("Asia/Singapore")
         )
         appointment["service"] = services[appointment["service"]]
-        appointment["doctor"] = users.find_one({"_id": appointment["doctor"]})
-        appointment["user"] = users.find_one({"_id": appointment["user"]})
+        appointment["doctor"] = users.find_one({"_id": ObjectId(appointment["doctor"])})
+        appointment["user"] = users.find_one({"_id": ObjectId(appointment["user"])})
         appointment["date"] = datetime_object.strftime(
             "%d/%m/%Y",
         )
@@ -83,5 +83,5 @@ def appointments_route():
         patients=users.find({"role": "patient"}),
         services=services_list,
         user=user,
-        date=datetime.now().astimezone(ZoneInfo('Asia/Singapore')).strftime('%Y-%m-%d')
+        date=datetime.now().astimezone(ZoneInfo("Asia/Singapore")).strftime("%Y-%m-%d"),
     )

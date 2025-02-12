@@ -1,4 +1,5 @@
 from typing import Any
+from bson import ObjectId
 from flask import render_template, request, redirect
 from app import app, users, shop, carts
 
@@ -10,11 +11,11 @@ def shop_route():
     if not user:
         return redirect("/login")
     items = list(shop.find())
-    cart = carts.find_one({"user": user["_id"]}) if user else None
+    cart = carts.find_one({"user": ObjectId(user["_id"])}) if user else None
     cart_items: list[dict[str, Any]] = []
     if cart:
         for item in cart["items"]:
-            item_data = shop.find_one({"_id": item["id"]})
+            item_data = shop.find_one({"_id": ObjectId(item["id"])})
             cart_items.append(
                 {
                     "info": item_data,
