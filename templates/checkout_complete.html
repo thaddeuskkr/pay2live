@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %} {% include 'includes/head.html' %} {% endblock %}
+    </head>
+
+    <body class="bg-base text-text">
+        {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mx-auto mt-32 w-full max-w-md rounded-lg bg-surface0 p-8 shadow-md">
+            <div class="text-center">
+                <svg
+                    class="mx-auto h-24 w-24 text-green"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+
+                <h1 class="mt-4 text-3xl font-bold text-text">Thank You!</h1>
+                <p class="mt-2 text-lg text-subtext0">Your order has been successfully placed.</p>
+
+                <div class="mt-8">
+                    <p class="text-subtext0">Amount Paid</p>
+                    <p class="text-4xl font-bold text-text">S${{ "%.2f"|format(subtotal) }}</p>
+                </div>
+
+                <div class="mt-6">
+                    <p class="text-subtext0">Order ID</p>
+                    <code class="rounded-md text-xl font-semibold text-pink">{{ order_id }}</code>
+                </div>
+
+                <p class="mt-6 text-sm text-subtext0">
+                    We've sent confirmation of your order to your registered phone number via WhatsApp.
+                </p>
+
+                <!-- TODO: Maybe for later use :)
+                <button
+                    class="mt-8 rounded-md bg-blue px-6 py-3 font-semibold text-crust transition-opacity hover:opacity-80">
+                    View Order Details
+                </button>
+                -->
+
+                <p class="mt-6 text-sm text-subtext0">If you have any questions, please contact support.</p>
+            </div>
+        </div>
+    </body>
+</html>

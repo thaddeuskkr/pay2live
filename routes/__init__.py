@@ -10,6 +10,7 @@ from .profile import *
 from .queue import *
 from .admin import *
 from .checkout import *
+from .checkout_complete import *
 from .contact import *
 
 __all__ = [
@@ -25,5 +26,6 @@ __all__ = [
     "queue",
     "admin",
     "checkout",
+    "checkout_complete",
     "contact",
 ]
