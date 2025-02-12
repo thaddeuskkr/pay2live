@@ -11,7 +11,7 @@
             <h1 class="mb-4 pt-16 text-center text-3xl font-bold text-text">Shop</h1>
             <div class="container mx-auto px-4 py-8">
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" id="shop-items">
-                    {% for item in shop_items %}
+                    {% for item in shop_items %} {% if item.visible %}
                     <div class="relative rounded-lg bg-surface0 p-6 shadow-md">
                         <img src="{{ item.image }}" class="mb-4 aspect-square w-fit rounded-lg object-cover" />
                         <h3 class="mb-2 text-xl font-bold">{{ item.name }}</h3>
@@ -22,7 +22,7 @@
                             Add to Cart
                         </button>
                     </div>
-                    {% endfor %}
+                    {% endif %} {% endfor %}
                 </div>
                 <div class="mt-8 rounded-lg bg-surface0 p-6 shadow-md">
                     <h2 class="mb-4 text-2xl font-bold">Cart</h2>
