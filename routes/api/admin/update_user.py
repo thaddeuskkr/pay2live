@@ -103,6 +103,9 @@ def a_update_user():
                 "address2": address2,
                 "address3": address3 or None,
                 "address4": address4,
+                "session_token": (
+                    user_to_update["session_token"] if active == "true" else None
+                ),
             }
         },
     )
