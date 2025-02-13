@@ -41,6 +41,15 @@
                 </button>
                 -->
 
+                <div class="text-center">
+                <h2 class="mt-4 text-xl font-bold">Items</h2>
+                <ul>
+                    {% for item in order_items %}
+                        <li>{{ item.info.name }} (S${{ "%.2f"|format(item.info.price) }} x {{ item.quantity }})</li>
+                    {% endfor %}
+                </ul>
+                </div>
+
                 <p class="mt-6 text-sm text-subtext0">If you have any questions, please contact support.</p>
             </div>
         </div>
