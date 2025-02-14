@@ -106,6 +106,10 @@ $(function () {
             if (response.status == 200) {
                 alert('Appointment booked successfully!');
                 $('#bookingPopup').addClass('hidden').removeClass('flex');
+                $('#patient-id').val('');
+                $('#service').val('');
+                $('#date').val('');
+                $('#time').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to book appointment: ${data.message}`);

@@ -151,6 +151,20 @@ $(function () {
             if (response.status == 200) {
                 alert('User added successfully!');
                 $('#newUserPopup').addClass('hidden').removeClass('flex');
+                $('#newFirstName').val('');
+                $('#newLastName').val('');
+                $('#newEmail').val('');
+                $('#newPhone').val('');
+                $('#newGender').val('');
+                $('#newNric').val('');
+                $('#newAddressLine1').val('');
+                $('#newAddressLine2').val('');
+                $('#newAddressLine3').val('');
+                $('#newPostalCode').val('');
+                $('#newRole').val('patient');
+                $('#newAdmin').val('false');
+                $('#newRegistered').val('true');
+                $('#newActive').val('true');
                 window.location.reload();
             } else {
                 alert(`Failed to add user: ${data.message}`);
@@ -255,6 +269,10 @@ $(function () {
             if (response.status == 200) {
                 alert('Item added successfully!');
                 $('#newItemPopup').addClass('hidden').removeClass('flex');
+                $('#newItemName').val('');
+                $('#newItemPrice').val('');
+                $('#newItemImage').val('');
+                $('#newItemVisible').val('true');
                 window.location.reload();
             } else {
                 alert(`Failed to add item: ${data.message}`);
