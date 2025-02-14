@@ -1,9 +1,8 @@
-import os
 import re
 import secrets
 from flask import request, make_response, escape
 import requests
-from app import app, users
+from app import app, users, otp_token, whatsapp_api_url
 from util import validate_nric
 
 
@@ -45,13 +44,13 @@ def update_user():
     if not otp or len(otp) != 6:
         otp = str(secrets.randbelow(10**6)).rjust(6, "0")
         request_response = requests.post(
-            f"{os.environ["WHATSAPP_API_URL"]}",
+            f"{whatsapp_api_url}",
             json={
                 "to": f"65{phone}",
                 "from": "pay2live",
                 "message": f"*{otp}* is your one-time password to finish updating your profile on *pay2live*. Do not share this OTP with anyone.",
             },
-            headers={"Authorization": os.environ["OTP_TOKEN"]},
+            headers={"Authorization": otp_token},
         )
         users.update_one({"session_token": session_token}, {"$set": {"otp2": otp}})
         if request_response.status_code == 200:

@@ -1,8 +1,7 @@
 from bson import ObjectId
 import requests
-import os
 from flask import request, make_response
-from app import app, ready, users, queue
+from app import app, ready, users, queue, otp_token, whatsapp_api_url
 from config import abbreviations
 
 
@@ -38,13 +37,13 @@ def delete_queue():
         return make_response({"message": "User not found"}, 404)
     queue.delete_one({"_id": ObjectId(dictionary["_id"])})
     request_response = requests.post(
-        f"{os.environ["WHATSAPP_API_URL"]}",
+        f"{whatsapp_api_url}",
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",
             "message": f"{called_user["first_name"]} {called_user["last_name"]},\nYour queue number *{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* has been cancelled.",
         },
-        headers={"Authorization": os.environ["OTP_TOKEN"]},
+        headers={"Authorization": otp_token},
     )
     if request_response.status_code == 200:
         response = make_response(

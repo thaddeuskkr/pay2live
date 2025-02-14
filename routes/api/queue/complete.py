@@ -1,8 +1,7 @@
 from bson import ObjectId
 import requests
-import os
 from flask import request, make_response
-from app import app, ready, users, queue
+from app import app, ready, users, queue, otp_token, whatsapp_api_url
 from config import abbreviations
 
 
@@ -50,13 +49,13 @@ def complete_queue():
         {"_id": ObjectId(dictionary["_id"])}, {"$set": {"status": "completed"}}
     )
     request_response = requests.post(
-        f"{os.environ["WHATSAPP_API_URL"]}",
+        f"{whatsapp_api_url}",
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",
             "message": f"{called_user["first_name"]} {called_user["last_name"]},\nThank you for visiting our clinic.",
         },
-        headers={"Authorization": os.environ["OTP_TOKEN"]},
+        headers={"Authorization": otp_token},
     )
     if request_response.status_code == 200:
         response = make_response(

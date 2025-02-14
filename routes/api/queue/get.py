@@ -1,10 +1,9 @@
 from typing import Any
 from bson import ObjectId
 import requests
-import os
 import pymongo
 from flask import request, make_response
-from app import app, ready, users, queue
+from app import app, ready, users, queue, otp_token, whatsapp_api_url
 from config import abbreviations
 import html
 
@@ -43,13 +42,13 @@ def get_queue():
     }
     queue.insert_one(dictionary)
     request_response = requests.post(
-        f"{os.environ["WHATSAPP_API_URL"]}",
+        f"{whatsapp_api_url}",
         json={
             "to": f"65{user["phone"]}",
             "from": "pay2live",
             "message": f"*{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* is your queue number.",
         },
-        headers={"Authorization": os.environ["OTP_TOKEN"]},
+        headers={"Authorization": otp_token},
     )
     if request_response.status_code == 200:
         response = make_response(

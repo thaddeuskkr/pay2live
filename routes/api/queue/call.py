@@ -1,8 +1,7 @@
 from bson import ObjectId
 import requests
-import os
 from flask import request, make_response
-from app import app, ready, users, queue
+from app import app, ready, users, queue, otp_token, whatsapp_api_url
 from config import abbreviations
 
 
@@ -44,13 +43,13 @@ def call_queue():
         if not previous_patient_user:
             return make_response({"message": "User not found"}, 404)
         request_response = requests.post(
-            f"{os.environ["WHATSAPP_API_URL"]}",
+            f"{whatsapp_api_url}",
             json={
                 "to": f"65{previous_patient_user['phone']}",
                 "from": "pay2live",
                 "message": f"{previous_patient_user['first_name']} {previous_patient_user["last_name"]},\nYou have just missed your queue number *{abbreviations[previous_patient['service']]}{str(previous_patient['number']).rjust(3, '0')}*.\nPlease speak to the clinic staff if you require further assistance.",
             },
-            headers={"Authorization": os.environ["OTP_TOKEN"]},
+            headers={"Authorization": otp_token},
         )
         queue.update_one(
             {"_id": ObjectId(previous_patient["_id"])}, {"$set": {"status": "missed"}}
@@ -72,13 +71,13 @@ def call_queue():
         {"$set": {"status": "current", "room": int(room)}},
     )
     request_response = requests.post(
-        f"{os.environ["WHATSAPP_API_URL"]}",
+        f"{whatsapp_api_url}",
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",
             "message": f"{called_user["first_name"]} {called_user["last_name"]},\nYour queue number *{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* has been called.\nPlease proceed to room {room} immediately.",
         },
-        headers={"Authorization": os.environ["OTP_TOKEN"]},
+        headers={"Authorization": otp_token},
     )
     if request_response.status_code == 200:
         response = make_response(

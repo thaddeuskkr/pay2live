@@ -1,5 +1,5 @@
 from flask import make_response, request, redirect
-from app import app, users
+from app import app, users, debug
 
 
 @app.route("/logout")
@@ -17,5 +17,15 @@ def logout():
                 {"$set": {"session_token": None}},
             )
     response = make_response(redirect("/"))
-    response.set_cookie("session_token", "", expires=0)
+    response.set_cookie(
+        "session_token",
+        httponly=True,
+        secure=(debug == False),
+        samesite="Lax",
+        value="",
+        max_age=None,
+        expires=None,
+        path="/",
+        domain=None,
+    )
     return response

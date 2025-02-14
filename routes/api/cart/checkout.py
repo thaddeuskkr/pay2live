@@ -1,8 +1,7 @@
-import os
 from bson import ObjectId
 from flask import request, make_response
 import requests
-from app import app, users, orders
+from app import app, users, orders, otp_token, whatsapp_api_url
 from util import luhn_check
 from datetime import datetime
 import re
@@ -110,13 +109,13 @@ def checkout():
     )
 
     request_response = requests.post(
-        f"{os.environ["WHATSAPP_API_URL"]}",
+        f"{whatsapp_api_url}",
         json={
             "to": f"65{user["phone"]}",
             "from": "pay2live",
             "message": f"*_Your order has been confirmed._*\n*Order ID:* `{order_id}`\n\n*Your order:*\n{order_info}\n\n*Subtotal:* ${order["total"]:.2f}\n\n*Ship to:*\n{first_name} {last_name}\n{address1}\n{address2}{f"\n{address3}" if address3 else ""}\nSingapore {address4}\n\n*Payment:* Card ending with {card_number[-4:]}",
         },
-        headers={"Authorization": os.environ["OTP_TOKEN"]},
+        headers={"Authorization": otp_token},
     )
 
     print(request_response)
