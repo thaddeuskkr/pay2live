@@ -184,19 +184,44 @@
                             Phone Number
                         </label>
                     </div>
+                    <div class="relative hidden" id="otp-div">
+                        <input
+                            id="otp"
+                            name="otp"
+                            type="text"
+                            pattern="[0-9]{6}"
+                            class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                            placeholder=""
+                            minlength="6"
+                            maxlength="6" />
+                        <label
+                            for="otp"
+                            class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                            OTP
+                        </label>
+                    </div>
                     <button
                         id="edit-button"
                         type="submit"
                         class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
                         Apply Changes
                     </button>
-                    <button
-                        id="delete-button"
-                        type="button"
-                        onclick="deleteAccount()"
-                        class="w-full rounded-md bg-peach px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
-                        Deactivate Account
-                    </button>
+                    <div class="flex space-x-3">
+                        <button
+                            id="delete-button"
+                            type="button"
+                            onclick="deleteAccount()"
+                            class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                            Deactivate Account
+                        </button>
+                        <button
+                            id="logout-all-devices-button"
+                            type="button"
+                            onclick="logoutAllDevices()"
+                            class="w-full rounded-md bg-lavender px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                            Logout All Devices
+                        </button>
+                    </div>
                 </form>
                 <div id="message-box" class="mt-4 hidden rounded-md px-4 py-2">
                     <p class="font-medium text-crust" id="message-content">{{ message }}</p>

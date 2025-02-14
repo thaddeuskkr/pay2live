@@ -17,6 +17,7 @@ class User:
         address4: str | None = None,
         session_token: str | None = None,
         otp: str | None = None,
+        otp2: str | None = None,
         admin: bool = False,
         registered: bool = False,
         active: bool = True,
@@ -34,6 +35,7 @@ class User:
         self.address4 = address4
         self.session_token = session_token
         self.otp = otp
+        self.otp2 = otp2
         self.admin = admin
         self.registered = registered
         self.active = active
@@ -53,6 +55,7 @@ class User:
             "address4": self.address4,
             "session_token": self.session_token,
             "otp": self.otp,
+            "otp2": self.otp2,
             "admin": self.admin,
             "registered": self.registered,
             "active": self.active,
@@ -74,6 +77,7 @@ class User:
             address4=data.get("address4"),
             session_token=data.get("session_token"),
             otp=data.get("otp"),
+            otp2=data.get("otp2"),
             admin=data.get("admin") == "True",
             registered=data.get("registered") == "True",
             active=data.get("active") == "True",

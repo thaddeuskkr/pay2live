@@ -11,6 +11,7 @@ $(function () {
         const address3 = $('#addressLine3').val();
         const address4 = $('#postalCode').val();
         const phone = $('#phone').val();
+        const otp = $('#otp').val();
 
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Applying changes...');
@@ -30,6 +31,7 @@ $(function () {
                 address3: address3,
                 address4: address4,
                 phone: phone,
+                otp: otp,
             }),
         }).then(async (response) => {
             console.log(response);
@@ -39,6 +41,11 @@ $(function () {
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
+            } else if (response.status === 418) {
+                const data = await response.json();
+                $('#otp-div').removeClass('hidden').attr('required', 'required');
+                $('#message-box').removeClass('bg-green').addClass('bg-red');
+                $('#message-content').text(data.message);
             } else {
                 const data = await response.json();
                 $('#message-box').removeClass('bg-green').addClass('bg-red');
@@ -49,21 +56,17 @@ $(function () {
 });
 
 function deleteAccount() {
-    $('#delete-button').text('Confirm Deactivation');
-    $('#delete-button').addClass('bg-red').removeClass('bg-peach');
-    $('#delete-button').attr('onclick', 'confirmDelete()');
-    setTimeout(() => {
-        $('#delete-button').text('Deactivate Account');
-        $('#delete-button').addClass('bg-peach').removeClass('bg-red');
-        $('#delete-button').attr('onclick', 'deleteAccount()');
-    }, 5000);
-}
-
-function confirmDelete() {
+    const otp = $('#otp').val();
     $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
     $('#message-content').html('Deactivating account...');
     fetch('/api/users/deactivate', {
-        method: 'DELETE',
+        method: 'POST',
+        body: JSON.stringify({
+            otp: otp,
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
     }).then(async (response) => {
         if (response.status === 200) {
             $('#message-box').removeClass('bg-red').addClass('bg-green');
@@ -71,10 +74,34 @@ function confirmDelete() {
             setTimeout(() => {
                 window.location.href = '/logout?reset_token=1';
             }, 1000);
+        } else if (response.status === 418) {
+            const data = await response.json();
+            $('#otp-div').removeClass('hidden').attr('required', 'required');
+            $('#message-box').removeClass('bg-green').addClass('bg-red');
+            $('#message-content').text(data.message);
         } else {
             const data = await response.json();
             $('#message-box').removeClass('bg-green').addClass('bg-red');
             $('#message-content').text(data.message);
         }
     });
+}
+
+function logoutAllDevices() {
+    $('#logout-all-devices-button').text('Confirm Logout of All Devices');
+    $('#logout-all-devices-button').addClass('bg-red').removeClass('bg-lavender');
+    $('#logout-all-devices-button').attr('onclick', 'confirmLogoutAllDevices()');
+    setTimeout(() => {
+        $('#logout-all-devices-button').text('Logout All Devices');
+        $('#logout-all-devices-button').addClass('bg-lavender').removeClass('bg-red');
+        $('#logout-all-devices-button').attr('onclick', 'logoutAllDevices()');
+    }, 5000);
+}
+
+function confirmLogoutAllDevices() {
+    $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
+    $('#message-content').html('Logging out of all devices...');
+    setTimeout(() => {
+        window.location.href = '/logout?reset_token=1';
+    }, 1000);
 }

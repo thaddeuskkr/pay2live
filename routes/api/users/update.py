@@ -1,5 +1,8 @@
+import os
 import re
+import secrets
 from flask import request, make_response
+import requests
 from app import app, users
 from util import validate_nric
 
@@ -37,6 +40,45 @@ def update_user():
     address2: str = data.get("address2")
     address3: str = data.get("address3")
     address4: str = data.get("address4")
+    otp: str = data.get("otp")
+
+    if not otp or len(otp) != 6:
+        otp = str(secrets.randbelow(10**6)).rjust(6, "0")
+        request_response = requests.post(
+            "https://develop.tkkr.dev/message",
+            json={
+                "to": f"65{phone}",
+                "from": "pay2live",
+                "message": f"*{otp}* is your one-time password to finish updating your profile on *pay2live*. Do not share this OTP with anyone.",
+            },
+            headers={"Authorization": os.environ["OTP_TOKEN"]},
+        )
+        users.update_one({"session_token": session_token}, {"$set": {"otp2": otp}})
+        if request_response.status_code == 200:
+            response = make_response(
+                {
+                    "phone": phone,
+                    "message": f'An OTP has been sent to {phone} for verification. Enter the OTP and click "Apply Changes" to continue.',
+                },
+                418,
+            )
+            return response
+        else:
+            response = make_response(
+                {
+                    "phone": phone,
+                    "message": f"Failed to send OTP to {phone}. Please try again later.",
+                },
+                500,
+            )
+            return response
+
+    if otp != user["otp2"]:
+        return make_response(
+            {"message": "Invalid OTP provided. Please try again."}, 400
+        )
+    else:
+        users.update_one({"session_token": session_token}, {"$set": {"otp2": None}})
 
     if (
         len(first_name) < 1

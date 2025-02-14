@@ -51,8 +51,12 @@ def send_otp():
     else:
         users.insert_one(userC.to_dict())
     request_response = requests.post(
-        "https://develop.tkkr.dev/otp",
-        json={"to": f"65{phone}", "from": "pay2live", "otp": otp},
+        "https://develop.tkkr.dev/message",
+        json={
+            "to": f"65{phone}",
+            "from": "pay2live",
+            "message": f"*{otp}* is your one-time password to log in to *pay2live*. Do not share this OTP with anyone.",
+        },
         headers={"Authorization": os.environ["OTP_TOKEN"]},
     )
     if request_response.status_code == 200:
@@ -68,7 +72,7 @@ def send_otp():
         response = make_response(
             {
                 "phone": phone,
-                "message": "Failed to send OTP. Please try again later.",
+                "message": f"Failed to send OTP to {phone}. Please try again later.",
             },
             500,
         )
