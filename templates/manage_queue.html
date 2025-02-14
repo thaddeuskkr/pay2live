@@ -23,6 +23,7 @@
                     Refresh
                 </button>
             </div>
+            {% if queue_numbers|length > 0 %}
             <table class="border border-text">
                 <thead>
                     <tr>
@@ -68,6 +69,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% endif %}
         </div>
     </body>
 </html>
