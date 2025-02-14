@@ -34,6 +34,22 @@ def finalise_cart():
         "total": subtotal,
         "paid": False,
         "fulfilled": False,
+        "payment": {
+            "name": None,
+            "card_number": None,
+            "card_expiry": None,
+            "card_cvv": None,
+        },
+        "shipping": {
+            "first_name": None,
+            "last_name": None,
+            "email": None,
+            "phone": None,
+            "address1": None,
+            "address2": None,
+            "address3": None,
+            "address4": None,
+        },
     }
 
     result = orders.insert_one(order)

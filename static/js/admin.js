@@ -261,4 +261,78 @@ $(function () {
             }
         });
     });
+    $('#manageOrderCancel').on('click', function () {
+        $('#manageOrderPopup').removeClass('flex').addClass('hidden');
+    });
+    $('.manage-order').on('click', function (e) {
+        e.preventDefault();
+        const id = $(e.currentTarget).attr('data-id');
+        const shipping_firstName = $(e.currentTarget).attr('data-shipping-first_name');
+        const shipping_lastName = $(e.currentTarget).attr('data-shipping-last_name');
+        const shipping_email = $(e.currentTarget).attr('data-shipping-email');
+        const shipping_phone = $(e.currentTarget).attr('data-shipping-phone');
+        const shipping_address1 = $(e.currentTarget).attr('data-shipping-address1');
+        const shipping_address2 = $(e.currentTarget).attr('data-shipping-address2');
+        const shipping_address3 = $(e.currentTarget).attr('data-shipping-address3');
+        const shipping_address4 = $(e.currentTarget).attr('data-shipping-address4');
+        const paid = $(e.currentTarget).attr('data-paid');
+        const fulfilled = $(e.currentTarget).attr('data-fulfilled');
+
+        $('#orderPaid').val(paid);
+        $('#orderFulfilled').val(fulfilled);
+        $('#shippingFirstName').val(shipping_firstName);
+        $('#shippingLastName').val(shipping_lastName);
+        $('#shippingEmail').val(shipping_email);
+        $('#shippingPhone').val(shipping_phone);
+        $('#shippingAddress1').val(shipping_address1);
+        $('#shippingAddress2').val(shipping_address2);
+        $('#shippingAddress3').val(shipping_address3);
+        $('#shippingPostalCode').val(shipping_address4);
+        $('#manage-order-form').attr('data-id', id);
+        $('#manageOrderPopup').removeClass('hidden').addClass('flex');
+    });
+
+    $('#manage-order-form').on('submit', function (e) {
+        e.preventDefault();
+        const id = $('#manage-order-form').attr('data-id');
+        const paid = $('#orderPaid').val();
+        const fulfilled = $('#orderFulfilled').val();
+        const shippingFirstName = $('#shippingFirstName').val();
+        const shippingLastName = $('#shippingLastName').val();
+        const shippingEmail = $('#shippingEmail').val();
+        const shippingPhone = $('#shippingPhone').val();
+        const shippingAddress1 = $('#shippingAddress1').val();
+        const shippingAddress2 = $('#shippingAddress2').val();
+        const shippingAddress3 = $('#shippingAddress3').val();
+        const shippingAddress4 = $('#shippingPostalCode').val();
+
+        fetch('/api/admin/orders/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                paid: paid,
+                fulfilled: fulfilled,
+                first_name: shippingFirstName,
+                last_name: shippingLastName,
+                email: shippingEmail,
+                phone: shippingPhone,
+                address1: shippingAddress1,
+                address2: shippingAddress2,
+                address3: shippingAddress3,
+                address4: shippingAddress4,
+            }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Order updated successfully!');
+                $('#manageOrderPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to update order: ${data.message}`);
+            }
+        });
+    });
 });

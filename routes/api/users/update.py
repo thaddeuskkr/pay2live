@@ -100,6 +100,8 @@ def update_user():
         return make_response({"message": "Invalid email address"}, 400)
     if not re.match(r"^\d{8}$", phone):
         return make_response({"message": "Invalid phone number"}, 400)
+    if not re.match(r"^\d{6}$", address4):
+        return make_response({"message": "Invalid postal code"}, 400)
     if not validate_nric(nric):
         return make_response({"message": "Invalid NRIC"}, 400)
     duplicate_phone = users.find_one({"phone": phone})

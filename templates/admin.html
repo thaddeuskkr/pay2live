@@ -229,6 +229,7 @@
                                 class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                                 placeholder=" "
                                 required
+                                pattern="[0-9]{6}"
                                 minlength="6"
                                 maxlength="6" />
                             <label
@@ -252,8 +253,8 @@
                                 Phone Number
                             </label>
                         </div>
-                        <div class="flex">
-                            <div class="relative mr-1 w-full">
+                        <div class="flex space-x-4">
+                            <div class="relative w-full">
                                 <select
                                     id="role"
                                     name="role"
@@ -269,7 +270,7 @@
                                     Role
                                 </label>
                             </div>
-                            <div class="relative mx-1 w-full">
+                            <div class="relative w-full">
                                 <select
                                     id="registered"
                                     name="registered"
@@ -285,7 +286,7 @@
                                     Registered
                                 </label>
                             </div>
-                            <div class="relative mx-1 w-full">
+                            <div class="relative w-full">
                                 <select
                                     id="active"
                                     name="active"
@@ -301,7 +302,7 @@
                                     Active
                                 </label>
                             </div>
-                            <div class="relative ml-1 w-full">
+                            <div class="relative w-full">
                                 <select
                                     id="admin"
                                     name="admin"
@@ -318,7 +319,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-4">
                             <button
                                 type="button"
                                 id="deleteUser"
@@ -471,6 +472,7 @@
                                 class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
                                 placeholder=" "
                                 required
+                                pattern="[0-9]{6}"
                                 minlength="6"
                                 maxlength="6" />
                             <label
@@ -494,8 +496,8 @@
                                 Phone Number
                             </label>
                         </div>
-                        <div class="flex">
-                            <div class="relative mr-1 w-full">
+                        <div class="flex space-x-4">
+                            <div class="relative w-full">
                                 <select
                                     id="newRole"
                                     name="newRole"
@@ -511,7 +513,7 @@
                                     Role
                                 </label>
                             </div>
-                            <div class="relative mx-1 w-full">
+                            <div class="relative w-full">
                                 <select
                                     id="newRegistered"
                                     name="newRegistered"
@@ -527,7 +529,7 @@
                                     Registered
                                 </label>
                             </div>
-                            <div class="relative mx-1 w-full">
+                            <div class="relative w-full">
                                 <select
                                     id="newActive"
                                     name="newActive"
@@ -543,7 +545,7 @@
                                     Active
                                 </label>
                             </div>
-                            <div class="relative ml-1 w-full">
+                            <div class="relative w-full">
                                 <select
                                     id="newAdmin"
                                     name="newAdmin"
@@ -560,7 +562,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-4">
                             <button
                                 id="newUser"
                                 type="submit"
@@ -679,7 +681,7 @@
                                 Visible
                             </label>
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-4">
                             <button
                                 type="button"
                                 id="deleteItem"
@@ -764,7 +766,7 @@
                                 Visible
                             </label>
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-4">
                             <button
                                 id="newItem"
                                 type="submit"
@@ -795,12 +797,27 @@
                     </thead>
                     <tbody>
                         {% for order in a_orders %}
-                        <tr class="cursor-pointer border-y border-subtext0 transition-colors hover:bg-surface1">
+                        <tr
+                            class="manage-order cursor-pointer border-y border-subtext0 transition-colors hover:bg-surface1"
+                            data-id="{{ order._id }}"
+                            data-shipping-first_name="{{ order.shipping.first_name or '' }}"
+                            data-shipping-last_name="{{ order.shipping.last_name or '' }}"
+                            data-shipping-email="{{ order.shipping.email or '' }}"
+                            data-shipping-phone="{{ order.shipping.phone or '' }}"
+                            data-shipping-address1="{{ order.shipping.address1 or '' }}"
+                            data-shipping-address2="{{ order.shipping.address2 or '' }}"
+                            data-shipping-address3="{{ order.shipping.address3 or '' }}"
+                            data-shipping-address4="{{ order.shipping.address4 or '' }}"
+                            data-paid="{{ 'true' if order.paid else 'false' }}"
+                            data-fulfilled="{{ 'true' if order.fulfilled else 'false' }}">
                             <td class="py-1"><code>{{ order._id }}</code></td>
                             <td class="py-1">
                                 <ul>
                                     {% for item in order["items"] %}
-                                    <li>{{ item.info.name }} - x{{ item.quantity }}</li>
+                                    <li>
+                                        {{ item.info.name }} - S${{ "%.2f"|format(item.info.price) }} x {{ item.quantity
+                                        }}
+                                    </li>
                                     {% endfor %}
                                 </ul>
                             </td>
@@ -811,6 +828,180 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+            <div
+                class="fixed inset-0 z-20 hidden items-center justify-center bg-black bg-opacity-50"
+                id="manageOrderPopup">
+                <div class="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Edit Order Attributes</h2>
+                    <form id="manage-order-form" class="space-y-4">
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div class="relative">
+                                <input
+                                    id="shippingFirstName"
+                                    name="shippingFirstName"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required />
+                                <label
+                                    for="shippingFirstName"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    First Name
+                                </label>
+                            </div>
+                            <div class="relative">
+                                <input
+                                    id="shippingLastName"
+                                    name="shippingLastName"
+                                    type="text"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    placeholder=" "
+                                    required />
+                                <label
+                                    for="shippingLastName"
+                                    class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                    Last Name
+                                </label>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="shippingEmail"
+                                name="shippingEmail"
+                                type="email"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="shippingEmail"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Email
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="shippingPhone"
+                                name="shippingPhone"
+                                type="tel"
+                                pattern="[0-9]{8}"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="shippingPhone"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Phone Number
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="shippingAddress1"
+                                name="shippingAddress1"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="shippingAddress1"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 1
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="shippingAddress2"
+                                name="shippingAddress2"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                required />
+                            <label
+                                for="shippingAddress2"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 2
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="shippingAddress3"
+                                name="shippingAddress3"
+                                type="text"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" " />
+                            <label
+                                for="shippingAddress3"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Address Line 3
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input
+                                id="shippingPostalCode"
+                                name="shippingPostalCode"
+                                type="text"
+                                pattern="[0-9]{6}"
+                                class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                placeholder=" "
+                                minlength="6"
+                                maxlength="6"
+                                required />
+                            <label
+                                for="shippingPostalCode"
+                                class="absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 cursor-text text-subtext1 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 peer-focus:scale-75">
+                                Postal Code
+                            </label>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="relative w-full">
+                                <select
+                                    id="orderPaid"
+                                    name="orderPaid"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <label
+                                    for="orderPaid"
+                                    class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                    Paid
+                                </label>
+                            </div>
+                            <div class="relative w-full">
+                                <select
+                                    id="orderFulfilled"
+                                    name="orderFulfilled"
+                                    class="peer block w-full rounded-md bg-surface1 px-4 py-4 pb-2 pt-6 text-text"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <label
+                                    for="orderFulfilled"
+                                    class="absolute left-4 top-2 origin-[0] -translate-y-2 scale-75 text-subtext1 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-mauve">
+                                    Fulfilled
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button
+                                id="saveOrder"
+                                type="submit"
+                                class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Save Changes
+                            </button>
+                            <button
+                                type="button"
+                                id="manageOrderCancel"
+                                class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

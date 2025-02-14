@@ -52,6 +52,8 @@ def register_user():
         return make_response({"message": "Invalid last name"}, 400)
     if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
         return make_response({"message": "Invalid email address"}, 400)
+    if not re.match(r"^\d{6}$", address4):
+        return make_response({"message": "Invalid postal code"}, 400)
     if not validate_nric(nric):
         return make_response({"message": "Invalid NRIC"}, 400)
     if user and user["registered"] == True:
