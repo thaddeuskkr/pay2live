@@ -21,7 +21,7 @@ def deactivate_user():
             json={
                 "to": f"65{user["phone"]}",
                 "from": "pay2live",
-                "message": f"*{otp}* is your one-time password to finish deactivating your *pay2live* account. Do not share this OTP with anyone.",
+                "message": f"*{otp}* is your one-time password to deactivate your *pay2live* account. Do note, once your account is deactivated, you will have to contact support to reactivate it. Do not share this OTP with anyone.",
             },
             headers={"Authorization": os.environ["OTP_TOKEN"]},
         )
