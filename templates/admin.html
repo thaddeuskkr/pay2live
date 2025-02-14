@@ -789,6 +789,7 @@
                     <thead>
                         <tr>
                             <th class="text-left">Order ID</th>
+                            <th class="text-left">Ship To</th>
                             <th class="text-left">Items</th>
                             <th class="text-left">Total</th>
                             <th class="text-left">Paid</th>
@@ -811,6 +812,7 @@
                             data-paid="{{ 'true' if order.paid else 'false' }}"
                             data-fulfilled="{{ 'true' if order.fulfilled else 'false' }}">
                             <td class="py-1"><code>{{ order._id }}</code></td>
+                            <td class="py-1">{{ order.shipping.first_name }} {{ order.shipping.last_name }}</td>
                             <td class="py-1">
                                 <ul>
                                     {% for item in order["items"] %}
