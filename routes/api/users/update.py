@@ -1,9 +1,10 @@
 import re
 import secrets
-from flask import request, make_response, escape
+from flask import request, make_response
 import requests
 from app import app, users, otp_token, whatsapp_api_url
 from util import validate_nric
+import html
 
 
 @app.route("/api/users/update", methods=["POST"])
@@ -56,8 +57,8 @@ def update_user():
         if request_response.status_code == 200:
             response = make_response(
                 {
-                    "phone": escape(phone),
-                    "message": f'An OTP has been sent to {escape(phone)} for verification. Enter the OTP and click "Apply Changes" to continue.',
+                    "phone": html.escape(phone),
+                    "message": f'An OTP has been sent to {html.escape(phone)} for verification. Enter the OTP and click "Apply Changes" to continue.',
                 },
                 418,
             )
@@ -65,8 +66,8 @@ def update_user():
         else:
             response = make_response(
                 {
-                    "phone": escape(phone),
-                    "message": f"Failed to send OTP to {escape(phone)}. Please try again later.",
+                    "phone": html.escape(phone),
+                    "message": f"Failed to send OTP to {html.escape(phone)}. Please try again later.",
                 },
                 500,
             )
