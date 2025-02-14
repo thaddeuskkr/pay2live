@@ -30,7 +30,7 @@ def deactivate_user():
             response = make_response(
                 {
                     "phone": user["phone"],
-                    "message": f'An OTP has been sent to {user["phone"]} for verification. Enter the OTP and click "Apply Changes" to continue.',
+                    "message": f'An OTP has been sent to {user["phone"]} for verification. Enter the OTP and click "Deactivate Account" to continue.',
                 },
                 418,
             )
