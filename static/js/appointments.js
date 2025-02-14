@@ -82,6 +82,7 @@ $(function () {
             if (response.status == 200) {
                 alert('Appointment updated successfully!');
                 $('#editPopup').addClass('hidden').removeClass('flex');
+                $('#editForm input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to update appointment: ${data.message}`);
@@ -106,10 +107,7 @@ $(function () {
             if (response.status == 200) {
                 alert('Appointment booked successfully!');
                 $('#bookingPopup').addClass('hidden').removeClass('flex');
-                $('#patient-id').val('');
-                $('#service').val('');
-                $('#date').val('');
-                $('#time').val('');
+                $('#bookingForm input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to book appointment: ${data.message}`);

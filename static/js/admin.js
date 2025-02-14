@@ -80,6 +80,7 @@ $(function () {
             if (response.status == 200) {
                 alert('User updated successfully!');
                 $('#manageUserPopup').addClass('hidden').removeClass('flex');
+                $('#manage-user-form input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to update user: ${data.message}`);
@@ -151,20 +152,7 @@ $(function () {
             if (response.status == 200) {
                 alert('User added successfully!');
                 $('#newUserPopup').addClass('hidden').removeClass('flex');
-                $('#newFirstName').val('');
-                $('#newLastName').val('');
-                $('#newEmail').val('');
-                $('#newPhone').val('');
-                $('#newGender').val('');
-                $('#newNric').val('');
-                $('#newAddressLine1').val('');
-                $('#newAddressLine2').val('');
-                $('#newAddressLine3').val('');
-                $('#newPostalCode').val('');
-                $('#newRole').val('patient');
-                $('#newAdmin').val('false');
-                $('#newRegistered').val('true');
-                $('#newActive').val('true');
+                $('#new-user-form input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to add user: ${data.message}`);
@@ -215,6 +203,7 @@ $(function () {
             if (response.status == 200) {
                 alert('Item updated successfully!');
                 $('#modifyItemPopup').addClass('hidden').removeClass('flex');
+                $('#modify-item-form input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to update item: ${data.message}`);
@@ -235,6 +224,7 @@ $(function () {
             if (response.status == 200) {
                 alert('Item deleted successfully!');
                 $('#modifyItemPopup').addClass('hidden').removeClass('flex');
+                $('#modify-item-form input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to delete item: ${data.message}`);
@@ -269,10 +259,7 @@ $(function () {
             if (response.status == 200) {
                 alert('Item added successfully!');
                 $('#newItemPopup').addClass('hidden').removeClass('flex');
-                $('#newItemName').val('');
-                $('#newItemPrice').val('');
-                $('#newItemImage').val('');
-                $('#newItemVisible').val('true');
+                $('#new-item-form input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to add item: ${data.message}`);
@@ -347,6 +334,7 @@ $(function () {
             if (response.status == 200) {
                 alert('Order updated successfully!');
                 $('#manageOrderPopup').addClass('hidden').removeClass('flex');
+                $('#manage-order-form input').val('');
                 window.location.reload();
             } else {
                 alert(`Failed to update order: ${data.message}`);
