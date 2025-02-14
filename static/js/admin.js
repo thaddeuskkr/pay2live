@@ -341,4 +341,24 @@ $(function () {
             }
         });
     });
+    $('#cancelOrder').on('click', function () {
+        if (!confirm('Are you sure you want to cancel this order?')) return;
+        const id = $('#manage-order-form').attr('data-id');
+        fetch('/api/admin/orders/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Order deleted successfully!');
+                $('#manageOrderPopup').addClass('hidden').removeClass('flex');
+                window.location.reload();
+            } else {
+                alert(`Failed to delete order: ${data.message}`);
+            }
+        });
+    });
 });

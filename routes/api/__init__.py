@@ -23,6 +23,7 @@ from .admin.update_shop import *
 from .admin.delete_shop import *
 from .admin.add_shop import *
 from .admin.update_order import *
+from .admin.delete_order import *
 
 __all__ = [
     "send_otp",
@@ -50,4 +51,5 @@ __all__ = [
     "a_delete_shop",
     "a_add_shop",
     "a_update_order",
+    "a_delete_order",
 ]

@@ -812,7 +812,9 @@
                             data-paid="{{ 'true' if order.paid else 'false' }}"
                             data-fulfilled="{{ 'true' if order.fulfilled else 'false' }}">
                             <td class="py-1"><code>{{ order._id }}</code></td>
-                            <td class="py-1">{{ order.shipping.first_name }} {{ order.shipping.last_name }}</td>
+                            <td class="py-1">
+                                {{ order.shipping.first_name or '' }} {{ order.shipping.last_name or '' }}
+                            </td>
                             <td class="py-1">
                                 <ul>
                                     {% for item in order["items"] %}
@@ -989,6 +991,12 @@
                             </div>
                         </div>
                         <div class="flex space-x-4">
+                            <button
+                                type="button"
+                                id="cancelOrder"
+                                class="w-full rounded-md bg-peach px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Cancel Order
+                            </button>
                             <button
                                 id="saveOrder"
                                 type="submit"
