@@ -1,7 +1,7 @@
 import os
 import re
 import secrets
-from flask import request, make_response
+from flask import request, make_response, escape
 import requests
 from app import app, users
 from util import validate_nric
@@ -57,8 +57,8 @@ def update_user():
         if request_response.status_code == 200:
             response = make_response(
                 {
-                    "phone": phone,
-                    "message": f'An OTP has been sent to {phone} for verification. Enter the OTP and click "Apply Changes" to continue.',
+                    "phone": escape(phone),
+                    "message": f'An OTP has been sent to {escape(phone)} for verification. Enter the OTP and click "Apply Changes" to continue.',
                 },
                 418,
             )
@@ -66,8 +66,8 @@ def update_user():
         else:
             response = make_response(
                 {
-                    "phone": phone,
-                    "message": f"Failed to send OTP to {phone}. Please try again later.",
+                    "phone": escape(phone),
+                    "message": f"Failed to send OTP to {escape(phone)}. Please try again later.",
                 },
                 500,
             )
