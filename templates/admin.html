@@ -34,12 +34,12 @@
                     href="/admin?tab=carts"
                     class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
                     >Carts</a
-                >
+                > -->
                 <a
                     href="/admin?tab=orders"
                     class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
                     >Orders</a
-                > -->
+                >
             </div>
             <div class="{{ 'hidden' if tab != 'users' }} mb-8 rounded-lg bg-surface0 p-6 shadow-md">
                 <div class="flex items-center justify-between">
@@ -62,42 +62,36 @@
                             <th class="text-left">Registered</th>
                             <th class="text-left">Active</th>
                             <th class="text-left">Admin</th>
-                            <th class="text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for user in a_users %}
-                        <tr>
-                            <td><code>{{ user._id }}</code></td>
-                            <td>{{ user.first_name }} {{ user.last_name }}</td>
-                            <td>{{ user.phone }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.nric }}</td>
-                            <td>{{ user.role|capitalize() }}</td>
-                            <td>{{ "Yes" if user.registered else "No" }}</td>
-                            <td>{{ "Yes" if user.active else "No" }}</td>
-                            <td>{{ "Yes" if user.admin else "No" }}</td>
-                            <td class="flex justify-end py-1">
-                                <button
-                                    class="manage-user mr-1 rounded-sm bg-mauve px-2 font-semibold text-crust transition-opacity hover:opacity-80"
-                                    data-id="{{ user._id }}"
-                                    data-phone="{{ user.phone }}"
-                                    data-first_name="{{ user.first_name }}"
-                                    data-last_name="{{ user.last_name }}"
-                                    data-email="{{ user.email }}"
-                                    data-gender="{{ user.gender }}"
-                                    data-nric="{{ user.nric }}"
-                                    data-role="{{ user.role }}"
-                                    data-admin="{{ 'true' if user.admin else 'false' }}"
-                                    data-registered="{{ 'true' if user.registered else 'false' }}"
-                                    data-active="{{ 'true' if user.active else 'false' }}"
-                                    data-address1="{{ user.address1 }}"
-                                    data-address2="{{ user.address2 }}"
-                                    data-address3="{{ user.address3 or '' }}"
-                                    data-address4="{{ user.address4 }}">
-                                    Manage
-                                </button>
-                            </td>
+                        <tr
+                            class="manage-user cursor-pointer border-y border-subtext0 transition-colors hover:bg-surface1"
+                            data-id="{{ user._id }}"
+                            data-phone="{{ user.phone }}"
+                            data-first_name="{{ user.first_name }}"
+                            data-last_name="{{ user.last_name }}"
+                            data-email="{{ user.email }}"
+                            data-gender="{{ user.gender }}"
+                            data-nric="{{ user.nric }}"
+                            data-role="{{ user.role }}"
+                            data-admin="{{ 'true' if user.admin else 'false' }}"
+                            data-registered="{{ 'true' if user.registered else 'false' }}"
+                            data-active="{{ 'true' if user.active else 'false' }}"
+                            data-address1="{{ user.address1 }}"
+                            data-address2="{{ user.address2 }}"
+                            data-address3="{{ user.address3 or '' }}"
+                            data-address4="{{ user.address4 }}">
+                            <td class="py-1"><code>{{ user._id }}</code></td>
+                            <td class="py-1">{{ user.first_name }} {{ user.last_name }}</td>
+                            <td class="py-1">{{ user.phone }}</td>
+                            <td class="py-1">{{ user.email }}</td>
+                            <td class="py-1">{{ user.nric }}</td>
+                            <td class="py-1">{{ user.role|capitalize() }}</td>
+                            <td class="py-1">{{ "Yes" if user.registered else "No" }}</td>
+                            <td class="py-1">{{ "Yes" if user.active else "No" }}</td>
+                            <td class="py-1">{{ "Yes" if user.admin else "No" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -600,28 +594,22 @@
                             <th class="text-left">Name</th>
                             <th class="text-left">Price</th>
                             <th class="text-left">Visible</th>
-                            <th class="text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in a_shop %}
-                        <tr>
-                            <td><img src="{{ item.image }}" class="max-w-28" /></td>
-                            <td><code>{{ item._id }}</code></td>
-                            <td>{{ item.name }}</td>
-                            <td>S${{ "%.2f"|format(item.price) }}</td>
-                            <td>{{ "Yes" if item.visible else "No" }}</td>
-                            <td class="py-1">
-                                <button
-                                    class="modify-item mr-1 self-center rounded-sm bg-mauve px-2 font-semibold text-crust transition-opacity hover:opacity-80"
-                                    data-id="{{ item._id }}"
-                                    data-name="{{ item.name }}"
-                                    data-price="{{ '%.2f'|format(item.price) }}"
-                                    data-visible="{{ 'true' if item.visible else 'false' }}"
-                                    data-image="{{ item.image }}">
-                                    Modify
-                                </button>
-                            </td>
+                        <tr
+                            class="modify-item cursor-pointer border-y border-subtext0 transition-colors hover:bg-surface1"
+                            data-id="{{ item._id }}"
+                            data-name="{{ item.name }}"
+                            data-price="{{ '%.2f'|format(item.price) }}"
+                            data-visible="{{ 'true' if item.visible else 'false' }}"
+                            data-image="{{ item.image }}">
+                            <td class="py-1"><img src="{{ item.image }}" class="max-w-28" /></td>
+                            <td class="py-1"><code>{{ item._id }}</code></td>
+                            <td class="py-1">{{ item.name }}</td>
+                            <td class="py-1">S${{ "%.2f"|format(item.price) }}</td>
+                            <td class="py-1">{{ "Yes" if item.visible else "No" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -792,6 +780,37 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <div class="{{ 'hidden' if tab != 'orders' }} mb-8 rounded-lg bg-surface0 p-6 shadow-md">
+                <h2 class="text-xl font-semibold text-text">Orders</h2>
+                <table class="mt-4 w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Order ID</th>
+                            <th class="text-left">Items</th>
+                            <th class="text-left">Total</th>
+                            <th class="text-left">Paid</th>
+                            <th class="text-left">Fulfilled</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in a_orders %}
+                        <tr class="cursor-pointer border-y border-subtext0 transition-colors hover:bg-surface1">
+                            <td class="py-1"><code>{{ order._id }}</code></td>
+                            <td class="py-1">
+                                <ul>
+                                    {% for item in order["items"] %}
+                                    <li>{{ item.info.name }} - x{{ item.quantity }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td class="py-1">S${{ "%.2f"|format(order.total) }}</td>
+                            <td class="py-1">{{ "Yes" if order.paid else "No" }}</td>
+                            <td class="py-1">{{ "Yes" if order.fulfilled else "No" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>
