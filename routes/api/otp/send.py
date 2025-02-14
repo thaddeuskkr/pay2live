@@ -51,7 +51,7 @@ def send_otp():
     else:
         users.insert_one(userC.to_dict())
     request_response = requests.post(
-        "https://develop.tkkr.dev/message",
+        f"{os.environ["WHATSAPP_API_URL"]}",
         json={
             "to": f"65{phone}",
             "from": "pay2live",

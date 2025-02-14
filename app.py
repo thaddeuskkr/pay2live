@@ -17,6 +17,7 @@ except KeyError:
 try:
     otp_token = os.environ["OTP_TOKEN"]
     mongo_url = os.environ["MONGODB_CONNECTION_URL"]
+    whatsapp_api_url = os.environ["WHATSAPP_API_URL"]
 except KeyError as e:
     raise ValueError(f"Required environment variable {e} is not set")
 

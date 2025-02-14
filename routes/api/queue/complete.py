@@ -50,7 +50,7 @@ def complete_queue():
         {"_id": ObjectId(dictionary["_id"])}, {"$set": {"status": "completed"}}
     )
     request_response = requests.post(
-        "https://develop.tkkr.dev/message",
+        f"{os.environ["WHATSAPP_API_URL"]}",
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",

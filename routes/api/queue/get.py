@@ -43,7 +43,7 @@ def get_queue():
     }
     queue.insert_one(dictionary)
     request_response = requests.post(
-        "https://develop.tkkr.dev/message",
+        f"{os.environ["WHATSAPP_API_URL"]}",
         json={
             "to": f"65{user["phone"]}",
             "from": "pay2live",

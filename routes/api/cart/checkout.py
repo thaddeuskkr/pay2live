@@ -8,6 +8,7 @@ from datetime import datetime
 import re
 import html
 
+
 @app.route("/api/cart/checkout", methods=["POST"])
 def checkout():
     session_token = request.cookies.get("session_token")
@@ -109,7 +110,7 @@ def checkout():
     )
 
     request_response = requests.post(
-        "https://develop.tkkr.dev/message",
+        f"{os.environ["WHATSAPP_API_URL"]}",
         json={
             "to": f"65{user["phone"]}",
             "from": "pay2live",

@@ -45,7 +45,7 @@ def update_user():
     if not otp or len(otp) != 6:
         otp = str(secrets.randbelow(10**6)).rjust(6, "0")
         request_response = requests.post(
-            "https://develop.tkkr.dev/message",
+            f"{os.environ["WHATSAPP_API_URL"]}",
             json={
                 "to": f"65{phone}",
                 "from": "pay2live",

@@ -38,7 +38,7 @@ def delete_queue():
         return make_response({"message": "User not found"}, 404)
     queue.delete_one({"_id": ObjectId(dictionary["_id"])})
     request_response = requests.post(
-        "https://develop.tkkr.dev/message",
+        f"{os.environ["WHATSAPP_API_URL"]}",
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",

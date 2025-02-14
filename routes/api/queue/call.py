@@ -44,7 +44,7 @@ def call_queue():
         if not previous_patient_user:
             return make_response({"message": "User not found"}, 404)
         request_response = requests.post(
-            "https://develop.tkkr.dev/message",
+            f"{os.environ["WHATSAPP_API_URL"]}",
             json={
                 "to": f"65{previous_patient_user['phone']}",
                 "from": "pay2live",
@@ -72,7 +72,7 @@ def call_queue():
         {"$set": {"status": "current", "room": int(room)}},
     )
     request_response = requests.post(
-        "https://develop.tkkr.dev/message",
+        f"{os.environ["WHATSAPP_API_URL"]}",
         json={
             "to": f"65{called_user["phone"]}",
             "from": "pay2live",
