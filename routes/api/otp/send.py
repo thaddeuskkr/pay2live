@@ -62,7 +62,7 @@ def send_otp():
         response = make_response(
             {
                 "phone": html.escape(phone),
-                "message": f"OTP sent to {phone}",
+                "message": f"OTP sent to {html.escape(phone)}",
             },
             200,
         )
@@ -71,7 +71,7 @@ def send_otp():
         response = make_response(
             {
                 "phone": html.escape(phone),
-                "message": f"Failed to send OTP to {phone}. Please try again later.",
+                "message": f"Failed to send OTP to {html.escape(phone)}. Please try again later.",
             },
             500,
         )
