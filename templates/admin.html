@@ -1042,6 +1042,7 @@
                             data-phone="{{ ticket.phone or '' }}"
                             data-subject="{{ ticket.subject }}"
                             data-message="{{ ticket.message }}"
+                            data-response="{{ ticket.response or '' }}"
                             data-status="{{ ticket.status }}"
                             data-user="{{ ticket.user }}"
                             data-created="{{ ticket._id | date_from_object_id }}">
@@ -1069,6 +1070,9 @@
                             Message:<br /><span id="ticketMessage" class="font-normal"></span>
                         </p>
                         <p class="font-bold text-subtext1">
+                            Response:<br /><span id="ticketResponse" class="font-normal"></span>
+                        </p>
+                        <p class="font-bold text-subtext1">
                             Status: <span id="ticketStatus" class="font-normal"></span>
                         </p>
                         <p class="font-bold text-subtext1">
@@ -1077,7 +1081,7 @@
                     </div>
                     <form id="response-form" class="mt-4 space-y-4">
                         <textarea
-                            id="ticketResponse"
+                            id="response"
                             class="w-full rounded-md bg-surface1 px-4 py-2 text-text"
                             placeholder="Enter your response here..."
                             required

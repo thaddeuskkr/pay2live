@@ -37,6 +37,7 @@ def create_ticket():
         "subject": subject,
         "message": message,
         "status": "open",
+        "response": None,
         "user": ObjectId(user["_id"]) if user else None,
     }
 
@@ -48,7 +49,7 @@ def create_ticket():
             json={
                 "to": f"65{user["phone"]}",
                 "from": "pay2live",
-                "message": f"*Your support ticket on pay2live has been created.\nYour ticket ID is *{str(inserted.inserted_id)}*.\n\nWe will get back to you as soon as possible.",
+                "message": f"*Your support ticket on pay2live has been created.*\nYour ticket ID is *{str(inserted.inserted_id)}*.\n\nWe will get back to you as soon as possible.",
             },
             headers={"Authorization": whatsapp_api_auth},
         )

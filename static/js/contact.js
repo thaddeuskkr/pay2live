@@ -17,6 +17,7 @@ $(function () {
         e.preventDefault();
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').html('Creating a support ticket...');
+        $('#submit-button').prop('disabled', true);
         const name = $('#name').val();
         const contactMethod = $('#contact-method').val();
         const email = $('#email').val();
@@ -50,6 +51,7 @@ $(function () {
             } else {
                 $('#message-box').removeClass('bg-green').addClass('bg-red');
                 $('#message-content').text(data.message);
+                $('#submit-button').prop('disabled', false);
             }
         });
     });

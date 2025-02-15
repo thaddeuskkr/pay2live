@@ -366,6 +366,7 @@ $(function () {
         const id = $(e.currentTarget).attr('data-id');
         const subject = $(e.currentTarget).attr('data-subject');
         const message = $(e.currentTarget).attr('data-message');
+        const response = $(e.currentTarget).attr('data-response');
         const status = $(e.currentTarget).attr('data-status');
         const created = $(e.currentTarget).attr('data-created');
         const name = $(e.currentTarget).attr('data-name');
@@ -373,13 +374,41 @@ $(function () {
         const phone = $(e.currentTarget).attr('data-phone');
         $('#ticketSubject').text(subject);
         $('#ticketMessage').text(message);
+        $('#ticketResponse').text(response || 'No response yet');
         $('#ticketStatus').text(String(status).charAt(0).toUpperCase() + String(status).slice(1));
         $('#ticketCreated').text(created);
         $('#ticketFrom').text(`${name} (${email || phone})`);
-        $('#ticketId').val(id);
+        $('#response-form').attr('data-id', id);
         $('#ticketDetailsPopup').removeClass('hidden').addClass('flex');
     });
     $('#ticketDetailsCancel').on('click', function () {
         $('#ticketDetailsPopup').removeClass('flex').addClass('hidden');
+    });
+    $('#response-form').on('submit', function (e) {
+        e.preventDefault();
+        const id = $('#response-form').attr('data-id');
+        const response = $('#response').val();
+        $('#respondToTicket').prop('disabled', true);
+        fetch('/api/tickets/respond', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                response: response,
+            }),
+        }).then(async (response) => {
+            const data = await response.json();
+            if (response.status == 200) {
+                alert('Response sent successfully!');
+                $('#ticketDetailsPopup').addClass('hidden').removeClass('flex');
+                $('#response-form textarea').val('');
+                window.location.reload();
+            } else {
+                alert(`Failed to send response: ${data.message}`);
+                $('#respondToTicket').prop('disabled', false);
+            }
+        });
     });
 });
