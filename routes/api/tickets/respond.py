@@ -1,4 +1,3 @@
-import html
 from util import send_email
 from bson import ObjectId
 from flask import request, make_response
@@ -29,7 +28,7 @@ def respond_ticket():
 
     tickets.update_one(
         {"_id": ObjectId(id)},
-        {"$set": {"response": html.escape(response), "status": "closed"}},
+        {"$set": {"response": response, "status": "closed"}},
     )
 
     if ticket["phone"]:
@@ -38,7 +37,7 @@ def respond_ticket():
             json={
                 "to": f"65{ticket["phone"]}",
                 "from": "pay2live",
-                "message": f"*Your support ticket on pay2live has received a response.*\n*Ticket ID:* {str(ticket["_id"])}\n*Response:*\n{html.escape(response)}",
+                "message": f"*Your support ticket on pay2live has received a response.*\n*Ticket ID:* {str(ticket["_id"])}\n*Response:*\n{response}",
             },
             headers={"Authorization": whatsapp_api_auth},
         )
@@ -55,7 +54,7 @@ def respond_ticket():
         email_response = send_email(
             ticket["email"],
             f"[pay2live] Support Ticket (ID: {str(ticket["_id"])})",
-            f"A new response has been received.\n\nResponse:\n{html.escape(response)}",
+            f"A new response has been received.\n\nResponse:\n{response}",
         )
         if email_response["error"] is False:
             return make_response({"message": "Successfully responded to ticket"})

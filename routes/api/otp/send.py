@@ -15,11 +15,11 @@ def send_otp():
         return make_response(
             {"message": f"Missing required fields: {missing_keys}"}, 400
         )
-    phone: str = html.escape(data.get("phone"))
+    phone: str = data.get("phone")
     if (len(phone) != 8) or (not phone.isdigit()):
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": "Invalid phone number",
             },
             400,
@@ -40,7 +40,7 @@ def send_otp():
         if not db_user["active"]:
             response = make_response(
                 {
-                    "phone": phone,
+                    "phone": html.escape(phone),
                     "message": "Your account has been deactivated. Please contact support.",
                 },
                 400,
@@ -61,7 +61,7 @@ def send_otp():
     if request_response.status_code == 200:
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": f"OTP sent to {phone}",
             },
             200,
@@ -70,7 +70,7 @@ def send_otp():
     else:
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": f"Failed to send OTP to {phone}. Please try again later.",
             },
             500,

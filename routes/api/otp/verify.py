@@ -14,11 +14,11 @@ def verify_otp():
             {"message": f"Missing required fields: {missing_keys}"}, 400
         )
     otp: str = data.get("otp")
-    phone: str = html.escape(data.get("phone"))
+    phone: str = data.get("phone")
     if (len(phone) != 8) or (not phone.isdigit()):
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": "Invalid phone number",
             },
             400,
@@ -27,7 +27,7 @@ def verify_otp():
     if (len(otp) != 6) or (not otp.isdigit()):
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": "Invalid OTP",
             },
             400,
@@ -37,7 +37,7 @@ def verify_otp():
     if user is None:
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": "No OTP has been sent for this phone number",
             },
             400,
@@ -47,7 +47,7 @@ def verify_otp():
     elif user["otp"] is None:
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": "No OTP has been sent for this phone number",
             },
             400,
@@ -67,7 +67,7 @@ def verify_otp():
         )
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "session_token": session_token,
                 "message": "OTP successfully verified",
                 "registered": user["registered"],
@@ -89,7 +89,7 @@ def verify_otp():
     else:
         response = make_response(
             {
-                "phone": phone,
+                "phone": html.escape(phone),
                 "message": "Invalid OTP",
             },
             400,
