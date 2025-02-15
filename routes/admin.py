@@ -1,6 +1,7 @@
 from datetime import datetime
 from bson import ObjectId
 from flask import render_template, redirect, request
+import pymongo
 from app import app, users, appointments, queue, shop, carts, orders, tickets
 
 tab_map = {
@@ -25,13 +26,13 @@ def admin():
 
     tab = request.args.get("tab", "users")
 
-    a_users = users.find()
-    a_appointments = appointments.find()
-    a_queue = queue.find()
-    a_shop = shop.find()
-    a_carts = carts.find()
-    a_orders = orders.find()
-    a_tickets = tickets.find()
+    a_users = users.find(sort=[("_id", pymongo.DESCENDING)])
+    a_appointments = appointments.find(sort=[("_id", pymongo.DESCENDING)])
+    a_queue = queue.find(sort=[("_id", pymongo.DESCENDING)])
+    a_shop = shop.find(sort=[("_id", pymongo.DESCENDING)])
+    a_carts = carts.find(sort=[("_id", pymongo.DESCENDING)])
+    a_orders = orders.find(sort=[("_id", pymongo.DESCENDING)])
+    a_tickets = tickets.find(sort=[("_id", pymongo.DESCENDING)])
 
     return render_template(
         "admin.html",
