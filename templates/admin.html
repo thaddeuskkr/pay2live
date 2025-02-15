@@ -40,6 +40,11 @@
                     class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
                     >Orders</a
                 >
+                <a
+                    href="/admin?tab=tickets"
+                    class="w-36 rounded-md bg-mauve px-4 py-2 text-center font-semibold text-crust transition-opacity hover:opacity-80"
+                    >Tickets</a
+                >
             </div>
             <div class="{{ 'hidden' if tab != 'users' }} mb-8 rounded-lg bg-surface0 p-6 shadow-md">
                 <div class="flex items-center justify-between">
@@ -1006,6 +1011,87 @@
                             <button
                                 type="button"
                                 id="manageOrderCancel"
+                                class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="{{ 'hidden' if tab != 'tickets' }} mb-8 rounded-lg bg-surface0 p-6 shadow-md">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-semibold text-text">Tickets</h2>
+                </div>
+                <table class="mt-4 w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left">ID</th>
+                            <th class="text-left">From</th>
+                            <th class="text-left">Subject</th>
+                            <th class="text-left">Created At</th>
+                            <th class="text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in a_tickets %}
+                        <tr
+                            class="ticket-details cursor-pointer border-y border-subtext0 transition-colors hover:bg-surface1"
+                            data-id="{{ ticket._id }}"
+                            data-name="{{ ticket.name }}"
+                            data-email="{{ ticket.email or '' }}"
+                            data-phone="{{ ticket.phone or '' }}"
+                            data-subject="{{ ticket.subject }}"
+                            data-message="{{ ticket.message }}"
+                            data-status="{{ ticket.status }}"
+                            data-user="{{ ticket.user }}"
+                            data-created="{{ ticket._id | date_from_object_id }}">
+                            <td class="py-1"><code>{{ ticket._id }}</code></td>
+                            <td class="py-1">{{ ticket.name }} ({{ ticket.email or ticket.phone }})</td>
+                            <td class="py-1">{{ ticket.subject }}</td>
+                            <td class="py-1">{{ ticket._id | date_from_object_id }}</td>
+                            <td class="py-1">{{ ticket.status|capitalize() }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div
+                class="fixed inset-0 z-20 hidden items-center justify-center bg-black bg-opacity-50"
+                id="ticketDetailsPopup">
+                <div class="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-lg bg-surface0 p-8 shadow-md">
+                    <h2 class="mb-6 text-center text-2xl font-bold text-blue">Ticket Details</h2>
+                    <div>
+                        <p class="font-bold text-subtext1">From: <span id="ticketFrom" class="font-normal"></span></p>
+                        <p class="font-bold text-subtext1">
+                            Subject: <span id="ticketSubject" class="font-normal"></span>
+                        </p>
+                        <p class="font-bold text-subtext1">
+                            Message:<br /><span id="ticketMessage" class="font-normal"></span>
+                        </p>
+                        <p class="font-bold text-subtext1">
+                            Status: <span id="ticketStatus" class="font-normal"></span>
+                        </p>
+                        <p class="font-bold text-subtext1">
+                            Created At: <span id="ticketCreated" class="font-normal"></span>
+                        </p>
+                    </div>
+                    <form id="response-form" class="mt-4 space-y-4">
+                        <textarea
+                            id="ticketResponse"
+                            class="w-full rounded-md bg-surface1 px-4 py-2 text-text"
+                            placeholder="Enter your response here..."
+                            required
+                            rows="10"></textarea>
+                        <div class="flex space-x-4">
+                            <button
+                                id="respondToTicket"
+                                type="submit"
+                                class="w-full rounded-md bg-mauve px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
+                                Respond
+                            </button>
+                            <button
+                                type="button"
+                                id="ticketDetailsCancel"
                                 class="w-full rounded-md bg-red px-4 py-2 font-medium text-crust transition-opacity hover:opacity-80">
                                 Cancel
                             </button>

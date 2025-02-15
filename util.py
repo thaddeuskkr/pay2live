@@ -1,5 +1,33 @@
+from email.message import EmailMessage
 from typing import Any
 import re
+import smtplib
+from app import smtp_host, smtp_password, smtp_port, smtp_sender, smtp_username
+
+
+def send_email(
+    recipient: str,
+    subject: str,
+    body: str,
+    smtp_host: str = smtp_host,
+    smtp_port: int = smtp_port,
+    smtp_username: str = smtp_username,
+    smtp_password: str = smtp_password,
+    sender: str = smtp_sender,
+) -> dict[str, Any]:
+    try:
+        with smtplib.SMTP(smtp_host, smtp_port) as server:
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+            message = EmailMessage()
+            message.set_content(body)
+            message["Subject"] = subject
+            message["From"] = sender
+            message["To"] = recipient
+            server.send_message(message)
+        return {"error": False, "message": "Email sent successfully"}
+    except Exception as e:
+        return {"error": True, "message": str(e)}
 
 
 # Use Luhn's algorithm to validate credit/debit card number

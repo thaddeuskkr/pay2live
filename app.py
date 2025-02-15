@@ -18,6 +18,11 @@ try:
     mongo_url = os.environ["MONGODB_CONNECTION_URL"]
     whatsapp_api_url = os.environ["WHATSAPP_API_URL"]
     whatsapp_api_auth = os.environ["WHATSAPP_API_AUTH"]
+    smtp_host = os.environ["SMTP_HOST"]
+    smtp_port = int(os.environ["SMTP_PORT"])
+    smtp_username = os.environ["SMTP_USERNAME"]
+    smtp_password = os.environ["SMTP_PASSWORD"]
+    smtp_sender = os.environ["SMTP_SENDER"]
 except KeyError as e:
     raise ValueError(f"Required environment variable {e} is not set")
 

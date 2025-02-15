@@ -12,7 +12,10 @@
             <p class="mb-6 text-center text-lg text-subtext1">
                 If you have any questions or concerns, please feel free to contact us.
             </p>
-            <form class="w-full space-y-4 rounded-lg bg-surface0 px-4 py-4" data-user_id="{{ user._id }}">
+            <form
+                class="w-full space-y-4 rounded-lg bg-surface0 px-4 py-4"
+                data-user_id="{{ user._id }}"
+                id="contact-form">
                 <div class="relative">
                     <label for="name" class="block text-sm font-medium text-subtext0">Name</label>
                     <input
@@ -60,6 +63,16 @@
                         value="{{ user.phone if user else '' }}" />
                 </div>
                 <div class="relative">
+                    <label for="subject" class="block text-sm font-medium text-subtext0">Subject</label>
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
+                        placeholder="What is your inquiry about?"
+                        required />
+                </div>
+                <div class="relative">
                     <label for="message" class="block text-sm font-medium text-subtext0">Message</label>
                     <textarea
                         id="message"
@@ -75,6 +88,9 @@
                     Send
                 </button>
             </form>
+            <div id="message-box" class="mt-4 hidden w-full rounded-md px-4 py-2">
+                <p class="font-medium text-crust" id="message-content">{{ message }}</p>
+            </div>
         </div>
     </body>
 </html>

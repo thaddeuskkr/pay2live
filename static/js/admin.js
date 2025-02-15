@@ -361,4 +361,25 @@ $(function () {
             }
         });
     });
+    $('.ticket-details').on('click', function (e) {
+        e.preventDefault();
+        const id = $(e.currentTarget).attr('data-id');
+        const subject = $(e.currentTarget).attr('data-subject');
+        const message = $(e.currentTarget).attr('data-message');
+        const status = $(e.currentTarget).attr('data-status');
+        const created = $(e.currentTarget).attr('data-created');
+        const name = $(e.currentTarget).attr('data-name');
+        const email = $(e.currentTarget).attr('data-email');
+        const phone = $(e.currentTarget).attr('data-phone');
+        $('#ticketSubject').text(subject);
+        $('#ticketMessage').text(message);
+        $('#ticketStatus').text(String(status).charAt(0).toUpperCase() + String(status).slice(1));
+        $('#ticketCreated').text(created);
+        $('#ticketFrom').text(`${name} (${email || phone})`);
+        $('#ticketId').val(id);
+        $('#ticketDetailsPopup').removeClass('hidden').addClass('flex');
+    });
+    $('#ticketDetailsCancel').on('click', function () {
+        $('#ticketDetailsPopup').removeClass('flex').addClass('hidden');
+    });
 });

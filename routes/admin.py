@@ -1,5 +1,7 @@
+from datetime import datetime
+from bson import ObjectId
 from flask import render_template, redirect, request
-from app import app, users, appointments, queue, shop, carts, orders
+from app import app, users, appointments, queue, shop, carts, orders, tickets
 
 tab_map = {
     "users": "User Management",
@@ -8,6 +10,7 @@ tab_map = {
     "shop": "Shop Management",
     "carts": "Cart Management",
     "orders": "Order Management",
+    "tickets": "Support Tickets",
 }
 
 
@@ -28,6 +31,7 @@ def admin():
     a_shop = shop.find()
     a_carts = carts.find()
     a_orders = orders.find()
+    a_tickets = tickets.find()
 
     return render_template(
         "admin.html",
@@ -41,4 +45,14 @@ def admin():
         a_shop=a_shop,
         a_carts=a_carts,
         a_orders=a_orders,
+        a_tickets=a_tickets,
     )
+
+
+@app.template_filter("date_from_object_id")
+def date_from_object_id_filter(oid_str: ObjectId | str):
+    oid_str = str(oid_str)
+    # Parse the first 8 hex characters
+    timestamp = int(oid_str[:8], 16)
+    # Convert the Unix timestamp (seconds) to a datetime object (UTC)
+    return datetime.fromtimestamp(timestamp)
