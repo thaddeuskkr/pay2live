@@ -61,6 +61,9 @@ function verifyOTP() {
         $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
         $('#message-content').text('Please enter a valid OTP.');
     } else {
+        $('#login-button').prop('disabled', true);
+        $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
+        $('#message-content').text('Verifying OTP...');
         fetch('/api/otp/verify', {
             method: 'POST',
             headers: {
@@ -80,6 +83,7 @@ function verifyOTP() {
                     else window.location.href = `./register?phone=${encodeURIComponent(phone)}`;
                 }, 1000);
             } else {
+                $('#login-button').prop('disabled', false);
                 $('#message-box').removeClass('hidden').removeClass('bg-green').addClass('bg-red');
                 $('#message-content').text('Invalid OTP. Please try again.');
             }
