@@ -45,7 +45,7 @@ def respond_ticket():
         if request_response.status_code != 200:
             return make_response(
                 {
-                    "message": f"Failed to respond to ticket {id}, as there was an error sending a WhatsApp message.",
+                    "message": f"Failed to respond to ticket as there was an error sending a WhatsApp message.",
                 },
                 500,
             )
@@ -62,7 +62,7 @@ def respond_ticket():
         else:
             return make_response(
                 {
-                    "message": f"Failed to respond to ticket {id}, as there was an error sending an email.",
+                    "message": f"Failed to respond to ticket as there was an error sending an email.",
                     "error": email_response["message"],
                 },
                 500,
