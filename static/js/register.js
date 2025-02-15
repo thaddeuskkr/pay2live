@@ -34,7 +34,6 @@ $(function () {
                 address4: address4,
             }),
         }).then(async (response) => {
-            console.log(response);
             if (response.status === 200) {
                 $('#message-box').removeClass('bg-red').addClass('bg-green');
                 $('#message-content').html('Your profile is complete! Redirecting...');
