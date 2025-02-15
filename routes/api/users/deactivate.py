@@ -1,7 +1,7 @@
 import secrets
 from flask import request, make_response
 import requests
-from app import app, users, otp_token, whatsapp_api_url
+from app import app, users, whatsapp_api_auth, whatsapp_api_url
 
 
 @app.route("/api/users/deactivate", methods=["POST"])
@@ -22,7 +22,7 @@ def deactivate_user():
                 "from": "pay2live",
                 "message": f"*{otp}* is your one-time password to deactivate your *pay2live* account. Do note, once your account is deactivated, you will have to contact support to reactivate it. Do not share this OTP with anyone.",
             },
-            headers={"Authorization": otp_token},
+            headers={"Authorization": whatsapp_api_auth},
         )
         users.update_one({"session_token": session_token}, {"$set": {"otp2": otp}})
         if request_response.status_code == 200:

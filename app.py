@@ -15,9 +15,9 @@ except KeyError:
     debug = False
 
 try:
-    otp_token = os.environ["OTP_TOKEN"]
     mongo_url = os.environ["MONGODB_CONNECTION_URL"]
     whatsapp_api_url = os.environ["WHATSAPP_API_URL"]
+    whatsapp_api_auth = os.environ["WHATSAPP_API_AUTH"]
 except KeyError as e:
     raise ValueError(f"Required environment variable {e} is not set")
 
@@ -36,6 +36,7 @@ appointments = db["appointments"]
 shop = db["shop"]
 carts = db["carts"]
 orders = db["orders"]
+tickets = db["tickets"]
 
 
 # Check if MongoDB is ready every minute

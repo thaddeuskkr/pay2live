@@ -1,7 +1,7 @@
 from bson import ObjectId
 import requests
 from flask import request, make_response
-from app import app, ready, users, queue, otp_token, whatsapp_api_url
+from app import app, ready, users, queue, whatsapp_api_auth, whatsapp_api_url
 from config import abbreviations
 
 
@@ -49,7 +49,7 @@ def call_queue():
                 "from": "pay2live",
                 "message": f"{previous_patient_user['first_name']} {previous_patient_user["last_name"]},\nYou have just missed your queue number *{abbreviations[previous_patient['service']]}{str(previous_patient['number']).rjust(3, '0')}*.\nPlease speak to the clinic staff if you require further assistance.",
             },
-            headers={"Authorization": otp_token},
+            headers={"Authorization": whatsapp_api_auth},
         )
         queue.update_one(
             {"_id": ObjectId(previous_patient["_id"])}, {"$set": {"status": "missed"}}
@@ -77,7 +77,7 @@ def call_queue():
             "from": "pay2live",
             "message": f"{called_user["first_name"]} {called_user["last_name"]},\nYour queue number *{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* has been called.\nPlease proceed to room {room} immediately.",
         },
-        headers={"Authorization": otp_token},
+        headers={"Authorization": whatsapp_api_auth},
     )
     if request_response.status_code == 200:
         response = make_response(

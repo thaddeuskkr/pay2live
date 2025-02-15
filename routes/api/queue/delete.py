@@ -1,7 +1,7 @@
 from bson import ObjectId
 import requests
 from flask import request, make_response
-from app import app, ready, users, queue, otp_token, whatsapp_api_url
+from app import app, ready, users, queue, whatsapp_api_auth, whatsapp_api_url
 from config import abbreviations
 
 
@@ -43,7 +43,7 @@ def delete_queue():
             "from": "pay2live",
             "message": f"{called_user["first_name"]} {called_user["last_name"]},\nYour queue number *{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* has been cancelled.",
         },
-        headers={"Authorization": otp_token},
+        headers={"Authorization": whatsapp_api_auth},
     )
     if request_response.status_code == 200:
         response = make_response(

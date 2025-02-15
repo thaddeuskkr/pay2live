@@ -3,7 +3,7 @@ from bson import ObjectId
 import requests
 import pymongo
 from flask import request, make_response
-from app import app, ready, users, queue, otp_token, whatsapp_api_url
+from app import app, ready, users, queue, whatsapp_api_auth, whatsapp_api_url
 from config import abbreviations
 import html
 
@@ -48,7 +48,7 @@ def get_queue():
             "from": "pay2live",
             "message": f"*{abbreviations[dictionary["service"]]}{str(dictionary['number']).rjust(3, "0")}* is your queue number.",
         },
-        headers={"Authorization": otp_token},
+        headers={"Authorization": whatsapp_api_auth},
     )
     if request_response.status_code == 200:
         response = make_response(

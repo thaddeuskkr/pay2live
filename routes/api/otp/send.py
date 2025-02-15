@@ -1,7 +1,7 @@
 import requests
 import secrets
 from flask import request, make_response
-from app import app, ready, users, otp_token, whatsapp_api_url
+from app import app, ready, users, whatsapp_api_auth, whatsapp_api_url
 from classes import User
 import html
 
@@ -56,7 +56,7 @@ def send_otp():
             "from": "pay2live",
             "message": f"*{otp}* is your one-time password to log in to *pay2live*. Do not share this OTP with anyone.",
         },
-        headers={"Authorization": otp_token},
+        headers={"Authorization": whatsapp_api_auth},
     )
     if request_response.status_code == 200:
         response = make_response(
