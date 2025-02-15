@@ -2,9 +2,79 @@
 <html lang="en">
     <head>
         {% block head %} {% include 'includes/head.html' %} {% endblock %}
+        <script src="/static/js/contact.js"></script>
     </head>
 
-    <body class="h-full bg-base text-text">
+    <body class="bg-base text-text">
         {% block navbar %} {% include 'includes/navbar.html' %} {% endblock %}
+        <div class="mx-auto mt-16 flex h-[calc(100vh-64px)] max-w-2xl flex-col items-center pt-16">
+            <h1 class="mb-1 text-center text-3xl font-bold text-text">Contact Us</h1>
+            <p class="mb-6 text-center text-lg text-subtext1">
+                If you have any questions or concerns, please feel free to contact us.
+            </p>
+            <form class="w-full space-y-4 rounded-lg bg-surface0 px-4 py-4" data-user_id="{{ user._id }}">
+                <div class="relative">
+                    <label for="name" class="block text-sm font-medium text-subtext0">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
+                        required
+                        placeholder="How should we address you?"
+                        value="{{ user.first_name if user else '' }}{{ ' ' if user else '' }}{{ user.last_name if user else '' }}" />
+                </div>
+                <div class="relative">
+                    <label for="contact-method" class="block text-sm font-medium text-subtext0"
+                        >Preferred Contact Method</label
+                    >
+                    <select
+                        id="contact-method"
+                        name="contact-method"
+                        class="mt-1 block w-full rounded-md border border-subtext0 bg-surface0 px-3 py-2 text-text shadow-sm sm:text-sm"
+                        required>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                    </select>
+                </div>
+                <div class="relative" id="email-input">
+                    <label for="email" class="block text-sm font-medium text-subtext0">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
+                        required
+                        placeholder="name@example.com"
+                        value="{{ user.email if user else '' }}" />
+                </div>
+                <div class="relative hidden" id="phone-input">
+                    <label for="phone" class="block text-sm font-medium text-subtext0">Phone</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        pattern="[0-9]{8}"
+                        class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
+                        placeholder="81234567"
+                        value="{{ user.phone if user else '' }}" />
+                </div>
+                <div class="relative">
+                    <label for="message" class="block text-sm font-medium text-subtext0">Message</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
+                        rows="10"
+                        required
+                        placeholder="How can we help you?"></textarea>
+                </div>
+                <button
+                    type="submit"
+                    class="mt-2 w-full rounded-md bg-mauve px-4 py-2 text-crust transition-opacity hover:opacity-80">
+                    Send
+                </button>
+            </form>
+        </div>
     </body>
 </html>
