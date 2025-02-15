@@ -10,8 +10,6 @@ from util import send_email
 def create_ticket():
     session_token = request.cookies.get("session_token")
     user = users.find_one({"session_token": session_token}) if session_token else None
-    if not user:
-        return make_response({"message": "Invalid session token"}, 401)
     data = request.get_json()
     required_fields = ["name", "contact_method", "subject", "message"]
     missing_keys = set(required_fields - data.keys())
@@ -47,7 +45,7 @@ def create_ticket():
         request_response = requests.post(
             f"{whatsapp_api_url}",
             json={
-                "to": f"65{user["phone"]}",
+                "to": f"65{ticket["phone"]}",
                 "from": "pay2live",
                 "message": f"*Your support ticket on pay2live has been created.*\nYour ticket ID is *{str(inserted.inserted_id)}*.\n\nWe will get back to you as soon as possible.",
             },

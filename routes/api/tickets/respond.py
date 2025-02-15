@@ -36,7 +36,7 @@ def respond_ticket():
         request_response = requests.post(
             f"{whatsapp_api_url}",
             json={
-                "to": f"65{user["phone"]}",
+                "to": f"65{ticket["phone"]}",
                 "from": "pay2live",
                 "message": f"*Your support ticket on pay2live has received a response.*\n*Ticket ID:* {str(ticket["_id"])}\n*Response:*\n{html.escape(response)}",
             },
