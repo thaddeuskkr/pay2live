@@ -1,5 +1,44 @@
 # pay2live
 
+**pay2live** is a web application designed to optimize patient management for small clinics. It simplifies appointment booking, queue management, administrative tasks, and online store operations while integrating WhatsApp for OTP-based authentication and patient notifications.
+
+## Features
+
+- **Appointment Booking & Queue Management** – Streamlined patient scheduling and real-time queue updates.
+- **Administrative Dashboard** – Manage users, appointments, and clinic operations with ease.
+- **WhatsApp Integration** – OTP-based login and automated patient notifications.
+- **Online Store with Cart Functionality** – Enables clinics to offer products/services online.
+- **Role-Based Access Control** – Secure user management and authentication.
+- **Cloud Deployment with Docker & GitHub Actions** – Automated builds and seamless updates.
+
+## Stack
+
+- **Backend:** Flask, Jinja, MongoDB
+- **Frontend:** HTML, Tailwind CSS, JQuery
+- **Deployment:** Docker, GitHub Actions
+
+## Production Setup
+
+**Docker** is the only recommended way to run **pay2live** in production.  
+Run the following command in a machine with Docker installed, and navigate to [localhost:5000](http://localhost:5000).
+
+```sh
+docker run \
+    --name pay2live \
+    --restart unless-stopped \
+    -p 5000:5000 \
+    -e DEBUG="False" \
+    -e WHATSAPP_API_URL="https://whatsapp.tkkr.dev" \
+    -e WHATSAPP_API_AUTH="YOUR_AUTH_KEY" \
+    -e MONGODB_CONNECTION_URL="YOUR_DATABASE_URL" \
+    -e SMTP_HOST="YOUR_SMTP_HOST" \
+    -e SMTP_PORT="587" \
+    -e SMTP_USERNAME="YOUR_USERNAME" \
+    -e SMTP_PASSWORD="YOUR_PASSWORD" \
+    -e SMTP_SENDER="YOUR_EMAIL" \
+    ghcr.io/thaddeuskkr/pay2live:main
+```
+
 ## Development Setup
 
 **This project is managed using [`uv`](https://github.com/astral-sh/uv).**  
