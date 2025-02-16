@@ -26,6 +26,9 @@ def respond_ticket():
     if not ticket:
         return make_response({"message": "Ticket not found"}, 404)
 
+    if ticket["status"] == "closed":
+        return make_response({"message": "Ticket is already closed"}, 400)
+
     tickets.update_one(
         {"_id": ObjectId(id)},
         {"$set": {"response": response, "status": "closed"}},
