@@ -1,6 +1,6 @@
 from bson import ObjectId
 from flask import request, make_response
-from app import app, users, shop
+from app import app, users, shop, carts
 
 
 @app.route("/api/admin/shop/delete", methods=["DELETE"])
@@ -25,5 +25,7 @@ def a_delete_shop():
         return make_response({"message": "Item not found"}, 404)
 
     shop.delete_one({"_id": ObjectId(item_to_delete["_id"])})
+
+    carts.update_many({}, {"$pull": {"items": {"id": ObjectId(item_to_delete["_id"])}}})
 
     return make_response({"message": "Item deleted successfully"}, 200)
