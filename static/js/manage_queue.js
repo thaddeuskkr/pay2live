@@ -3,6 +3,10 @@ $(function () {
         window.location.href = '/queue?room=' + encodeURIComponent($('#room').val());
     });
     $('.call').on('click', function (e) {
+        if ($('#room').val() === '') {
+            alert('Please enter a room before calling a queue number.');
+            return;
+        }
         const queue_number = $(e.currentTarget).attr('data-queue_number');
         fetch('/api/queue/call', {
             method: 'POST',
