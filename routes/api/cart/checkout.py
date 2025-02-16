@@ -61,6 +61,17 @@ def checkout():
         return make_response({"message": "Invalid phone number"}, 400)
     if not luhn_check(card_number):
         return make_response({"message": "Invalid credit/debit card number"}, 400)
+    if not re.match(r"^\d{3,4}$", card_cvv):
+        return make_response({"message": "Invalid CVV. Must be 3 or 4 digits."}, 400)
+    if (
+        not first_name.isalpha()
+        or not last_name.isalpha()
+        or not name_on_card.isalpha()
+    ):
+        return make_response(
+            {"message": "Name must contain only alphabetical characters"}, 400
+        )
+
     try:
         card_expiry_date = datetime.strptime(card_expiry, "%m/%y")
         current_date = datetime.now()
