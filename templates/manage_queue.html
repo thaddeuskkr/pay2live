@@ -11,7 +11,7 @@
             <h1 class="mb-1 text-center text-3xl font-bold text-text">Queue Management</h1>
             <div class="mb-6 text-center">
                 <p class="mb-2 text-lg font-semibold text-subtext1">
-                    {{ waiting }} patient{{ 's' if waiting != 1 else '' }} in queue
+                    {{ waiting or '0' }} patient{{ 's' if waiting != 1 else '' }} in queue
                 </p>
                 <input
                     id="room"
