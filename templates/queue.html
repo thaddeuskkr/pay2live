@@ -12,7 +12,9 @@
                 <h1 class="mb-4 text-center text-3xl font-bold text-text">Queue System</h1>
 
                 <div class="mb-6 text-center">
-                    <p class="mb-2 text-lg font-semibold text-subtext1">{{ waiting or '0' }} patients in queue</p>
+                    <p class="mb-2 text-lg font-semibold text-subtext1">
+                        {{ waiting or '0' }} patient{{ 's' if waiting != 1 else '' }} in queue
+                    </p>
                     {% if current_queue_numbers %}
                     <p class="mb-2 text-lg text-subtext1">Currently Serving:</p>
                     {% endif %}
