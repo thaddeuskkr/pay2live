@@ -14,9 +14,15 @@
                         pay2live provides progressive, and affordable healthcare, accessible on mobile and online for
                         everyone. Get started with us!
                     </p>
-                    <a href="login" class="rounded bg-blue-500 px-6 py-3 text-white transition-opacity hover:opacity-80"
+                    {% if user %}
+                    <a href="/profile" class="rounded bg-blue px-6 py-3 text-crust transition-opacity hover:opacity-80"
+                        >My Profile</a
+                    >
+                    {% else %}
+                    <a href="/login" class="rounded bg-blue px-6 py-3 text-crust transition-opacity hover:opacity-80"
                         >Login / Signup</a
                     >
+                    {% endif %}
                 </div>
                 <div class="mt-8 max-w-lg md:ml-8 md:mt-0">
                     <img src="/static/assets/home-illust.png" alt="Healthcare illustration" class="h-auto w-full" />
@@ -26,24 +32,20 @@
             <section id="features" class="py-16">
                 <h2 class="mb-8 text-center text-3xl font-semibold">Features</h2>
                 <div class="mx-auto grid max-w-5xl grid-cols-1 gap-12 md:grid-cols-3">
-                    <div class="rounded-lg p-6 shadow-md">
+                    <div class="rounded-lg bg-surface0 p-6 shadow-md">
                         <h3 class="mb-4 text-xl font-semibold">Secure Payments</h3>
                         <p class="leading-relaxed">State-of-the-art encryption ensures your transactions are safe.</p>
                     </div>
-                    <div class="rounded-lg p-6 shadow-md">
+                    <div class="rounded-lg bg-surface0 p-6 shadow-md">
                         <h3 class="mb-4 text-xl font-semibold">Fast Transactions</h3>
                         <p class="leading-relaxed">Experience quick and seamless payment processing.</p>
                     </div>
-                    <div class="rounded-lg p-6 shadow-md">
+                    <div class="rounded-lg bg-surface0 p-6 shadow-md">
                         <h3 class="mb-4 text-xl font-semibold">User-Friendly Interface</h3>
                         <p class="leading-relaxed">Navigate effortlessly with our intuitive design.</p>
                     </div>
                 </div>
             </section>
         </main>
-
-        <footer class="py-6 text-center">
-            <p>&copy; 2025 pay2live. All Rights Reserved.</p>
-        </footer>
     </body>
 </html>
