@@ -29,7 +29,7 @@ def add_appointment():
     if service not in services.keys():
         return make_response({"message": "Invalid service"}, 400)
 
-    if int(timestamp) < current_time_ms:
+    if not user["admin"] and int(timestamp) < current_time_ms:
         return make_response({"message": "Cannot book an appointment in the past"}, 400)
 
     if user["role"] == "doctor":

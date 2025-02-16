@@ -20,14 +20,33 @@ def edit_appointment():
         )
     id: str = data.get("id")
     timestamp: str = data.get("timestamp")
+    doctor: str = data.get("doctor")
+    patient: str = data.get("patient")
+
+    if user["admin"] and not users.find({"_id": ObjectId(doctor)}):
+        return make_response({"message": "Invalid doctor ID"}, 400)
+
+    if user["admin"] and not users.find({"_id": ObjectId(patient)}):
+        return make_response({"message": "Invalid patient ID"}, 400)
 
     current_time_ms = int(time.time() * 1000)
 
-    if int(timestamp) < current_time_ms:
+    if not user["admin"] and int(timestamp) < current_time_ms:
         return make_response({"message": "Cannot move an appointment to the past"}, 400)
 
     # Update the appointment in MongoDB
-    if user["role"] == "doctor":
+    if user["admin"]:
+        appointments.update_one(
+            {"_id": ObjectId(id)},
+            {
+                "$set": {
+                    "timestamp": timestamp,
+                    "doctor": ObjectId(doctor),
+                    "user": ObjectId(patient),
+                }
+            },
+        )
+    elif user["role"] == "doctor":
         appointments.update_one(
             {"_id": ObjectId(id)},
             {"$set": {"timestamp": timestamp}},

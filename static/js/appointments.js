@@ -57,6 +57,8 @@ $(function () {
         $('#editService').attr('disabled', 'disabled');
         $('#editDate').val(dataDate);
         $('#editTime').val(dataTime);
+        $('#e-patient-id').val($(e.currentTarget).attr('data-patient'));
+        $('#e-doctor-id').val($(e.currentTarget).attr('data-doctor'));
         $('#editPopup').removeClass('hidden').addClass('flex');
         $('#editPopup').append(`<input type="hidden" name="id" value="${escapeHtml(dataId)}">`);
     });
@@ -76,6 +78,8 @@ $(function () {
             body: JSON.stringify({
                 id: $('#editPopup input[name="id"]').val(),
                 timestamp: datetime.toMillis(),
+                doctor: $('#e-doctor-id').val(),
+                patient: $('#e-patient-id').val(),
             }),
         }).then(async (response) => {
             const data = await response.json();

@@ -17,7 +17,7 @@ def appointments_route():
     filter = request.args.get("filter", "upcoming")
 
     if filter == "new":
-        if user["role"] != "doctor":
+        if user["role"] != "doctor" and not user["admin"]:
             return redirect("/appointments")
         appointments_list = [
             x
@@ -26,7 +26,7 @@ def appointments_route():
         ]
         filter_header = "Unclaimed Appointments"
     elif filter == "past":
-        if user["role"] == "admin":
+        if user["admin"]:
             appointments_list = list(appointments.find())
         elif user["role"] == "doctor":
             appointments_list = list(
@@ -41,7 +41,7 @@ def appointments_route():
         ]
         filter_header = "Past Appointments"
     else:
-        if user["role"] == "admin":
+        if user["admin"]:
             appointments_list = list(appointments.find())
         elif user["role"] == "doctor":
             appointments_list = list(

@@ -45,10 +45,11 @@
                         <p class="text-subtext0">Date: {{ appointment.date }}</p>
                         <p class="text-subtext0">Time: {{ appointment.time }}</p>
                         <p class="text-subtext0">
-                            {% if user["role"] == "patient" %} Doctor: {{ 'Unassigned' if not appointment.doctor else
-                            appointment.doctor.first_name + ' ' + appointment.doctor.last_name }} {% endif %} {% if
-                            user["role"] == "doctor" %} Patient: {{ appointment.user.first_name + ' ' +
-                            appointment.user.last_name }} {% endif %}
+                            {% if user["role"] == "patient" or user["admin"] %} Doctor: {{ 'Unassigned' if not
+                            appointment.doctor else appointment.doctor.first_name + ' ' + appointment.doctor.last_name
+                            }} {% endif %} {% if user["admin"] %}<br />
+                            {% endif %} {% if user["role"] == "doctor" or user["admin"] %} Patient: {{
+                            appointment.user.first_name + ' ' + appointment.user.last_name }} {% endif %}
                         </p>
                         <div class="flex space-x-2 pt-2">
                             <button
@@ -57,7 +58,9 @@
                                 data-id="{{ appointment.id }}"
                                 data-service="{{ appointment.raw.service }}"
                                 data-service-text="{{ appointment.service }}"
-                                data-timestamp="{{ appointment.raw.timestamp }}">
+                                data-timestamp="{{ appointment.raw.timestamp }}"
+                                data-doctor="{{ appointment.raw.doctor._id }}"
+                                data-patient="{{ appointment.raw.user._id }}">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5"
@@ -134,6 +137,40 @@
                                 required
                                 class="w-full rounded-md bg-surface1 px-3 py-2" />
                         </div>
+                        {% if user["admin"] %}
+                        <div class="mb-6">
+                            <label for="patient" class="text-gray mb-2 block font-semibold">Patient</label>
+                            <input
+                                list="patients-list"
+                                id="e-patient-id"
+                                name="patient"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                            <datalist id="patients-list">
+                                {% for patient in patients %}
+                                <option value="{{ patient._id }}" data-id="{{ patient._id }}">
+                                    {{ patient.first_name }} {{ patient.last_name }} ({{ patient.nric }})
+                                </option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        <div class="mb-6">
+                            <label for="doctor" class="text-gray mb-2 block font-semibold">Doctor</label>
+                            <input
+                                list="doctors-list"
+                                id="e-doctor-id"
+                                name="doctor"
+                                required
+                                class="w-full rounded-md bg-surface1 px-3 py-2" />
+                            <datalist id="doctors-list">
+                                {% for doctor in doctors %}
+                                <option value="{{ doctor._id }}" data-id="{{ doctor._id }}">
+                                    {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.nric }})
+                                </option>
+                                {% endfor %}
+                            </datalist>
+                        </div>
+                        {% endif %}
                         <div class="flex justify-end space-x-4">
                             <button
                                 type="button"
