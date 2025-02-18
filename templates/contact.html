@@ -25,7 +25,7 @@
                         class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
                         required
                         placeholder="How should we address you?"
-                        value="{{ user.first_name if user else '' }}{{ ' ' if user else '' }}{{ user.last_name if user else '' }}" />
+                        value="{{ user.first_name if user and user['registered'] else '' }}{{ ' ' if user and user['registered'] else '' }}{{ user.last_name if user and user['registered'] else '' }}" />
                 </div>
                 <div class="relative">
                     <label for="contact-method" class="block text-sm font-medium text-subtext0"
@@ -49,7 +49,7 @@
                         class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
                         required
                         placeholder="name@example.com"
-                        value="{{ user.email if user else '' }}" />
+                        value="{{ user.email if user and user['registered'] else '' }}" />
                 </div>
                 <div class="relative hidden" id="phone-input">
                     <label for="phone" class="block text-sm font-medium text-subtext0">Phone</label>
@@ -61,7 +61,7 @@
                         title="Phone number should be 8 numerical characters (no country code)"
                         class="mt-1 block w-full rounded-md border border-subtext0 bg-transparent px-3 py-2 text-text shadow-sm sm:text-sm"
                         placeholder="81234567"
-                        value="{{ user.phone if user else '' }}" />
+                        value="{{ user.phone if user and user['registered'] else '' }}" />
                 </div>
                 <div class="relative">
                     <label for="subject" class="block text-sm font-medium text-subtext0">Subject</label>

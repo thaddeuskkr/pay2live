@@ -13,6 +13,8 @@ def appointments_route():
     user = users.find_one({"session_token": session_token}) if session_token else None
     if not user:
         return redirect("/login")
+    if not user["registered"]:
+        return redirect("/register")
 
     filter = request.args.get("filter", "upcoming")
 

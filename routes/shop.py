@@ -10,6 +10,8 @@ def shop_route():
     user = users.find_one({"session_token": session_token}) if session_token else None
     if not user:
         return redirect("/login")
+    if not user["registered"]:
+        return redirect("/register")
     items = list(shop.find())
     cart = carts.find_one({"user": ObjectId(user["_id"])}) if user else None
     cart_items: list[dict[str, Any]] = []

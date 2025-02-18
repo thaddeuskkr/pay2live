@@ -8,6 +8,6 @@ def register():
     user = users.find_one({"session_token": session_token}) if session_token else None
     if not user:
         return redirect("/login")
-    if user.get("registered"):
+    if user["registered"]:
         return redirect("/profile")
     return render_template("register.html", current_page="register", user=user)

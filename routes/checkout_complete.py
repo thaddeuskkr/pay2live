@@ -9,6 +9,8 @@ def checkout_complete(id: str):
     user = users.find_one({"session_token": session_token}) if session_token else None
     if not user:
         return redirect("/login")
+    if not user["registered"]:
+        return redirect("/register")
     order = orders.find_one({"_id": ObjectId(id)})
     if not order or str(order["user"]) != str(user["_id"]):
         return redirect("/shop")
