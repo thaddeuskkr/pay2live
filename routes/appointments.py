@@ -44,7 +44,7 @@ def appointments_route():
         filter_header = "Past Appointments"
     else:
         if user["admin"]:
-            appointments_list = list(appointments.find())
+            appointments_list = list(appointments.find({"doctor": {"$ne": None}}))
         elif user["role"] == "doctor":
             appointments_list = list(
                 appointments.find({"doctor": ObjectId(user["_id"])})
@@ -80,10 +80,15 @@ def appointments_route():
         "appointments.html",
         filter_header=filter_header,
         current_page="appointments",
-        appointments=sorted(appointments_list, key=lambda x: x["timestamp"]),
+        appointments=sorted(
+            appointments_list,
+            key=lambda x: x["timestamp"],
+            reverse=True if filter == "past" else False,
+        ),
         doctors=users.find({"role": "doctor"}),
         patients=users.find({"role": "patient"}),
         services=services_list,
         user=user,
         date=datetime.now().astimezone(ZoneInfo("Asia/Singapore")).strftime("%Y-%m-%d"),
+        time=datetime.now().astimezone(ZoneInfo("Asia/Singapore")).strftime("%H:%M"),
     )
