@@ -10,21 +10,7 @@
         <div class="mx-auto mt-16 h-[calc(100vh-64px)] max-w-4xl items-center justify-center">
             <h1 class="mb-4 pt-16 text-center text-3xl font-bold text-text">Shop</h1>
             <div class="container mx-auto px-4 py-8">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" id="shop-items">
-                    {% for item in shop_items %} {% if item.visible %}
-                    <div class="relative rounded-lg bg-surface0 p-6 shadow-md">
-                        <img src="{{ item.image }}" class="mb-4 aspect-square w-fit rounded-lg object-cover" />
-                        <h3 class="mb-2 text-xl font-bold">{{ item.name }}</h3>
-                        <p class="mb-4 text-subtext1">S${{ "%.2f"|format(item.price) }}</p>
-                        <button
-                            onclick="addToCart('{{ item._id }}')"
-                            class="rounded bg-blue px-4 py-2 text-crust transition-opacity hover:opacity-80">
-                            Add to Cart
-                        </button>
-                    </div>
-                    {% endif %} {% endfor %}
-                </div>
-                <div class="mt-8 rounded-lg bg-surface0 p-6 shadow-md">
+                <div class="rounded-lg bg-surface0 p-6 shadow-md">
                     <h2 class="mb-4 text-2xl font-bold">Cart</h2>
                     <ul id="cart-items" class="mb-4">
                         {% for item in cart_items %}
@@ -56,6 +42,20 @@
                         Clear Cart
                     </button>
                     {% endif %}
+                </div>
+                <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" id="shop-items">
+                    {% for item in shop_items %} {% if item.visible %}
+                    <div class="relative rounded-lg bg-surface0 p-6 shadow-md">
+                        <img src="{{ item.image }}" class="mb-4 aspect-square w-fit rounded-lg object-cover" />
+                        <h3 class="mb-2 text-xl font-bold">{{ item.name }}</h3>
+                        <p class="mb-4 text-subtext1">S${{ "%.2f"|format(item.price) }}</p>
+                        <button
+                            onclick="addToCart('{{ item._id }}')"
+                            class="rounded bg-blue px-4 py-2 text-crust transition-opacity hover:opacity-80">
+                            Add to Cart
+                        </button>
+                    </div>
+                    {% endif %} {% endfor %}
                 </div>
             </div>
         </div>
