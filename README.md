@@ -115,5 +115,5 @@ uv run flask run
 
 ## School Submission References
 
-* *This project was presented at commit [f82c7be](https://github.com/thaddeuskkr/pay2live/commit/f82c7be87ca9b65be31fea62f105beae3d251b5d).*
-* *The POLITEMall submission was made at commit [055147d](https://github.com/thaddeuskkr/pay2live/commit/055147d4e870818c9f8903b31991085daa2cccd8).*
+* *This project was presented at commit [`f82c7be`](https://github.com/thaddeuskkr/pay2live/commit/f82c7be87ca9b65be31fea62f105beae3d251b5d).*
+* *The POLITEMall submission was made at commit [`055147d`](https://github.com/thaddeuskkr/pay2live/commit/055147d4e870818c9f8903b31991085daa2cccd8).*
