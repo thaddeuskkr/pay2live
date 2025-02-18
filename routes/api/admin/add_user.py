@@ -1,7 +1,6 @@
 import re
 from flask import request, make_response
 from app import app, users
-from classes import User
 from util import validate_nric
 
 
@@ -79,22 +78,29 @@ def a_add_user():
         return make_response(
             {"message": "User with that email address already exists"}, 400
         )
+    duplicate_nric = users.find_one({"nric": str.upper(nric)})
+    if duplicate_nric:
+        return make_response({"message": "User with that NRIC already exists"}, 400)
 
-    userC = User(
-        phone=phone,
-        first_name=first_name,
-        last_name=last_name,
-        email=email,
-        gender=gender,
-        nric=str.upper(nric),
-        role=role,
-        admin=admin == "true",
-        registered=registered == "true",
-        active=active == "true",
-        address1=address1,
-        address2=address2,
-        address3=address3 or None,
-        address4=address4,
+    users.insert_one(
+        {
+            "phone": phone,
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "gender": gender,
+            "nric": str.upper(nric),
+            "role": role,
+            "address1": address1,
+            "address2": address2,
+            "address3": address3,
+            "address4": address4,
+            "session_token": None,
+            "otp": None,
+            "otp2": None,
+            "admin": admin == "true",
+            "registered": registered == "true",
+            "active": active == "true",
+        }
     )
-    users.insert_one(userC.to_dict())
     return make_response({"message": "User updated successfully"}, 200)

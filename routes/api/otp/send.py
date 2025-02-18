@@ -2,7 +2,6 @@ import requests
 import secrets
 from flask import request, make_response
 from app import app, ready, users, whatsapp_api_auth, whatsapp_api_url
-from classes import User
 import html
 
 
@@ -34,7 +33,6 @@ def send_otp():
             500,
         )
         return response
-    userC = User(phone=phone, otp=otp)
     db_user = users.find_one({"phone": phone})
     if db_user:
         if not db_user["active"]:
@@ -48,7 +46,27 @@ def send_otp():
             return response
         users.update_one({"phone": phone}, {"$set": {"otp": otp}})
     else:
-        users.insert_one(userC.to_dict())
+        users.insert_one(
+            {
+                "phone": phone,
+                "first_name": None,
+                "last_name": None,
+                "email": None,
+                "gender": None,
+                "nric": None,
+                "role": "patient",
+                "address1": None,
+                "address2": None,
+                "address3": None,
+                "address4": None,
+                "session_token": None,
+                "otp": otp,
+                "otp2": None,
+                "admin": False,
+                "registered": False,
+                "active": True,
+            }
+        )
     request_response = requests.post(
         f"{whatsapp_api_url}",
         json={
