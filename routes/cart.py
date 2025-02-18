@@ -4,8 +4,8 @@ from flask import render_template, request, redirect
 from app import app, users, shop, carts
 
 
-@app.route("/shop")
-def shop_route():
+@app.route("/cart")
+def cart_route():
     session_token = request.cookies.get("session_token")
     user = users.find_one({"session_token": session_token}) if session_token else None
     if not user:
@@ -24,12 +24,14 @@ def shop_route():
                     "quantity": item["quantity"],
                 }
             )
+    if len(cart_items) == 0:
+        return redirect("/shop")
     subtotal = 0.00
     for item in cart_items:
         subtotal += item["info"]["price"] * item["quantity"]
     return render_template(
-        "shop.html",
-        current_page="shop",
+        "cart.html",
+        current_page="cart",
         user=user,
         shop_items=items,
         cart_items=cart_items,

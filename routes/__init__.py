@@ -9,6 +9,7 @@ from .register import *
 from .profile import *
 from .queue import *
 from .admin import *
+from .cart import *
 from .checkout import *
 from .checkout_complete import *
 from .contact import *
@@ -25,6 +26,7 @@ __all__ = [
     "profile",
     "queue",
     "admin",
+    "cart",
     "checkout",
     "checkout_complete",
     "contact",
