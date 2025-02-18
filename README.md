@@ -2,6 +2,10 @@
 
 **pay2live** is a web application designed to optimize patient management for small clinics. It simplifies appointment booking, queue management, administrative tasks, and online store operations while integrating WhatsApp for OTP-based authentication and patient notifications.
 
+## Live Demo
+
+*This web application is currently running live at [pay2live.tkkr.dev](https://pay2live.tkkr.dev)*
+
 ## Features
 
 - **Appointment Booking & Queue Management** – Streamlined patient scheduling and real-time queue updates.
@@ -93,18 +97,23 @@ npm install
 uv sync
 ```
 
-## Run the development server(s)
+### Run the development server(s)
 
 _Do these in separate terminals, as they are blocking processes._
 
-### Run Tailwind CSS (watch mode)
+#### Run Tailwind CSS (watch mode)
 
 ```sh
 npm run watch
 ```
 
-### Run the Flask application
+#### Run the Flask application
 
 ```sh
 uv run flask run
 ```
+
+## School Submission References
+
+* *This project was presented at commit [f82c7be](https://github.com/thaddeuskkr/pay2live/commit/f82c7be87ca9b65be31fea62f105beae3d251b5d).*
+* *The POLITEMall submission was made at commit [055147d](https://github.com/thaddeuskkr/pay2live/commit/055147d4e870818c9f8903b31991085daa2cccd8).*
